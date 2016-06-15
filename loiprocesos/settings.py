@@ -121,3 +121,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+if os.environ.get('HEROKU', False):
+    # settings especificas para heroku
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
+    ALLOWED_HOSTS = ['*']
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
