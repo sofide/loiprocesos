@@ -1,4 +1,16 @@
+{% load staticfiles %}
+
 <html>
-        <p>Hi there!</p>
-        <p>It works!</p>
-    </html>
+  <head>
+    <title>LOI Procesos</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/clases.css' %}?{% now "U" %}"/>
+  </head>
+  <body>
+    <div class="page-header">
+      <a href="/" class="top-menu"><h1>LOI Procesos!</h1></a>
+    </div>
+    {% block content %}
+    {% endblock %}
+
+  </body>
+</html>
