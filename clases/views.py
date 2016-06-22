@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def clases_principal(request):
+    return render(request, 'clases/clases_principal.html', {})
