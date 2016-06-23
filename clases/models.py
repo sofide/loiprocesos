@@ -33,7 +33,7 @@ class TP(models.Model):
 
 class Exposicion(models.Model):
     clase = models.ForeignKey(Clase)
-    grupo = models.ForeignKey(Grupo)
+    grupotemp = models.ForeignKey(Grupo, null=True)
     tp = models.ForeignKey(TP)
 
     class Meta:
@@ -42,5 +42,5 @@ class Exposicion(models.Model):
 
 class Pregunta(models.Model):
     exposicion = models.ForeignKey(Exposicion)
-    grupo = models.ForeignKey(Grupo)
+    grupotemp = models.ForeignKey(Grupo, null=True)
     pregunta = models.TextField()
