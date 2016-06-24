@@ -44,6 +44,7 @@ class Pregunta(models.Model):
     exposicion = models.ForeignKey(Exposicion)
     grupo = models.ForeignKey('grupos.Grupo', null=True)
     pregunta = models.TextField()
+    mejor = models.BooleanField(default=False)
 
 
 class ContadorPreguntas(models.Model):
