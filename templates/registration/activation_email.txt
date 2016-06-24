@@ -1,0 +1,6 @@
+Hola {{ user }}!
+Activá tu cuenta de  {{ site.name }}:
+
+http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+
+Este link es válido por  {{ expiration_days }} días.
