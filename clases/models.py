@@ -44,3 +44,12 @@ class Pregunta(models.Model):
     exposicion = models.ForeignKey(Exposicion)
     grupo = models.ForeignKey('grupos.Grupo', null=True)
     pregunta = models.TextField()
+
+
+class ContadorPreguntas(models.Model):
+    clase = models.ForeignKey(Clase)
+    exposicion = models.ForeignKey(Exposicion)
+    preguntador = models.ForeignKey(Grupo)
+    cantidad = models.IntegerField()
+    primero = models.BooleanField(default=False)
+    ultimo = models.BooleanField(default=False)
