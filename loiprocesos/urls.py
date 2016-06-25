@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^clases/', include('clases.urls')),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
-    url(r'^/$', home, name='home'),
+    url(r'^$', home, name='home'),
 ]
