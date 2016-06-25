@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from clases.forms import ContadorPreguntasForm, ClaseForm
-from clases.models import Clase
+from clases.models import Clase, Exposicion
 
 
 def clases_home(request):
@@ -17,6 +17,17 @@ def clases_home(request):
         request,
         'clases/clases_home.html',
         {'clases': clases, 'form': form}
+    )
+
+
+def ver_clase(request, pk):
+    clase = get_object_or_404(Clase, pk=pk)
+    exposiciones = Exposicion.objects.filter(clase__id = pk).order_by('grupo__numero')
+
+    return render(
+        request,
+        'clases/ver_clase.html',
+        {'clase': clase, 'exposiciones': exposiciones}
     )
 
 
