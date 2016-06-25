@@ -1,16 +1,15 @@
-{% load staticfiles %}
+{% extends 'base/base.html' %}
 
-<html>
-  <head>
-    <title>LOI Procesos</title>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/clases.css' %}?{% now "U" %}"/>
-  </head>
-  <body>
-    <div class="page-header">
-      <a href="/" class="top-menu"><h1>LOI Procesos!</h1></a>
-    </div>
-    {% block content %}
-    {% endblock %}
+{% block content %}
+  <h1>Clases de Procesos!!</h1>
+  <h3> Acá se van a poder ver indicadores de las clases como: </h3>
+  <ul>
+    <li>Cantidad de preguntas hechas</li>
+    <li>Cantidad de preguntas recibidas</li>
+    <li>Cantidad de mejores preguntas</li>
+    <li>Grupo que normalmente es el último en preguntar</li>
+    <li>Grupo que normalmente es el primero en pregutnar</li>
+  </ul>
+  
 
-  </body>
-</html>
+{% endblock %}
