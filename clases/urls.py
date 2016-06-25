@@ -3,6 +3,6 @@ from clases.views import clases_home, clases_add
 
 urlpatterns = [
     url(r'^$', clases_home, name='clases_home'),
-    url(r'^/cargar$', clases_add, name='clases_add'),
+    url(r'^cargar$', clases_add, name='clases_add'),
 
 ]
