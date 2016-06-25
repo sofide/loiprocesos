@@ -10,6 +10,17 @@
     <li>Grupo que normalmente es el último en preguntar</li>
     <li>Grupo que normalmente es el primero en pregutnar</li>
   </ul>
-  
 
+  <h3>Listado de clases</h3>
+  {% if clases %}
+    {% for clase in clases %}
+    <!--  <a href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a> -->
+    <a href="{% url 'clases_home' %}"> {{ clase }} </a>
+    {% endfor %}
+  {% endif %}
+  <p> Agregar otra clase!: </p>
+  <form method="POST" class="post-form">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Cargar!</button>
+  </form>
 {% endblock %}
