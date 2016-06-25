@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h1>Clase {{ clase }}</h1>
+
+  <h2>Exposiciones en esta clase: </h2>
+
+  {% if exposiciones %}
+    {% for exp in exposiciones %}
+    <a href="{% url 'ver_exposicion' exp.id %}"> {{ exposicion }} </a>
+    {% endfor %}
+  {% endif %}
+  <p> Agregar otra exposicion a esta clase!: </p>
+  <form method="POST" class="post-form">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Cargar!</button>
+  </form>
+{% endblock %}
