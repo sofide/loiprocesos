@@ -40,7 +40,7 @@ def ver_clase(request, pk):
     )
 
 def ver_exposicion(request, expo_pk):
-    exposicion = get_object_or_404(Clase, pk=expo_pk)
+    exposicion = get_object_or_404(Exposicion, pk=expo_pk)
     preguntas = Pregunta.objects.filter(exposicion = exposicion).order_by('grupo__numero')
     if request.method == "POST":
             form = ContadorPreguntasForm(request.POST)
