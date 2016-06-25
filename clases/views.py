@@ -21,10 +21,17 @@ def clases_home(request):
 
 
 def ver_clase(request, pk):
-    clase = get_object_or_404(Clase, pk=pk)
-    exposiciones = Exposicion.objects.filter(clase__id = pk).order_by('grupo__numero')
-    form = ExposicionForm()
-
+    if request.method == "POST":
+            form = ExposicionForm(request.POST)
+            if form.is_valid():
+                exposicion = form.save()
+                exposicion.save()
+                return redirect('clases.views.ver_clase', pk=pk)
+    else:
+        clase = get_object_or_404(Clase, pk=pk)
+        exposiciones = Exposicion.objects.filter(clase__id = pk).order_by('grupo__numero')
+        form = ExposicionForm()
+    
     return render(
         request,
         'clases/ver_clase.html',
