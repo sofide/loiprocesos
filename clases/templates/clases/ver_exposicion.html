@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h1>Exposicion: {{ clase }}</h1>
+
+  <h2>Preguntas hechas en esta exposicion: </h2>
+
+  <ul>
+  {% if preguntas %}
+    {% for preg in preguntas %}
+    <li>{{ preg.grupo }} realizó {{ preg.cantidad }} pregunta/s </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <p> Agregar otra pregunta a esta clase!: </p>
+
+  <form method="POST" class="post-form">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Cargar!</button>
+  </form>
+{% endblock %}
