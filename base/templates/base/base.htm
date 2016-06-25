@@ -1,0 +1,31 @@
+
+{% load staticfiles %}
+
+<html>
+  <head>
+    <title>LOI Procesos</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  </head>
+  <body>
+    <div class="page-header">
+      <a href="http://loiprocesos.com/"><h1>LOI Procesos!</h1></a>
+      <p> Cátedra Procesos Industriales - Licenciatura en Organización Industrial - UTN Facultad Regional Rafaela </p>
+      <div class="seccion"> Teoría </div>
+      <div class="seccion"> Grupos </div>
+      <div class="seccion"> Clases </div>
+    </div>
+    <div class="lateral">
+    	<div class="option"><p>Una accion posible</p></div>
+    	<div class="option"><p>Otra accion posible</p></div>
+    	<div class="option"><p>Otra más!!</p></div>
+    	<div class="option"><p>blabla</p></div>
+    	<div class="option"><p>blalñfjñlsdñflajsasdkflaskdjflñkasfas</p></div>
+    </div>
+    <div class="contenido">
+    	<h3>Acá va a ir el contenido del sitio!</h3>
+    </div>
+    {% block content %}
+    {% endblock %}
+
+  </body>
+</html>
