@@ -48,7 +48,6 @@ class Pregunta(models.Model):
 
 
 class ContadorPreguntas(models.Model):
-    clase = models.ForeignKey(Clase)
     exposicion = models.ForeignKey(Exposicion)
     preguntador = models.ForeignKey(Grupo)
     cantidad = models.IntegerField()
