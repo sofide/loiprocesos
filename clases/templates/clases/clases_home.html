@@ -14,8 +14,7 @@
   <h3>Listado de clases</h3>
   {% if clases %}
     {% for clase in clases %}
-    <!--  <a href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a> -->
-    <a href="{% url 'clases_home' %}"> {{ clase }} </a>
+    <a href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a>
     {% endfor %}
   {% endif %}
   <p> Agregar otra clase!: </p>
