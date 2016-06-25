@@ -1,7 +1,8 @@
 from django.conf.urls import include, url
-from clases import views
+from clases.views import clases_home
 
 urlpatterns = [
-    url(r'^$', views.clases_principal, name='clases_principal'),
+    url(r'^$', clases_home, name='clases_home'),
+    url(r'^/cargar$', clases_add, name='clases_add'),
 
 ]
