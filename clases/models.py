@@ -28,7 +28,7 @@ class TP(models.Model):
     descripcion = models.TextField()
 
     def __str__(self):
-        return nombre
+        return self.nombre
 
 
 class Exposicion(models.Model):
