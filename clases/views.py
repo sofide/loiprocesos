@@ -45,9 +45,9 @@ def ver_exposicion(request, expo_pk):
     if request.method == "POST":
             form = ContadorPreguntasForm(request.POST)
             if form.is_valid():
-                exposicion = form.save(commit=False)
-                exposicion.clase = clase
-                exposicion.save()
+                pregunta = form.save(commit=False)
+                pregunta.exposicion = exposicion
+                pregunta.save()
                 return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
     else:
         form = ContadorPreguntasForm()
