@@ -6,7 +6,7 @@ class ContadorPreguntasForm(forms.ModelForm):
     class Meta:
         model = ContadorPreguntas
         fields = (
-            'exposicion', 'preguntador',
+            'preguntador',
             'cantidad', 'primero', 'ultimo'
         )
 
