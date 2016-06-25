@@ -39,6 +39,9 @@ class Exposicion(models.Model):
     class Meta:
         verbose_name_plural = "Exposiciones"
 
+    def __str__(self):
+        return '{} - G{} - TP {}'.format(str(self.clase), self.grupo.numero, self.tp)
+
 
 class Pregunta(models.Model):
     exposicion = models.ForeignKey(Exposicion)
