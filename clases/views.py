@@ -43,14 +43,14 @@ def ver_exposicion(request, expo_pk):
     exposicion = get_object_or_404(Clase, pk=expo_pk)
     preguntas = Pregunta.objects.filter(exposicion = exposicion).order_by('grupo__numero')
     if request.method == "POST":
-            form = ExposicionForm(request.POST)
+            form = ContadorPreguntasForm(request.POST)
             if form.is_valid():
                 exposicion = form.save(commit=False)
                 exposicion.clase = clase
                 exposicion.save()
                 return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
     else:
-        form = ExposicionForm()
+        form = ContadorPreguntasForm()
 
     return render(
         request,
