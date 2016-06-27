@@ -13,9 +13,11 @@
 
   <h3>Listado de clases</h3>
   {% if clases %}
+  <ul>
     {% for clase in clases %}
-    <a href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a>
+    <li><a href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a></li>
     {% endfor %}
+  </ul>
   {% endif %}
   <p> Agregar otra clase!: </p>
   <form method="POST" class="post-form">{% csrf_token %}
