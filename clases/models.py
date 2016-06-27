@@ -3,9 +3,9 @@ from django.utils import timezone
 
 
 class Clase(models.Model):
-    fecha = models.DateTimeField(default=timezone.now)
+    fecha = models.DateField(default=timezone.now)
     def __str__(self):
-        return self.fecha.strftime('%d-%m-%Y')
+        return str(self.fecha)
 
 
 class Grupo(models.Model):
