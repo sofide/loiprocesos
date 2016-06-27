@@ -4,6 +4,7 @@
 <html>
   <head>
     <title>LOI Procesos</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/photo.css' %}?{% now "U" %}"/>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/css/bootstrap-theme.min.css' %}">
@@ -16,7 +17,7 @@
       <p> Cátedra Procesos Industriales - Licenciatura en Organización Industrial - UTN Facultad Regional Rafaela </p>
       <div class="seccion"> Teoría </div>
       <div class="seccion"> Grupos </div>
-      <div class="seccion"> Clases </div>
+      <a href= "{% url 'clases_home' %}" class="seccion"> Clases </a>
     </div>
     <div class="lateral">
     	<div class="option"><p>Una accion posible</p></div>
