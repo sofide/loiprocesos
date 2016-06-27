@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 from clases.views import clases_home, clases_add, ver_clase, ver_exposicion
 
 urlpatterns = [
