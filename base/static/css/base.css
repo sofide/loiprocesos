@@ -14,8 +14,7 @@ color: black;
 }
 
 a:hover {
-color: white;
-background-color: black;
+color: #2980B9;
 text-decoration: none;
 }
 
@@ -34,10 +33,6 @@ text-decoration: none;
 .page-header a:visited {
 color:white;
 text-decoration: none;
-}
-
-.page-header a:hover {
-color: black;
 }
 
 .seccion {
