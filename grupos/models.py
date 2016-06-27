@@ -7,7 +7,7 @@ class Grupo(models.Model):
     producto = models.CharField(max_length=200)
 
     def __str__(self):
-        return '{} - {} - {}'.format(str(self.año), self.empresa, self.producto)
+        return '{} - G{} - {} - {}'.format(str(self.año), self.numero, self.empresa, self.producto)
 
 
 class Pertenencia(models.Model):
