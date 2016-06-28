@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from clases.forms import ContadorPreguntasForm, ClaseForm, ExposicionForm
-from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
+from clases.models import (Clase, Exposicion, Pregunta, ContadorPreguntas,
+                           TiemposExpoForm)
 
 
 def clases_home(request):
@@ -22,7 +23,8 @@ def clases_home(request):
 
 def ver_clase(request, pk):
     clase = get_object_or_404(Clase, pk=pk)
-    exposiciones = Exposicion.objects.filter(clase = clase).order_by('grupo__numero')
+    exposiciones = Exposicion.objects.filter(clase = clase)\
+                                     .order_by('grupo__numero')
     if request.method == "POST":
             form = ExposicionForm(request.POST)
             if form.is_valid():
@@ -41,7 +43,8 @@ def ver_clase(request, pk):
 
 def ver_exposicion(request, expo_pk):
     exposicion = get_object_or_404(Exposicion, pk=expo_pk)
-    preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion).order_by('preguntador__numero')
+    preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
+                                         .order_by('preguntador__numero')
     if request.method == "POST":
             form = ContadorPreguntasForm(exposicion.grupo, request.POST)
             if form.is_valid():
