@@ -20,6 +20,10 @@ class Exposicion(models.Model):
     clase = models.ForeignKey(Clase)
     grupo = models.ForeignKey('grupos.Grupo', null=True)
     tp = models.ForeignKey(TP)
+    start_expo = models.DateTimeField(null=True, default=null)
+    start_preg = models.DateTimeField(null=True, default=null)
+    finish_expo = models.DateTimeField(null=True, default=null)
+
 
     class Meta:
         verbose_name_plural = "Exposiciones"
