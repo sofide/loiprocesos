@@ -29,8 +29,22 @@ class ExposicionForm(forms.ModelForm):
         fields = ('grupo', 'tp')
 
 
-class TiemposExpoForm(forms.ModelForm):
+class StartExpoForm(forms.ModelForm):
 
     class Meta:
         model = Exposicion
-        fields = ('start_expo', 'start_preg', 'finish_expo')
+        fields = ('start_expo')
+
+
+class StartQuestionsForm(forms.ModelForm):
+
+    class Meta:
+        model = Exposicion
+        fields = ('start_ques',)
+
+
+class FinishExpoForm(forms.ModelForm):
+
+    class Meta:
+        model = Exposicion
+        fields = ('finish_expo')
