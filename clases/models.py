@@ -21,7 +21,7 @@ class Exposicion(models.Model):
     grupo = models.ForeignKey('grupos.Grupo', null=True)
     tp = models.ForeignKey(TP)
     start_expo = models.DateTimeField(null=True, default=None)
-    start_preg = models.DateTimeField(null=True, default=None)
+    start_ques = models.DateTimeField(null=True, default=None)
     finish_expo = models.DateTimeField(null=True, default=None)
 
 
