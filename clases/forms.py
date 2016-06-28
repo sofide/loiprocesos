@@ -33,7 +33,7 @@ class StartExpoForm(forms.ModelForm):
 
     class Meta:
         model = Exposicion
-        fields = ('start_expo')
+        fields = ('start_expo',)
 
 
 class StartQuestionsForm(forms.ModelForm):
@@ -47,4 +47,4 @@ class FinishExpoForm(forms.ModelForm):
 
     class Meta:
         model = Exposicion
-        fields = ('finish_expo')
+        fields = ('finish_expo',)
