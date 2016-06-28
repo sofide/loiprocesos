@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from clases.forms import ContadorPreguntasForm, ClaseForm, ExposicionForm
-from clases.models import (Clase, Exposicion, Pregunta, ContadorPreguntas,
-                           TiemposExpoForm)
+from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
+                          StartExpoForm, StartQuestionsForm, FinishExpoForm)
+from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
+
 
 
 def clases_home(request):
