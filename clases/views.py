@@ -47,6 +47,7 @@ def ver_exposicion(request, expo_pk):
     preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
                                          .order_by('preguntador__numero')
     if request.method == "POST":
+        if 'pregunta' in request.POST:
             form = ContadorPreguntasForm(exposicion.grupo, request.POST)
             if form.is_valid():
                 pregunta = form.save(commit=False)
