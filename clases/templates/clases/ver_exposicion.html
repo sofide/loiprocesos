@@ -1,7 +1,35 @@
 {% extends 'base/base.html' %}
 
+
 {% block content %}
   <h1>Exposicion: {{ exposicion }}</h1>
+
+  {% if exposicion.start_expo %}
+    <h3>Comienzo de la exposición: {{ exposicion.start_expo }}</h3>
+  {% else %}
+    <form method="POST" class="post-form">{% csrf_token %}
+      {{ st_expo_form.as_p }}
+      <input type="submit" name="st_ex" class="save btn btn-default" value="Cargar!"></input>
+    </form>
+  {% endif %}
+
+  {% if exposicion.start_ques %}
+    <h3>Comienzo de las preguntas: {{ exposicion.start_ques }}</h3>
+  {% else %}
+    <form method="POST" class="post-form">{% csrf_token %}
+      {{ st_ques_form.as_p }}
+      <input type="submit" name="st_qu" class="save btn btn-default" value="Cargar!"></input>
+    </form>
+  {% endif %}
+
+  {% if exposicion.finish_expo %}
+    <h3>Fin de la exposición: {{ exposicion.finish_expo }}</h3>
+  {% else %}
+    <form method="POST" class="post-form">{% csrf_token %}
+      {{ fi_expo_form.as_p }}
+      <input type="submit" name="fi_ex" class="save btn btn-default" value="Cargar!"></input>
+    </form>
+  {% endif %}
 
   <h2>Preguntas realizadas en esta exposicion: </h2>
 
@@ -15,7 +43,7 @@
   <p> Agregar otra pregunta a esta clase!: </p>
 
   <form method="POST" class="post-form">{% csrf_token %}
-    {{ form.as_p }}
+    {{ cont_preg_form.as_p }}
     <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
   </form>
 {% endblock %}
