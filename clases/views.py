@@ -46,21 +46,46 @@ def ver_exposicion(request, expo_pk):
     exposicion = get_object_or_404(Exposicion, pk=expo_pk)
     preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
                                          .order_by('preguntador__numero')
+
+    cont_preg_form = ContadorPreguntasForm(exposicion.grupo)
+    st_expo_form = StartExpoForm()
+    st_ques_form = StartQuestionsForm()
+    fi_expo_form = FinishExpoForm()
+
     if request.method == "POST":
         if 'pregunta' in request.POST:
-            form = ContadorPreguntasForm(exposicion.grupo, request.POST)
-            if form.is_valid():
-                pregunta = form.save(commit=False)
+            cont_preg_form = ContadorPreguntasForm(exposicion.grupo,
+                                                   request.POST)
+            if cont_preg_form.is_valid():
+                pregunta = cont_preg_form.save(commit=False)
                 pregunta.exposicion = exposicion
                 pregunta.save()
                 return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
-    else:
-        form = ContadorPreguntasForm(exposicion.grupo)
+
+        elif 'st_ex' in request.POST:
+            st_expo_form = StartExpoForm(request.POST)
+            if st_expo_form.is_valid():
+                st_expo_form.save()
+                return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
+
+        elif 'st_qu' in request.POST:
+            st_ques_form = StartQuestionsForm(request.POST)
+            if st_ques_form.is_valid():
+                st_ques_form.save()
+                return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
+
+        elif 'fi_ex' in request.POST:
+            fi_expo_form = FinishExpoForm(request.POST)
+            if fi_expo_form.is_valid():
+                fi_expo_form.save()
+                return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
     return render(
         request,
         'clases/ver_exposicion.html',
-        {'exposicion': exposicion, 'preguntas': preguntas, 'form': form}
+        {'exposicion': exposicion, 'preguntas': preguntas,
+         'cont_preg_form': cont_preg_form, 'st_expo_form': st_expo_form,
+         'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form}
     )
 
 
