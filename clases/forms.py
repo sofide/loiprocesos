@@ -1,4 +1,7 @@
 from django import forms
+from django.conf import settings
+from django.utils import timezone
+
 from clases.models import ContadorPreguntas, Clase, Exposicion
 from grupos.models import Grupo
 
@@ -16,6 +19,10 @@ class ContadorPreguntasForm(forms.ModelForm):
 
 
 class ClaseForm(forms.ModelForm):
+    fecha = forms.DateField(
+        input_formats=settings.DATE_INPUT_FORMATS,
+        widget=forms.widgets.DateInput(format=settings.DATE_INPUT_FORMATS[0]),
+        initial=timezone.now())
 
     class Meta:
         model = Clase
@@ -30,6 +37,10 @@ class ExposicionForm(forms.ModelForm):
 
 
 class StartExpoForm(forms.ModelForm):
+    start_expo = forms.DateTimeField(
+        input_formats=settings.DATETIME_INPUT_FORMATS,
+        widget=forms.widgets.DateTimeInput(format=settings.DATETIME_INPUT_FORMATS[0]),
+        initial=timezone.now())
 
     class Meta:
         model = Exposicion
@@ -37,6 +48,10 @@ class StartExpoForm(forms.ModelForm):
 
 
 class StartQuestionsForm(forms.ModelForm):
+    start_ques = forms.DateTimeField(
+        input_formats=settings.DATETIME_INPUT_FORMATS,
+        widget=forms.widgets.DateTimeInput(format=settings.DATETIME_INPUT_FORMATS[0]),
+        initial=timezone.now())
 
     class Meta:
         model = Exposicion
@@ -44,6 +59,10 @@ class StartQuestionsForm(forms.ModelForm):
 
 
 class FinishExpoForm(forms.ModelForm):
+    finish_expo = forms.DateTimeField(
+        input_formats=settings.DATETIME_INPUT_FORMATS,
+        widget=forms.widgets.DateTimeInput(format=settings.DATETIME_INPUT_FORMATS[0]),
+        initial=timezone.now())
 
     class Meta:
         model = Exposicion
