@@ -5,7 +5,7 @@
   <h1>Exposicion: {{ exposicion }}</h1>
 
   {% if exposicion.start_expo %}
-    <h3>Comienzo de la exposición: {{ exposicion.start_expo }}</h3>
+    <p>Comienzo de la exposición: {{ exposicion.start_expo }}</p>
   {% else %}
     <form method="POST" class="post-form">{% csrf_token %}
       {{ st_expo_form.as_p }}
@@ -14,7 +14,7 @@
   {% endif %}
 
   {% if exposicion.start_ques %}
-    <h3>Comienzo de las preguntas: {{ exposicion.start_ques }}</h3>
+    <p>Comienzo de las preguntas: {{ exposicion.start_ques }}</p>
   {% else %}
     <form method="POST" class="post-form">{% csrf_token %}
       {{ st_ques_form.as_p }}
@@ -23,7 +23,7 @@
   {% endif %}
 
   {% if exposicion.finish_expo %}
-    <h3>Fin de la exposición: {{ exposicion.finish_expo }}</h3>
+    <p>Fin de la exposición: {{ exposicion.finish_expo }}</p>
   {% else %}
     <form method="POST" class="post-form">{% csrf_token %}
       {{ fi_expo_form.as_p }}
