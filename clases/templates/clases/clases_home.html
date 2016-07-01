@@ -20,8 +20,22 @@
   </ul>
   {% endif %}
   <p> Agregar otra clase!: </p>
-  <form method="POST" class="post-form">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Cargar!</button>
-  </form>
+  <div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+          <form method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Cargar!</button>
+          </form>
+        </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+      $(function () {
+          $('#id_fecha').datetimepicker({
+              format: 'DD/MM/YYYY'
+          });
+      });
+  </script>
 {% endblock %}
