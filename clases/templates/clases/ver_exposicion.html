@@ -4,32 +4,36 @@
 {% block content %}
   <h1>Exposicion: {{ exposicion }}</h1>
 
-  {% if exposicion.start_expo %}
-    <p>Comienzo de la exposición: {{ exposicion.start_expo }}</p>
-  {% else %}
-    <form method="POST" class="post-form">{% csrf_token %}
-      {{ st_expo_form.as_p }}
-      <input type="submit" name="st_ex" class="save btn btn-default" value="Cargar!"></input>
-    </form>
-  {% endif %}
+  <div class="row">
+      <div class='col-sm-6'>
+          {% if exposicion.start_expo %}
+            <p>Comienzo de la exposición: {{ exposicion.start_expo }}</p>
+          {% else %}
+            <form method="POST" class="post-form">{% csrf_token %}
+              {{ st_expo_form.as_p }}
+              <input type="submit" name="st_ex" class="save btn btn-default" value="Cargar!"></input>
+            </form>
+          {% endif %}
 
-  {% if exposicion.start_ques %}
-    <p>Comienzo de las preguntas: {{ exposicion.start_ques }}</p>
-  {% else %}
-    <form method="POST" class="post-form">{% csrf_token %}
-      {{ st_ques_form.as_p }}
-      <input type="submit" name="st_qu" class="save btn btn-default" value="Cargar!"></input>
-    </form>
-  {% endif %}
+          {% if exposicion.start_ques %}
+            <p>Comienzo de las preguntas: {{ exposicion.start_ques }}</p>
+          {% else %}
+            <form method="POST" class="post-form">{% csrf_token %}
+              {{ st_ques_form.as_p }}
+              <input type="submit" name="st_qu" class="save btn btn-default" value="Cargar!"></input>
+            </form>
+          {% endif %}
 
-  {% if exposicion.finish_expo %}
-    <p>Fin de la exposición: {{ exposicion.finish_expo }}</p>
-  {% else %}
-    <form method="POST" class="post-form">{% csrf_token %}
-      {{ fi_expo_form.as_p }}
-      <input type="submit" name="fi_ex" class="save btn btn-default" value="Cargar!"></input>
-    </form>
-  {% endif %}
+          {% if exposicion.finish_expo %}
+            <p>Fin de la exposición: {{ exposicion.finish_expo }}</p>
+          {% else %}
+            <form method="POST" class="post-form">{% csrf_token %}
+              {{ fi_expo_form.as_p }}
+              <input type="submit" name="fi_ex" class="save btn btn-default" value="Cargar!"></input>
+            </form>
+          {% endif %}
+        </div>
+    </div>
 
   <h2>Preguntas realizadas en esta exposicion: </h2>
 
@@ -46,4 +50,13 @@
     {{ cont_preg_form.as_p }}
     <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
   </form>
+
+  <script type="text/javascript">
+      $(function () {
+          $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({
+              format: 'DD/MM/YYYY hh:mm:ss'
+          });
+      });
+  </script>
+
 {% endblock %}
