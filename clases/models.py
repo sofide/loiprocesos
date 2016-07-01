@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 class Clase(models.Model):
-    fecha = models.DateField(default=timezone.now)
+    fecha = models.DateField(default=timezone.now, unique=True)
     def __str__(self):
         return str(self.fecha.strftime(settings.DATE_INPUT_FORMATS[0]))
 
