@@ -136,6 +136,6 @@ ACCOUNT_ACTIVATION_DAYS = 7
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-DATETIME_INPUT_FORMATS = ('%d/%m/%Y %H:%M-%S',)
+DATETIME_INPUT_FORMATS = ('%d/%m/%Y %H:%M:%S',)
 
 DATE_INPUT_FORMATS = ('%d/%m/%Y',)
