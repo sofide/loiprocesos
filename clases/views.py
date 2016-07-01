@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
 from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm)
 from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
 
+from clases.graphics import graphic
 
 
 def clases_home(request):
@@ -15,10 +17,13 @@ def clases_home(request):
                 return redirect('clases.views.clases_home')
     else:
         form = ClaseForm()
+
+    script, div = graphic()
+
     return render(
         request,
         'clases/clases_home.html',
-        {'clases': clases, 'form': form}
+        {'clases': clases, 'form': form, 'script':script, 'div':div}
     )
 
 
@@ -53,6 +58,7 @@ def ver_exposicion(request, expo_pk):
     fi_expo_form = FinishExpoForm()
 
     if request.method == "POST":
+
         if 'pregunta' in request.POST:
             cont_preg_form = ContadorPreguntasForm(exposicion.grupo,
                                                    request.POST)
