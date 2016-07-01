@@ -6,7 +6,7 @@ from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
 
 
 def clases_home(request):
-    clases = Clase.objects.all()
+    clases = Clase.objects.all().order_by('-fecha')
     if request.method == "POST":
             form = ClaseForm(request.POST)
             if form.is_valid():
