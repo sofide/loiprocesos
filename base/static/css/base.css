@@ -4,7 +4,6 @@ font-family: verdana;
 }
 
 body {
-background-color: #c8d2d2;
 margin: 0;
 
 }
@@ -54,8 +53,10 @@ color: #2980B9;
 .lateral{
 margin: 0;
 background-color: #404040;
+
 float: left;
 width: 20%;
+height: 100%;
 color: white;
 padding: 10px;
 }
