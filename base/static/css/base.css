@@ -1,55 +1,84 @@
 /* General de toda la web */
 * {
-font-family: verdana;
+  font-family: verdana;
 }
 
 body {
-margin: 0;
+  margin: 0;
 
 }
 
 a {
-color: black;
+  color: black;
 }
 
 a:hover {
-color: #2980B9;
-text-decoration: none;
+  color: #2980B9;
+  text-decoration: none;
 }
 
+/* Page Header */
 .page-header {
-margin: 0;
-background-color: #2980B9;
-color: white;
-padding: 10px;
+  margin: 0;
+  position: fixed;
+  background-color: #2980B9;
+  color: white;
+  padding: 10px;
+  height: 150px;
+  width: 100%;
+  clear: both;
+  z-index: 10000;
 }
 
 .page-header a:link {
-color: white;
-text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 .page-header a:visited {
-color:white;
-text-decoration: none;
+  color:white;
+  text-decoration: none;
 }
 
 .seccion {
-margin: 0px;
-border-radius: 4px;
-display: inline-block;
-padding: 5px 0;
-width: 120px;
-background-color: #404040;
-color:white;
-text-align:center;
+  margin: 0px;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 5px 0;
+  width: 120px;
+  height: 30px;
+  background-color: #404040;
+  color:white;
+  text-align:center;
 }
 
 .seccion:hover {
-background-color: black;
-color: #2980B9;
+  background-color: black;
+  color: #2980B9;
 }
 
+.menu-button {
+  margin: 0px 15px;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 5px 0;
+  width: 30px;
+  height: 30px;
+  background-color: #404040;
+  color:white;
+  text-align:center;
+}
+
+/* Configs del cuerpo */
+
+.container-loi {
+  padding-top: 150px;
+}
+
+/* Retoques a la sidebar */
+
+
+/*! REEMPLAZADO POR SIMPLE-SIDEBAR
 .lateral{
 margin: 0;
 background-color: #404040;
@@ -75,3 +104,4 @@ padding: 1px 5px;
 background-color: black;
 color: #2980B9;
 }
+*/

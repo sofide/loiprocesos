@@ -10,6 +10,7 @@
     <link
     href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.css"
     rel="stylesheet" type="text/css">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/css/simple-sidebar.css' %}"/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}?{% now "U" %}"/>
 
 
@@ -22,25 +23,55 @@
   </head>
   <body>
     <div class="page-header">
-      <a href="http://loiprocesos.com/"><h1>LOI Procesos!</h1></a>
+      <a href="{% url 'home' %}"><h1>LOI Procesos!</h1></a>
       <p> Cátedra Procesos Industriales - Licenciatura en Organización Industrial - UTN Facultad Regional Rafaela </p>
+      <a href="#menu-toggle" class="menu-button" id="menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger" ></span>
+      </a>
       <div class="seccion"> Teoría </div>
       <a href= "{% url 'grupos_home' %}" class="seccion"> Grupos </a>
       <a href= "{% url 'clases_home' %}" class="seccion"> Clases </a>
     </div>
-    <div class="lateral">
-    	<div class="option"><p>Una accion posible</p></div>
-    	<div class="option"><p>Otra accion posible</p></div>
-    	<div class="option"><p>Otra más!!</p></div>
-    	<div class="option"><p>blabla</p></div>
-    	<div class="option"><p>blalñfjñlsdñflajsasdkflaskdjflñkasfas</p></div>
-    </div>
-    <div class="contenido">
-      <div class="container">
-        {% block content %}
-        {% endblock %}
+      <div id="wrapper">
+        <div class="container-loi">
+
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+            <div class="sidebar-loi">
+              <ul class="sidebar-nav">
+                  <li class="sidebar-brand">
+                      <a href="{% url 'home' %}">
+                          Loi Procesos
+                      </a>
+                  </li>
+                {% if side_bar %}
+                  {% for item in side_bar %}
+                  <li><a href= "{% url item.1 %}">item.0</a></li>
+                  {% endfor %}
+                {% endif %}
+            	  <li><a href= "{% url 'clases_home' %}"> Ver las Clases </a></li>
+                <li><a href= "{% url 'grupos_home' %}"> Grupos de trabajo </a></li>
+              </ul>
+            </div>
+          </div>
+
+
+          <div id="page-content-wrapper">
+            <div class="container-fluid">
+              {% block content %}
+              {% endblock %}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
+   <!-- Menu Toggle Script -->
+   <script>
+   $("#menu-toggle").click(function(e) {
+       e.preventDefault();
+       $("#wrapper").toggleClass("toggled");
+   });
+   </script>
 
   </body>
 </html>
