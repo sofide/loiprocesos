@@ -139,3 +139,12 @@ if DEBUG:
 DATETIME_INPUT_FORMATS = ('%d/%m/%Y %H:%M:%S',)
 
 DATE_INPUT_FORMATS = ('%d/%m/%Y',)
+
+
+from .local_settings import *
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'loiprocesos@gmail.com'
