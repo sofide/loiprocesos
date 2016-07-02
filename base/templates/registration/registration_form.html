@@ -1,4 +1,12 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<p>Registrate en Loiprocesos.com y solicitá autorización para acceder a todo el material y las funciones del sitio web</p>
+
 <form method="POST">{% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Registrarme!</button>
 </form>
+
+<p>¿Ya tenés una cuenta? </p><a href="/accounts/login">Logueate haciendo click aquí</a>
+{% endblock %}

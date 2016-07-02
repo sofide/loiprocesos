@@ -1,5 +1,9 @@
 Hola {{ user }}!
-Activá tu cuenta de  {{ site.name }}:
+
+
+Gracias por registrarte en  {{ site.name }}!!
+
+Estamos necesitando que actives tu cuenta, para eso hacé click en el siguiente link:
 
 http://{{ site.domain }}{% url 'registration_activate' activation_key %}
 
