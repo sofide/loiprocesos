@@ -40,6 +40,10 @@ a:hover {
   text-decoration: none;
 }
 
+.page-header a:hover {
+  background: black;
+}
+
 .seccion {
   margin: 0px;
   border-radius: 4px;
@@ -53,7 +57,7 @@ a:hover {
 }
 
 .seccion:hover {
-  background-color: black;
+  background-color: #black;
   color: #2980B9;
 }
 
@@ -69,13 +73,19 @@ a:hover {
   text-align:center;
 }
 
-/* Configs del cuerpo */
+.menu-button:hover {
+  background-color: black;
+  color: #2980B9;
+}
 
+/* Configs del cuerpo */
 .container-loi {
   padding-top: 150px;
+
 }
 
 /* Retoques a la sidebar */
+
 
 
 /*! REEMPLAZADO POR SIMPLE-SIDEBAR

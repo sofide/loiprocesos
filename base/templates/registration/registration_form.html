@@ -1,7 +1,9 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<p>Registrate en Loiprocesos.com y solicitá autorización para acceder a todo el material y las funciones del sitio web</p>
+<h3> Bienvenido a Loiprocesos.com</h3>
+
+<p>Registrate en Loiprocesos.com y solicitá autorización para acceder a todo el material y las funciones del sitio web.</p>
 
 <form method="POST">{% csrf_token %}
     {{ form.as_p }}

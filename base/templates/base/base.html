@@ -23,14 +23,30 @@
   </head>
   <body>
     <div class="page-header">
-      <a href="{% url 'home' %}"><h1>LOI Procesos!</h1></a>
-      <p> Cátedra Procesos Industriales - Licenciatura en Organización Industrial - UTN Facultad Regional Rafaela </p>
-      <a href="#menu-toggle" class="menu-button" id="menu-toggle">
-        <span class="glyphicon glyphicon-menu-hamburger" ></span>
-      </a>
-      <div class="seccion"> Teoría </div>
-      <a href= "{% url 'grupos_home' %}" class="seccion"> Grupos </a>
-      <a href= "{% url 'clases_home' %}" class="seccion"> Clases </a>
+      <div class = "row">
+        <div class="col-md-8">
+          <a href="{% url 'home' %}"><h1>LOI Procesos!</h1></a>
+          <p> Cátedra Procesos Industriales - Licenciatura en Organización Industrial - UTN Facultad Regional Rafaela </p>
+        </div>
+        <div class="col-md-4">
+          {% if user.is_authenticated %}
+            <h4>{{ user.username }}</h4>
+          {% else %}
+            <a href="/accounts/login" class="account-request">Log in</a>
+            <a href="/accounts/register" class="account-request">Registrarse</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="#menu-toggle" class="menu-button" id="menu-toggle">
+            <span class="glyphicon glyphicon-menu-hamburger" ></span>
+          </a>
+          <div class="seccion"> Teoría </div>
+          <a href= "{% url 'grupos_home' %}" class="seccion"> Grupos </a>
+          <a href= "{% url 'clases_home' %}" class="seccion"> Clases </a>
+        </div>
+      </div>
     </div>
       <div id="wrapper">
         <div class="container-loi">
