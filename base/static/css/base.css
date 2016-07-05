@@ -9,11 +9,11 @@ body {
 }
 
 a {
-  color: black;
+  color: #2980B9;
 }
 
 a:hover {
-  color: #2980B9;
+  color: #404040;
   text-decoration: none;
 }
 
@@ -30,52 +30,56 @@ a:hover {
   z-index: 10000;
 }
 
-.page-header a:link {
+a.ph-title {
   color: white;
   text-decoration: none;
 }
 
-.page-header a:visited {
+a.ph-title:visited {
   color:white;
   text-decoration: none;
 }
 
-.page-header a:hover {
-  background: black;
+a.ph-title:hover {
+  color: #404040;
 }
 
-.seccion {
+a.seccion {
   margin: 0px;
   border-radius: 4px;
   display: inline-block;
   padding: 5px 0;
   width: 120px;
   height: 30px;
-  background-color: #404040;
-  color:white;
+  background-color: white;
+  color:#2980B9;
+  font-weight: bold;
   text-align:center;
 }
 
-.seccion:hover {
-  background-color: #black;
-  color: #2980B9;
+a.seccion:hover {
+  background-color: #404040;
+  color: white;
+  font-weight: bold;
 }
 
-.menu-button {
+a.menu-button {
   margin: 0px 15px;
   border-radius: 4px;
   display: inline-block;
   padding: 5px 0;
   width: 30px;
   height: 30px;
-  background-color: #404040;
-  color:white;
+  background-color: white;
+  color:#2980B9;
+  font-weight: bold;
   text-align:center;
 }
 
-.menu-button:hover {
-  background-color: black;
-  color: #2980B9;
+a.menu-button:hover {
+  background-color: #404040;
+  color: white;
+  font-weight: bold;
 }
 
 /* Configs del cuerpo */
