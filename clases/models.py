@@ -42,7 +42,8 @@ class Pregunta(models.Model):
 
 class ContadorPreguntas(models.Model):
     exposicion = models.ForeignKey(Exposicion)
-    preguntador = models.ForeignKey('grupos.Grupo')
+    preguntador = models.ForeignKey('grupos.Grupo',
+                                    verbose_name="Grupo que pregunta")
     cantidad = models.IntegerField()
     primero = models.BooleanField(default=False)
     ultimo = models.BooleanField(default=False)
