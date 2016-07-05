@@ -2,3 +2,4 @@ django==1.9
 django-toolbelt
 django-registration
 bokeh
+pandas
