@@ -4,7 +4,7 @@ from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm)
 from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
 
-from clases.graphics import graphic
+from clases.graphics import tiempo_expo_graphic, graphic
 
 
 def clases_home(request):
@@ -52,6 +52,12 @@ def ver_exposicion(request, expo_pk):
     preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
                                          .order_by('preguntador__numero')
 
+    tiempos_graph = None
+    preguntas_graph = None
+
+    if exposicion.start_expo and exposicion.start_ques and exposicion.finish_expo:
+        tiempos_graph = tiempo_expo_graphic(exposicion)
+
     cont_preg_form = ContadorPreguntasForm(exposicion.grupo)
     st_expo_form = StartExpoForm()
     st_ques_form = StartQuestionsForm()
@@ -94,7 +100,8 @@ def ver_exposicion(request, expo_pk):
         'clases/ver_exposicion.html',
         {'exposicion': exposicion, 'preguntas': preguntas,
          'cont_preg_form': cont_preg_form, 'st_expo_form': st_expo_form,
-         'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form}
+         'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form,
+         'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph}
     )
 
 
