@@ -1,9 +1,31 @@
 from bokeh.plotting import figure
 from bokeh.embed import components
 from bokeh.resources import CDN
+from bokeh.charts import Bar, output_file, show, hplot
 
 from clases.models import Exposicion
 
+
+def tiempo_expo_graphic(exposicion):
+    t_expo = (exposicion.start_ques - exposicion.start_expo).seconds/60.
+    t_preg = (exposicion.finish_expo - exposicion.start_ques).seconds/60.
+    t_total = (exposicion.finish_expo - exposicion.start_expo).seconds/60.
+
+    data = {
+        'tags': ['T. exposicion', 'T. pregutnas'],
+        'expo': [str(exposicion), str(exposicion)],
+        'tiempos': [t_expo, t_preg],
+    }
+
+    # x-axis labels pulled from the interpreter column, stacking labels from sample column
+    bar = Bar(data, values='tiempos', label='expo', stack='tags',
+        palette=['#2980B9', '#404040'], title="Tiempos de exposicion",
+        plot_width=300, plot_height=500,
+
+        )
+
+    # table-like data results in reconfiguration of the chart with no data manipulation
+    return components(bar, CDN)
 
 def graphic():
     x = [0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
