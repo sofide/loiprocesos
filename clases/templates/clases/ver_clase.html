@@ -6,9 +6,11 @@
   <h2>Hay {{ exposiciones|length }} exposicion/es en esta clase </h2>
 
   {% if exposiciones %}
+    <ul>
     {% for exp in exposiciones %}
-    <a href="{% url 'ver_exposicion' exp.id %}"> {{ exp }} </a>
+    <li><a href="{% url 'ver_exposicion' exp.id %}"> {{ exp }} </a></li>
     {% endfor %}
+    </ul>
   {% endif %}
   <p> Agregar otra exposicion a esta clase!: </p>
   <form method="POST" class="post-form">{% csrf_token %}
