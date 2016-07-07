@@ -12,9 +12,11 @@
     {% endfor %}
     </ul>
   {% endif %}
-  <p> Agregar otra exposicion a esta clase!: </p>
-  <form method="POST" class="post-form">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Cargar!</button>
-  </form>
+  {% if perms.clases %}
+    <p> Agregar otra exposicion a esta clase!: </p>
+    <form method="POST" class="post-form">{% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="save btn btn-default">Cargar!</button>
+    </form>
+  {% endif %}
 {% endblock %}

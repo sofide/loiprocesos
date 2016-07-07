@@ -8,7 +8,7 @@
     <div class="col-sm-8">
       {% if exposicion.start_expo %}
         <p>Comienzo de la exposición: {{ exposicion.start_expo }}</p>
-      {% else %}
+      {% elif perms.clases %}
         <form method="POST" class="post-form">{% csrf_token %}
           {{ st_expo_form.as_p }}
           <input type="submit" name="st_ex" class="save btn btn-default" value="Cargar!"></input>
@@ -17,7 +17,7 @@
 
       {% if exposicion.start_ques %}
         <p>Comienzo de las preguntas: {{ exposicion.start_ques }}</p>
-      {% else %}
+      {% elif perms.clases %}
         <form method="POST" class="post-form">{% csrf_token %}
           {{ st_ques_form.as_p }}
           <input type="submit" name="st_qu" class="save btn btn-default" value="Cargar!"></input>
@@ -26,7 +26,7 @@
 
       {% if exposicion.finish_expo %}
         <p>Fin de la exposición: {{ exposicion.finish_expo }}</p>
-      {% else %}
+      {% elif perms.clases %}
         <form method="POST" class="post-form">{% csrf_token %}
           {{ fi_expo_form.as_p }}
           <input type="submit" name="fi_ex" class="save btn btn-default" value="Cargar!"></input>
@@ -48,22 +48,24 @@
         {% endfor %}
       </ul>
       {% else %}
-       <p>Todavía no hay preguntas registradas</p>
+       <p>Todavía no se registraron las cantidades de preguntas por grupos hechas en clases</p>
       {% endif %}
-      <h2> Agregar otra pregunta a esta clase: </h2>
+      {% if perms.clases %}
+        <h2> Agregar preguntas por grupo a esta clase: </h2>
 
-      <form method="POST" class="post-form">{% csrf_token %}
-        {{ cont_preg_form.as_p }}
-        <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
-      </form>
+        <form method="POST" class="post-form">{% csrf_token %}
+          {{ cont_preg_form.as_p }}
+          <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
+        </form>
 
-      <script type="text/javascript">
-          $(function () {
-              $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({
-                  format: 'DD/MM/YYYY hh:mm:ss'
-              });
-          });
-      </script>
+        <script type="text/javascript">
+            $(function () {
+                $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({
+                    format: 'DD/MM/YYYY hh:mm:ss'
+                });
+            });
+        </script>
+      {% endif %}
     </div>
     <div class="col-sm-4">
       {% if tiempos_graph %}

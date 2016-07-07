@@ -19,24 +19,26 @@
     {% endfor %}
   </ul>
   {% endif %}
-  <p> Agregar otra clase!: </p>
-    <div class="row">
-        <div class='col-sm-6'>
-          <form method="POST" class="post-form">{% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Cargar!</button>
-          </form>
-        </div>
-    </div>
+  {% if perms.clases %}
+    <p> Agregar otra clase!: </p>
+      <div class="row">
+          <div class='col-sm-6'>
+            <form method="POST" class="post-form">{% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="save btn btn-default">Cargar!</button>
+            </form>
+          </div>
+      </div>
 
-  <script type="text/javascript">
-      $(function () {
-          $('#id_fecha').datetimepicker({
-              format: 'DD/MM/YYYY'
-          });
-      });
-  </script>
-  {{ div|safe }}
+    <script type="text/javascript">
+        $(function () {
+            $('#id_fecha').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+        });
+    </script>
+    {{ div|safe }}
 
-  {{ script|safe }}
+    {{ script|safe }}
+  {% endif %}
 {% endblock %}
