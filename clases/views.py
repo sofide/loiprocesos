@@ -29,7 +29,7 @@ def clases_home(request):
 
 def ver_clase(request, pk):
     clase = get_object_or_404(Clase, pk=pk)
-    exposiciones = Exposicion.objects.filter(clase = clase)\
+    exposiciones = Exposicion.objects.filter(clase=clase)\
                                      .order_by('grupo__numero')
     if request.method == "POST":
             form = ExposicionForm(request.POST)
