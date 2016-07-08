@@ -136,9 +136,6 @@ DATETIME_INPUT_FORMATS = ('%d/%m/%Y %H:%M:%S',)
 
 DATE_INPUT_FORMATS = ('%d/%m/%Y',)
 
-
-from .local_settings import *
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -147,6 +144,10 @@ EMAIL_HOST_USER = 'loiprocesos@gmail.com'
 
 LOGIN_URL = '/accounts/login'
 
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 
 if IN_HEROKU:
@@ -156,3 +157,4 @@ if IN_HEROKU:
     ALLOWED_HOSTS = ['*']
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     DEGUG = False
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
