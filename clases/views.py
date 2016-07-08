@@ -4,7 +4,7 @@ from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm)
 from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
 
-from clases.graphics import tiempo_expo_graphic, graphic
+from clases.graphics import tiempo_expo_graphic, q_pregs_graphic, graphic
 
 
 def clases_home(request):
@@ -57,6 +57,9 @@ def ver_exposicion(request, expo_pk):
 
     if exposicion.start_expo and exposicion.start_ques and exposicion.finish_expo:
         tiempos_graph = tiempo_expo_graphic(exposicion)
+
+    if ContadorPreguntas.objects.filter(exposicion=exposicion):
+        preguntas_graph = q_pregs_graphic(exposicion)
 
     cont_preg_form = ContadorPreguntasForm(exposicion.grupo)
     st_expo_form = StartExpoForm()
