@@ -23,7 +23,7 @@ class Material(models.Model):
     unidad = models.ForeignKey(Unidad)
     nombre = models.CharField(max_length=200)
     link = models.URLField()
-    autor = models.CharField(max_length=200)
+    autor = models.CharField(max_length=200, null=True)
     vigente = models.BooleanField(default=True)
 
 

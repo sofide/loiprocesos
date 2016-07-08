@@ -1,11 +1,31 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <h1>Teoría de Procesos industriales</h1>
-  <ul>
-    {% for unidad in unidades %}
-      <li><a href="{% url 'ver_unidad' unidad.id %}"> {{ unidad }} </a></li>
-    {% endfor %}
-  </ul>
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>Teoría de Procesos industriales</h1>
+    </div>
+    <div class="col-sm-4">
+      {% if perms.teoria and unidad_form %}
+        {% if unidad_form %}
+          <p>Agregar una nueva unidad de Teoría:</p>
+          <form method="POST" class="extended-form">{% csrf_token %}
+            {{ unidad_form.as_p }}
+            <input type="submit" name="st_ex" class="save btn btn-default" value="Cargar!"></input>
+          </form>
+        {% else %}
+          <a class="btn btn-primary btn-xs" href="{% url 'add_unidad' %}">Agregar unidad</a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <ul>
+      <h3>Unidades:</h3>
+      {% for unidad in unidades %}
+        <li><a href="{% url 'ver_unidad' unidad.id %}"> {{ unidad }} </a></li>
+      {% endfor %}
+    </ul>
+  </div>
 
 {% endblock %}
