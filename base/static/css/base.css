@@ -94,6 +94,13 @@ a.menu-button:hover {
 
 }
 
+/* Configs de bokeh */
+.bk-root {
+  height:auto;
+}
+
+
+
 /* Retoques a la sidebar */
 
 
