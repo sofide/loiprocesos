@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^pruebas/$', pruebas, name='pruebas'),
     url(r'^clases/', include('clases.urls')),
     url(r'^grupos/', include('grupos.urls')),
+    url(r'^teoria/', include('teoria.urls')),
 ]
