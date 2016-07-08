@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'clases',
     'grupos',
     'base',
+    'teoria',
 ]
 
 MIDDLEWARE_CLASSES = [
