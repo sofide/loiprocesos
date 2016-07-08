@@ -30,7 +30,8 @@ def clases_home(request):
 def ver_clase(request, pk):
     clase = get_object_or_404(Clase, pk=pk)
     exposiciones = Exposicion.objects.filter(clase=clase)\
-                                     .order_by('grupo__numero')
+                                     .order_by('grupo__numero')\
+                                     .select_related('grupo')
     if request.method == "POST":
             form = ExposicionForm(request.POST)
             if form.is_valid():
@@ -50,7 +51,8 @@ def ver_clase(request, pk):
 def ver_exposicion(request, expo_pk):
     exposicion = get_object_or_404(Exposicion, pk=expo_pk)
     preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
-                                         .order_by('preguntador__numero')
+                                         .order_by('preguntador__numero')\
+                                         .select_related('grupo')
 
     tiempos_graph = None
     preguntas_graph = None
