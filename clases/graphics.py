@@ -3,7 +3,7 @@ from bokeh.embed import components
 from bokeh.resources import CDN
 from bokeh.charts import Bar, output_file, show, hplot
 
-from clases.models import Exposicion
+from clases.models import Exposicion, ContadorPreguntas
 
 
 def tiempo_expo_graphic(exposicion):
@@ -13,19 +13,34 @@ def tiempo_expo_graphic(exposicion):
 
     data = {
         'tags': ['T. exposicion', 'T. pregutnas'],
-        'expo': [str(exposicion), str(exposicion)],
+        'expo': ['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa),
+                 'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa)],
         'tiempos': [t_expo, t_preg],
     }
-
-    # x-axis labels pulled from the interpreter column, stacking labels from sample column
     bar = Bar(data, values='tiempos', label='expo', stack='tags',
         palette=['#2980B9', '#404040'], title="Tiempos de exposicion",
-        plot_width=300, plot_height=500,
-
+        plot_width=300, plot_height=500, legend="bottom_center"
         )
-
-    # table-like data results in reconfiguration of the chart with no data manipulation
     return components(bar, CDN)
+
+
+def q_pregs_graphic(exposicion):
+    pregs = ContadorPreguntas.objects.filter(exposicion=exposicion)\
+                                     .order_by('preguntador__numero')
+
+    data = {
+        'grupos': ['G{}'.format(p.preguntador.numero) for p in pregs],
+        'cantidad': [p.cantidad for p in pregs]
+    }
+
+    bar = Bar(data, label="grupos", values="cantidad",
+        plot_width=300, plot_height=500, legend=False,
+        palette=['#2980B9',],
+        title="Cantidad de preguntas"
+    )
+
+    return components(bar, CDN)
+
 
 def graphic():
     x = [0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
