@@ -1,8 +1,55 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <h1>{{ grupo }}</h1>
-  <p> Proximamente vamos a mostrar cosas interesantes de este grupo </p>
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>{{ grupo }}</h1>
+      {% if editar_form %}
+        <form method="POST" class="extended-form">{% csrf_token %}
+          {{ editar_form.as_p }}
+          <input type="submit" class="save btn btn-default" value="Guardar cambios"></input>
+        </form>
+
+      {% else %}
+        {% if pertenece %}
+          <a class="btn btn-primary btn-xs" href="{% url 'edit_grupo' grupo.pk %}">Editar descripcion del grupo</a>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="col-sm-4">
+      {% if perms.grupos.can_edit_pertenencia %}
+        {% if pertenencia_form %}
+          <p>Agregar usuario a este grupo</p>
+          <form method="POST">{% csrf_token %}
+            {{ pertenencia_form.as_p }}
+            <input type="submit" class="save btn btn-default" value="Cargar!"></input>
+          </form>
+        {% endif %}
+
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    {% if grupo.descripcion %}
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          {{ grupo.descripcion }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+
+  {% if user.is_authenticated %}
+    {% if grupo.id_carpeta_drive %}
+    <h2> Trabajos prácticos en curso: </h2>
+    <iframe src="https://drive.google.com/embeddedfolderview?id={{ grupo.id_carpeta_drive }}"
+            style="width:100%; height:600px; border:0;"></iframe>
+    {% endif %}
+  {% else %}
+    <p> Para ver los trabajos prácticos de este grupo tenés que estar logueado</p>
+  {% endif %}
+
 
 
 {% endblock %}
