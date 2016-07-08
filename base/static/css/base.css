@@ -23,6 +23,12 @@ span {
   color: #2980B9;
 }
 
+/* Formularios */
+.extended-form textarea {
+  width: 100%;
+}
+
+
 /* Page Header */
 .page-header {
   margin: 0;
