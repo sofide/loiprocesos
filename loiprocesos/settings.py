@@ -147,6 +147,8 @@ EMAIL_HOST_USER = 'loiprocesos@gmail.com'
 
 LOGIN_URL = '/accounts/login'
 
+LOGIN_REDIRECT_URL = '/'
+
 if IN_HEROKU:
     EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 else:
