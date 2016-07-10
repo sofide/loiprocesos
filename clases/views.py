@@ -52,7 +52,7 @@ def ver_exposicion(request, expo_pk):
     exposicion = get_object_or_404(Exposicion, pk=expo_pk)
     preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
                                          .order_by('preguntador__numero')\
-                                         .select_related('grupo')
+                                         .select_related('preguntador')
 
     tiempos_graph = None
     preguntas_graph = None
