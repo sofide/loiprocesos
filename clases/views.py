@@ -32,6 +32,14 @@ def ver_clase(request, pk):
     exposiciones = Exposicion.objects.filter(clase=clase)\
                                      .order_by('grupo__numero')\
                                      .select_related('grupo')
+
+    tiempos_chart = None
+    expo_chart = [expo for expo in exposiciones
+                       if expo.start_expo and expo.start_ques and expo.finish_expo]
+
+    if expo_chart:
+        tiempos_chart = tiempo_expo_graphic(expo_chart)
+
     if request.method == "POST":
             form = ExposicionForm(request.POST)
             if form.is_valid():
@@ -45,7 +53,9 @@ def ver_clase(request, pk):
     return render(
         request,
         'clases/ver_clase.html',
-        {'clase': clase, 'exposiciones': exposiciones, 'form': form}
+        {'clase': clase, 'exposiciones': exposiciones, 'form': form,
+         'tiempos_chart': tiempos_chart,
+         }
     )
 
 def ver_exposicion(request, expo_pk):

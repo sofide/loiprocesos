@@ -19,4 +19,9 @@
       <button type="submit" class="save btn btn-default">Cargar!</button>
     </form>
   {% endif %}
+  {% if tiempos_chart %}
+    {{tiempos_chart.0|safe}}
+    {{tiempos_chart.1|safe}}
+  {% endif %}
+
 {% endblock %}
