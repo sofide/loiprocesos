@@ -118,8 +118,3 @@ def ver_exposicion(request, expo_pk):
          'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form,
          'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph}
     )
-
-
-def clases_add(request):
-    form = ContadorPreguntasForm()
-    return render(request, 'clases/clases_add.html', {'form': form})
