@@ -22,10 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'v29rnm0n7r#09i@+)d@#21+fl2=9qx1hd)nc)y1$v(qf4+1sqf'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 IN_HEROKU = os.environ.get('HEROKU', False)
+# SECURITY WARNING: don't run with debug turned on in production!
+if IN_HEROKU:
+    DEBUG = False
+else:
+    DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -144,10 +147,13 @@ EMAIL_HOST_USER = 'loiprocesos@gmail.com'
 
 LOGIN_URL = '/accounts/login'
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+if IN_HEROKU:
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+else:
+    try:
+        from .local_settings import *
+    except ImportError:
+        pass
 
 
 if IN_HEROKU:
@@ -156,5 +162,3 @@ if IN_HEROKU:
     DATABASES['default'] = dj_database_url.config()
     ALLOWED_HOSTS = ['*']
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    DEGUG = False
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
