@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 
 from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm)
@@ -110,11 +111,18 @@ def ver_exposicion(request, expo_pk):
                 exposicion.save()
                 return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
+    side_bar = [
+        ["Ver más expos del {}".format(exposicion.clase),
+            reverse('ver_clase', args=[exposicion.clase.id])],
+    ]
+
     return render(
         request,
         'clases/ver_exposicion.html',
         {'exposicion': exposicion, 'preguntas': preguntas,
          'cont_preg_form': cont_preg_form, 'st_expo_form': st_expo_form,
          'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form,
-         'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph}
+         'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph,
+         'side_bar': side_bar,
+         }
     )

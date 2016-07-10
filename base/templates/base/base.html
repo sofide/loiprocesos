@@ -68,7 +68,7 @@
                   </li>
                 {% if side_bar %}
                   {% for item in side_bar %}
-                  <li><a href= "{% url item.1 %}">item.0</a></li>
+                  <li><a href= "{{ item.1 }}">{{ item.0 }}</a></li>
                   {% endfor %}
                 {% endif %}
             	  <li><a href= "{% url 'clases_home' %}"> Ver las Clases </a></li>
