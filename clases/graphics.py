@@ -6,16 +6,22 @@ from bokeh.charts import Bar, output_file, show, hplot
 from clases.models import Exposicion, ContadorPreguntas
 
 
-def tiempo_expo_graphic(exposicion):
-    t_expo = (exposicion.start_ques - exposicion.start_expo).seconds/60.
-    t_preg = (exposicion.finish_expo - exposicion.start_ques).seconds/60.
-    t_total = (exposicion.finish_expo - exposicion.start_expo).seconds/60.
+def tiempo_expo_graphic(exposiciones):
+    expo = []
+    tiempos = []
+    for exposicion in exposiciones:
+        t_expo = (exposicion.start_ques - exposicion.start_expo).seconds/60.
+        t_preg = (exposicion.finish_expo - exposicion.start_ques).seconds/60.
+
+        expo.extend(['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa),
+                     'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa)])
+        tiempos.extend([t_expo, t_preg])
+
 
     data = {
-        'tags': ['T. exposicion', 'T. pregutnas'],
-        'expo': ['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa),
-                 'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa)],
-        'tiempos': [t_expo, t_preg],
+        'tags': [t for t in ('T. exposicion', 'T. pregutnas')*len(exposiciones)],
+        'expo': expo,
+        'tiempos': tiempos,
     }
     bar = Bar(data, values='tiempos', label='expo', stack='tags',
         palette=['#2980B9', '#404040'], title="Tiempos de exposicion",

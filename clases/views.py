@@ -58,7 +58,7 @@ def ver_exposicion(request, expo_pk):
     preguntas_graph = None
 
     if exposicion.start_expo and exposicion.start_ques and exposicion.finish_expo:
-        tiempos_graph = tiempo_expo_graphic(exposicion)
+        tiempos_graph = tiempo_expo_graphic([exposicion])
 
     if ContadorPreguntas.objects.filter(exposicion=exposicion):
         preguntas_graph = q_pregs_graphic(exposicion)
