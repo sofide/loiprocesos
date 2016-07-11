@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.utils import timezone
 
-from clases.models import ContadorPreguntas, Clase, Exposicion
+from clases.models import ContadorPreguntas, Clase, Exposicion, Pregunta
 from grupos.models import Grupo
 
 class ContadorPreguntasForm(forms.ModelForm):
@@ -67,3 +67,9 @@ class FinishExpoForm(forms.ModelForm):
     class Meta:
         model = Exposicion
         fields = ('finish_expo',)
+
+
+class AddPreguntasForm(forms.ModelForm):
+    class Meta:
+        model = Pregunta
+        fields = ('exposicion', 'pregunta')

@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  {{ warn }}
+  <form method="POST" class="post-form">{% csrf_token %}
+    {{ preguntas_form.as_p }}
+    <button type="submit" class="save btn btn-default">Cargar!</button>
+  </form>
+
+{% endblock %}

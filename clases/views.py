@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
-                          StartExpoForm, StartQuestionsForm, FinishExpoForm)
+                          StartExpoForm, StartQuestionsForm, FinishExpoForm,
+                          AddPreguntasForm)
 from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
 
 from clases.graphics import tiempo_expo_graphic, q_pregs_graphic, graphic
+
+from grupos.models import Pertenencia
 
 
 def clases_home(request):
@@ -111,9 +114,17 @@ def ver_exposicion(request, expo_pk):
                 exposicion.save()
                 return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
+    grupo = request.user.grupos.order_by('-año').first()
+
+    if grupo:
+        grupo_side_bar = ["Ver mi grupo", reverse('ver_grupo', args=[grupo.id])]
+    else:
+        grupo_side_bar = ["No está registrado en ningún grupo", reverse('grupos_home')]
+
     side_bar = [
         ["Ver más expos del {}".format(exposicion.clase),
             reverse('ver_clase', args=[exposicion.clase.id])],
+        grupo_side_bar
     ]
 
     return render(
@@ -124,5 +135,33 @@ def ver_exposicion(request, expo_pk):
          'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form,
          'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph,
          'side_bar': side_bar,
+         }
+    )
+
+def preguntas(request):
+    grupo = request.user.grupos.order_by('-año').first()
+
+    if grupo:
+        warn = "Cargar pregunta realizada por {}".format(grupo)
+    else:
+        warn = "No estás registrado en ningún grupo. Se cargará la pregunta anónimamente"
+
+
+    if request.method == "POST":
+            form = AddPreguntasForm(request.POST)
+            if form.is_valid():
+                pregunta = form.save(commit=False)
+                if grupo:
+                    pregunta.grupo = grupo
+                pregunta.save()
+                return redirect('preguntas')
+    else:
+        form = AddPreguntasForm()
+
+    return render(
+        request,
+        'clases/preguntas.html',
+        {'preguntas_form':form,
+         'warn': warn,
          }
     )
