@@ -9,7 +9,7 @@
 
   {% if trabajos %}
     {% for trabajo in trabajos %}
-      <h3> {{ trabajo.nombre }} </h3>
+      <h3> {{ trabajo }} </h3>
       {% if perms.clases %}
         <a class="btn btn-primary btn-xs" href="{% url 'edit_tp' trabajo.id %}">Editar</a>
       {% endif %}

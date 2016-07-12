@@ -79,7 +79,10 @@ class EditTPForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(EditTPForm, self).__init__(*args,**kwargs)
         self.fields['descripcion'].widget = forms.HiddenInput()
+        self.fields['descripcion'].label = "Decripción"
+        self.fields['numero'].label = "Número"
+
 
     class Meta:
         model = TP
-        fields = ('nombre', 'descripcion')
+        fields = ('numero', 'nombre', 'descripcion')

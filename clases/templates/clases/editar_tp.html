@@ -3,6 +3,7 @@
 {% block content %}
 
   {% if perms.clases %}
+    <h2> Editar Trabajo Práctico </h2>
     <form method="POST" class="extended-form">{% csrf_token %}
       {{ form.as_p }}
       <trix-editor input="id_descripcion"></trix-editor>

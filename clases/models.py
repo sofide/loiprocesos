@@ -13,14 +13,18 @@ class Clase(models.Model):
 
 
 class TP(models.Model):
+    numero = models.IntegerField(null=True, blank=True, default=None)
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
 
     def __str__(self):
-        return self.nombre
+        if self.numero:
+            return "TP {} - {}".format(self.numero, self.nombre)
+        else:
+            return self.nombre
 
     class Meta:
-        ordering = ['nombre',]
+        ordering = ['numero',]
 
 
 class Exposicion(models.Model):
