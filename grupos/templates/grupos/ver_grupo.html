@@ -7,6 +7,7 @@
       {% if editar_form %}
         <form method="POST" class="extended-form">{% csrf_token %}
           {{ editar_form.as_p }}
+          <trix-editor input="id_descripcion"></trix-editor>
           <input type="submit" class="save btn btn-default" value="Guardar cambios"></input>
         </form>
 
@@ -33,7 +34,7 @@
     {% if grupo.descripcion %}
       <div class="panel panel-primary">
         <div class="panel-body">
-          {{ grupo.descripcion }}
+          {{ grupo.descripcion | safe }}
         </div>
       </div>
     {% endif %}

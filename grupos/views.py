@@ -15,11 +15,11 @@ def ver_grupo(request, grupo_pk):
     grupo = get_object_or_404(Grupo, pk=grupo_pk)
 
     if request.method == "POST":
-            form = PertenenciaForm(request.POST)
+            form = PertenenciaForm(request.POST,)
             if form.is_valid():
-                descripcion = form.save(commit=False)
-                descripcion.grupo = grupo
-                descripcion.save()
+                pertenencia = form.save(commit=False)
+                pertenencia.grupo = grupo
+                pertenencia.save()
                 return redirect('grupos.views.ver_grupo', grupo_pk=grupo_pk)
     else:
         form = PertenenciaForm()
@@ -42,13 +42,13 @@ def edit_grupo(request, grupo_pk):
     if request.user in [pert.usuario for pert in Pertenencia.objects\
                                                             .filter(grupo=grupo)]:
         if request.method == "POST":
-                form = DescripcionGrupoForm(request.POST)
+                form = DescripcionGrupoForm(request.POST, instance=grupo)
                 if form.is_valid():
                     grupo.descripcion = form.cleaned_data["descripcion"]
                     grupo.save()
                     return redirect('grupos.views.ver_grupo', grupo_pk=grupo_pk)
         else:
-            form = DescripcionGrupoForm()
+            form = DescripcionGrupoForm(instance=grupo)
     else:
         return redirect('grupos.views.ver_grupo', grupo_pk=grupo_pk)
 
