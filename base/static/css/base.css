@@ -75,6 +75,16 @@ a#ph-link:hover {
   color: #404040;
 }
 
+a#ph-grupo {
+  color: white;
+  font-size: 15px;
+  display: block
+}
+
+a#ph-grupo:hover {
+  color: #404040;
+}
+
 a.seccion {
   margin: 0px;
   border-radius: 4px;
