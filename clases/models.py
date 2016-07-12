@@ -8,6 +8,9 @@ class Clase(models.Model):
     def __str__(self):
         return str(self.fecha.strftime(settings.DATE_INPUT_FORMATS[0]))
 
+    class Meta:
+        ordering = ['-fecha']
+
 
 class TP(models.Model):
     nombre = models.CharField(max_length=200)
@@ -15,6 +18,9 @@ class TP(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    class Meta:
+        ordering = ['nombre',]
 
 
 class Exposicion(models.Model):
@@ -24,7 +30,6 @@ class Exposicion(models.Model):
     start_expo = models.DateTimeField(null=True, default=None)
     start_ques = models.DateTimeField(null=True, default=None)
     finish_expo = models.DateTimeField(null=True, default=None)
-
 
     class Meta:
         verbose_name_plural = "Exposiciones"

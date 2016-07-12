@@ -14,6 +14,9 @@ class Grupo(models.Model):
         related_name='grupos'
     )
 
+    class Meta:
+        ordering = ['-año', 'numero']
+
     def __str__(self):
         return '{} - G{} - {} - {}'.format(str(self.año), self.numero, self.empresa, self.producto)
 
