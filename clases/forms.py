@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.utils import timezone
 
-from clases.models import ContadorPreguntas, Clase, Exposicion, Pregunta
+from clases.models import ContadorPreguntas, Clase, Exposicion, Pregunta, TP
 from grupos.models import Grupo
 
 class ContadorPreguntasForm(forms.ModelForm):
@@ -73,3 +73,13 @@ class AddPreguntasForm(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = ('exposicion', 'pregunta')
+
+
+class EditTPForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super(EditTPForm, self).__init__(*args,**kwargs)
+        self.fields['descripcion'].widget = forms.HiddenInput()
+
+    class Meta:
+        model = TP
+        fields = ('nombre', 'descripcion')

@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h1> Trabajos prácticos de Procesos Industriales</h1>
+
+  {% if perms.clases %}
+    <a class="btn btn-primary btn-xs" href="{% url 'edit_tp' %}">Agregar Trabajo práctico</a>
+  {% endif %}
+
+  {% if trabajos %}
+    {% for trabajo in trabajos %}
+      <h3> {{ trabajo.nombre }} </h3>
+      {% if perms.clases %}
+        <a class="btn btn-primary btn-xs" href="{% url 'edit_tp' trabajo.id %}">Editar</a>
+      {% endif %}
+      <p> {{ trabajo.descripcion | safe }} </p>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}

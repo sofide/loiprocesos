@@ -3,8 +3,8 @@ from django.core.urlresolvers import reverse
 
 from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm,
-                          AddPreguntasForm)
-from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas
+                          AddPreguntasForm, EditTPForm)
+from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas, TP
 
 from clases.graphics import tiempo_expo_graphic, q_pregs_graphic, graphic
 
@@ -164,4 +164,33 @@ def preguntas(request):
         {'preguntas_form':form,
          'warn': warn,
          }
+    )
+
+def trabajos_practicos(request):
+    trabajos = TP.objects.all()
+    return render(
+        request,
+        'clases/trabajos_practicos.html',
+        {'trabajos':trabajos,}
+        )
+
+def edit_tp(request, tp_pk=None):
+    if tp_pk:
+        tp = get_object_or_404(TP, pk=tp_pk)
+    else:
+        tp = None
+
+    if request.method == "POST":
+            form = EditTPForm(request.POST, instance=tp)
+            if form.is_valid():
+                new_tp = form.save(commit=False)
+                new_tp.save()
+                return redirect('trabajos_practicos')
+    else:
+        form = EditTPForm(instance=tp)
+
+    return render(
+        request,
+        'clases/editar_tp.html',
+        {'form': form}
     )
