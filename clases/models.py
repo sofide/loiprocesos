@@ -49,6 +49,9 @@ class Pregunta(models.Model):
     pregunta = models.TextField()
     mejor = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.pregunta
+
 
 class ContadorPreguntas(models.Model):
     exposicion = models.ForeignKey(Exposicion)
