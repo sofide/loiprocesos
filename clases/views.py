@@ -134,19 +134,23 @@ def preguntas(request):
     grupo = request.user.grupos.order_by('-año').first()
 
     if grupo:
-        warn = "Cargar pregunta realizada por {}".format(grupo)
+        warn = "Estás registrado en el grupo {}. Las preguntas que cargues se registrarán a nombre de ese grupo.".format(grupo)
     else:
         warn = "No estás registrado en ningún grupo. Se cargará la pregunta anónimamente"
 
 
     if request.method == "POST":
-            form = AddPreguntasForm(request.POST)
-            if form.is_valid():
-                pregunta = form.save(commit=False)
-                if grupo:
-                    pregunta.grupo = grupo
-                pregunta.save()
-                return redirect('preguntas')
+        form = AddPreguntasForm(request.POST)
+        if form.is_valid():
+            pregunta = form.save(commit=False)
+            if grupo:
+                pregunta.grupo = grupo
+            pregunta.save()
+            if "add" in request.POST:
+                initial = pregunta.exposicion.id
+            else:
+                initial = None
+            form = AddPreguntasForm(initial={'exposicion':initial})
     else:
         form = AddPreguntasForm()
 

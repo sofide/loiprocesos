@@ -73,6 +73,9 @@ class AddPreguntasForm(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = ('exposicion', 'pregunta')
+        widgets = {
+          'pregunta': forms.Textarea(attrs={'rows':3}),
+        }
 
 
 class EditTPForm(forms.ModelForm):
@@ -81,7 +84,6 @@ class EditTPForm(forms.ModelForm):
         self.fields['descripcion'].widget = forms.HiddenInput()
         self.fields['descripcion'].label = "Decripción"
         self.fields['numero'].label = "Número"
-
 
     class Meta:
         model = TP

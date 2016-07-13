@@ -1,10 +1,16 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  {{ warn }}
-  <form method="POST" class="post-form">{% csrf_token %}
+  <div class="panel panel-primary">
+    <div class="panel-body">
+      {{ warn }}
+    </div>
+  </div>
+  <form method="POST" class="extended-form">{% csrf_token %}
     {{ preguntas_form.as_p }}
-    <button type="submit" class="save btn btn-default">Cargar!</button>
+    <input type="submit" name="save" class="save btn btn-default" value="Cargar"></input>
+    <input type="submit" name="add" class="save btn btn-default" value="Cargar y agregar otra"></input>
+
   </form>
 
 {% endblock %}
