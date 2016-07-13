@@ -91,28 +91,24 @@ def ver_exposicion(request, expo_pk):
                 pregunta = cont_preg_form.save(commit=False)
                 pregunta.exposicion = exposicion
                 pregunta.save()
-                return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
         elif 'st_ex' in request.POST:
             st_expo_form = StartExpoForm(request.POST)
             if st_expo_form.is_valid():
                 exposicion.start_expo = st_expo_form.cleaned_data["start_expo"]
                 exposicion.save()
-                return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
         elif 'st_qu' in request.POST:
             st_ques_form = StartQuestionsForm(request.POST)
             if st_ques_form.is_valid():
                 exposicion.start_ques = st_ques_form.cleaned_data["start_ques"]
                 exposicion.save()
-                return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
         elif 'fi_ex' in request.POST:
             fi_expo_form = FinishExpoForm(request.POST)
             if fi_expo_form.is_valid():
                 exposicion.finish_expo = fi_expo_form.cleaned_data["finish_expo"]
                 exposicion.save()
-                return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
     side_bar = [
         ["Ver más expos del {}".format(exposicion.clase),
