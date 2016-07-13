@@ -114,17 +114,9 @@ def ver_exposicion(request, expo_pk):
                 exposicion.save()
                 return redirect('clases.views.ver_exposicion', expo_pk=expo_pk)
 
-    grupo = request.user.grupos.order_by('-año').first()
-
-    if grupo:
-        grupo_side_bar = ["Ver mi grupo", reverse('ver_grupo', args=[grupo.id])]
-    else:
-        grupo_side_bar = ["No está registrado en ningún grupo", reverse('grupos_home')]
-
     side_bar = [
         ["Ver más expos del {}".format(exposicion.clase),
             reverse('ver_clase', args=[exposicion.clase.id])],
-        grupo_side_bar
     ]
 
     return render(
