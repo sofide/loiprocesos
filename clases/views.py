@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse
 from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm,
                           AddPreguntasForm, EditTPForm)
-from clases.models import Clase, Exposicion, Pregunta, ContadorPreguntas, TP
+from clases.models import (Clase, Exposicion, Pregunta, ContadorPreguntas, TP,
+                           Pregunta)
 
 from clases.graphics import tiempo_expo_graphic, q_pregs_graphic, graphic
 
@@ -64,9 +65,12 @@ def ver_clase(request, pk):
 
 def ver_exposicion(request, expo_pk):
     exposicion = get_object_or_404(Exposicion, pk=expo_pk)
-    preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
-                                         .order_by('preguntador__numero')\
-                                         .select_related('preguntador')
+    q_preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
+                                           .order_by('preguntador__numero')\
+                                           .select_related('preguntador')
+    preguntas = Pregunta.objects.filter(exposicion=exposicion)\
+                                .oreder_by('grupo')
+                                .select_related('grupo')
 
     tiempos_graph = None
     preguntas_graph = None
@@ -118,7 +122,7 @@ def ver_exposicion(request, expo_pk):
     return render(
         request,
         'clases/ver_exposicion.html',
-        {'exposicion': exposicion, 'preguntas': preguntas,
+        {'exposicion': exposicion, 'q_preguntas': q_preguntas,
          'cont_preg_form': cont_preg_form, 'st_expo_form': st_expo_form,
          'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form,
          'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph,

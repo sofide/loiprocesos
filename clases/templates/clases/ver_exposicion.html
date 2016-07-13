@@ -35,8 +35,8 @@
 
       <h2>Preguntas realizadas en esta exposicion: </h2>
       <ul>
-      {% if preguntas %}
-        {% for preg in preguntas %}
+      {% if q_preguntas %}
+        {% for preg in q_preguntas %}
         <li>
           {{ preg.preguntador }} realizó {{ preg.cantidad }} pregunta/s
           {% if preg.primero %}
