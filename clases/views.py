@@ -68,9 +68,13 @@ def ver_exposicion(request, expo_pk):
     q_preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
                                            .order_by('preguntador__numero')\
                                            .select_related('preguntador')
-    preguntas = Pregunta.objects.filter(exposicion=exposicion)\
-                                .oreder_by('grupo')
-                                .select_related('grupo')
+    preguntas_query = Pregunta.objects.filter(exposicion=exposicion)\
+                                      .order_by('grupo')\
+                                      .select_related('grupo')
+
+    preguntas = {}
+
+
 
     tiempos_graph = None
     preguntas_graph = None
