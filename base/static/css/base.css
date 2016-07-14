@@ -55,6 +55,19 @@ span {
   display: inline-block;
 }
 
+a.inline-title {
+  vertical-align: top;
+  margin-top: 20px
+}
+
+div.inline-title {
+  margin-left: 20px;
+}
+
+div #agregar {
+  text-align: right;
+}
+
 
 /* Formularios */
 .extended-form textarea {

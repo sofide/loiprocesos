@@ -2,7 +2,7 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8" id="agregar">
       <h1>{{ grupo }}</h1>
       {% if editar_form %}
         <form method="POST" class="extended-form">{% csrf_token %}
