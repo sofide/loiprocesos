@@ -58,6 +58,24 @@
           <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
         </form>
 
+        {% if preguntas_agrupadas %}
+          <h2> Preguntas: </h2>
+          {% for grupo, preguntas in preguntas_agrupadas %}
+            <h4>{{grupo}}</h4>
+            <ul>
+              {% for pregunta in preguntas %}
+                <li>
+                  {{ pregunta }}
+                  {% if pregunta.mejor %}
+                    <span>Seleccionada como Mejor</span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endfor %}
+        {% endif %}
+
+
         <script type="text/javascript">
             $(function () {
                 $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({

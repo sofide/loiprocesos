@@ -1,3 +1,5 @@
+import itertools
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 
@@ -72,7 +74,10 @@ def ver_exposicion(request, expo_pk):
 
     preguntas = {}
 
-
+    preguntas = exposicion.preguntas.select_related('grupo').all()
+    preguntas_agrupadas = [(grupo, list(preguntas_grupo))
+                            for grupo, preguntas_grupo
+                            in itertools.groupby(preguntas, lambda p: p.grupo)]
 
     tiempos_graph = None
     preguntas_graph = None
@@ -128,7 +133,7 @@ def ver_exposicion(request, expo_pk):
          'cont_preg_form': cont_preg_form, 'st_expo_form': st_expo_form,
          'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form,
          'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph,
-         'side_bar': side_bar,
+         'side_bar': side_bar, 'preguntas_agrupadas': preguntas_agrupadas,
          }
     )
 
