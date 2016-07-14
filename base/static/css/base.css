@@ -23,6 +23,39 @@ span {
   color: #2980B9;
 }
 
+.btn1 {
+  background-color: #404040;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.btn1:hover {
+  background-color: #2980B9;
+  color: white
+}
+
+.btn2 {
+  background-color: #2980B9;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.btn2:hover {
+  background-color: #404040;
+  color: white
+}
+
+.inline-title {
+  display: inline-block;
+}
+
+
 /* Formularios */
 .extended-form textarea {
   width: 100%;
