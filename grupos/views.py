@@ -3,6 +3,8 @@ import datetime
 
 from grupos.models import Grupo, Pertenencia
 from grupos.forms import DescripcionGrupoForm, PertenenciaForm
+from clases.models import Exposicion
+from clases.graphics import tiempo_expo_graphic
 
 
 def grupos_home(request, año=datetime.datetime.now().strftime('%Y')):
@@ -13,6 +15,15 @@ def grupos_home(request, año=datetime.datetime.now().strftime('%Y')):
 
 def ver_grupo(request, grupo_pk):
     grupo = get_object_or_404(Grupo, pk=grupo_pk)
+    exposiciones = Exposicion.objects.filter(grupo=grupo).select_related('tp', 'clase')
+    ultima_exp = exposiciones[0]
+
+    expos_chart = [x for x in exposiciones if x.start_expo and x.start_ques and x.finish_expo]
+
+    if expos_chart:
+        tiempos_chart = tiempo_expo_graphic(expos_chart)
+    else:
+        tiempos_chart = None
 
     if request.method == "POST":
             form = PertenenciaForm(request.POST,)
@@ -33,7 +44,9 @@ def ver_grupo(request, grupo_pk):
 
     return render(request, 'grupos/ver_grupo.html', {'grupo': grupo,
                                                      'pertenece': pertenece,
-                                                     'pertenencia_form': form})
+                                                     'pertenencia_form': form,
+                                                     'tiempos_chart': tiempos_chart,
+                                                     })
 
 
 def edit_grupo(request, grupo_pk):

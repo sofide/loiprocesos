@@ -39,6 +39,10 @@
       </div>
     {% endif %}
   </div>
+  {% if tiempos_chart %}
+   {{tiempos_chart.0 | safe}}
+   {{tiempos_chart.1 | safe}}
+  {% endif %}
 
 
   {% if user.is_authenticated %}

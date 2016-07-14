@@ -12,10 +12,16 @@ def tiempo_expo_graphic(exposiciones):
     for exposicion in exposiciones:
         t_expo = (exposicion.start_ques - exposicion.start_expo).seconds/60.
         t_preg = (exposicion.finish_expo - exposicion.start_ques).seconds/60.
-
-        expo.extend(['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa),
-                     'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa)])
         tiempos.extend([t_expo, t_preg])
+
+    if len(set(e.grupo for e in exposiciones)) == 1 and len(exposiciones) > 1:
+        for exposicion in exposiciones:
+            expo.extend(["{} - TP{}".format(exposicion.clase, exposicion.tp.numero),
+                         "{} - TP{}".format(exposicion.clase, exposicion.tp.numero)])
+    else:
+        for exposicion in exposiciones:
+            expo.extend(['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa),
+                         'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa)])
 
 
     data = {
