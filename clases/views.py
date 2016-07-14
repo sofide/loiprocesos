@@ -7,7 +7,7 @@ from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
 from clases.models import (Clase, Exposicion, Pregunta, ContadorPreguntas, TP,
                            Pregunta)
 
-from clases.graphics import tiempo_expo_graphic, q_pregs_graphic, graphic
+from clases.graphics import tiempo_expo_graphic, q_pregs_graphic
 
 from grupos.models import Pertenencia
 
@@ -23,12 +23,10 @@ def clases_home(request):
     else:
         form = ClaseForm()
 
-    script, div = graphic()
-
     return render(
         request,
         'clases/clases_home.html',
-        {'clases': clases, 'form': form, 'script':script, 'div':div}
+        {'clases': clases, 'form': form}
     )
 
 
