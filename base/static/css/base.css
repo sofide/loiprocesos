@@ -23,7 +23,7 @@ span {
   color: #2980B9;
 }
 
-.btn1 {
+.btn-soft {
   background-color: #EEEEEE;
   color: #999999;
   padding: 5px 10px;
@@ -32,7 +32,7 @@ span {
   font-size: 12px;
 }
 
-.btn1:hover {
+.btn-soft:hover {
   background-color: #2980B9;
   color: white
 }

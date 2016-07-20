@@ -16,7 +16,7 @@
     {% for trabajo in trabajos %}
       <div class="row">
         {% if perms.clases %}
-          <a class="btn1 inline-title" href="{% url 'edit_tp' trabajo.id %}">Editar</a>
+          <a class="btn-soft inline-title" href="{% url 'edit_tp' trabajo.id %}">Editar</a>
         {% endif %}
         <div class="inline-title">
           <h3> {{ trabajo }} </h3>
