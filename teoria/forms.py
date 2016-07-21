@@ -1,6 +1,6 @@
 from django import forms
 
-from teoria.models import Unidad
+from teoria.models import Unidad, Material
 
 
 class EditUdForm(forms.ModelForm):
@@ -13,3 +13,9 @@ class EditUdForm(forms.ModelForm):
         widgets = {
           'titulo': forms.TextInput(attrs={'size':100}),
         }
+
+
+class MaterialForm(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = ('unidad', 'nombre', 'link', 'autor')

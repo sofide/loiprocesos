@@ -74,10 +74,9 @@ div #agregar {
   width: 100%;
 }
 
-.extended-input #id_titulo {
+.extended-input #id_titulo, #id_nombre, #id_link, #id_autor {
   width: 100%;
 }
-
 
 /* Page Header */
 .page-header {

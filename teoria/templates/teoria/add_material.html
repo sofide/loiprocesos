@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <form method="POST" class="extended-input">{% csrf_token %}
+    {{ material_form.as_p }}
+    <input type="submit" name="save" class="save btn btn-default" value="Cargar"></input>
+    <input type="submit" name="add" class="save btn btn-default" value="Cargar y agregar otra"></input>
+
+  </form>
+
+{% endblock %}

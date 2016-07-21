@@ -1,9 +1,11 @@
 from django.conf.urls import url
-from teoria.views import teoria_home, ver_unidad, edit_ud
+from teoria.views import teoria_home, ver_unidad, edit_ud, add_material
 
 urlpatterns = [
     url(r'^$', teoria_home, name='teoria_home'),
     url(r'^(?P<unidad_pk>[0-9]+)/$', ver_unidad, name='ver_unidad'),
     url(r'^ud/edit/(?P<ud_pk>[0-9]+)?/?$', edit_ud, name='edit_ud'),
+    url(r'^material/$', add_material, name='add_material'),
+
 
 ]
