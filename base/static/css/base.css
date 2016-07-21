@@ -74,6 +74,10 @@ div #agregar {
   width: 100%;
 }
 
+.extended-input #id_titulo {
+  width: 100%;
+}
+
 
 /* Page Header */
 .page-header {

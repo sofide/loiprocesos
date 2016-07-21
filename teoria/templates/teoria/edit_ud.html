@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+  {% if perms.clases %}
+    <h2> Editar Unidad </h2>
+    <form method="POST" class="extended-input">{% csrf_token %}
+      {{ unidad_form.as_p }}
+      <trix-editor input="id_descripcion"></trix-editor>
+      <input type="submit" class="save btn2" value="Guardar cambios"></input>
+    </form>
+  {% else %}
+    <h4> No tenés autorización para editar los trabajos prácticos </h4>
+  {% endif %}
+
+
+{% endblock %}
