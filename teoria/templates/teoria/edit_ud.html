@@ -3,7 +3,11 @@
 {% block content %}
 
   {% if perms.clases %}
-    <h2> Editar Unidad </h2>
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        {{ warn }}
+      </div>
+    </div>
     <form method="POST" class="extended-input">{% csrf_token %}
       {{ unidad_form.as_p }}
       <trix-editor input="id_descripcion"></trix-editor>
