@@ -14,24 +14,24 @@
   </div>
   <div class="row">
 
+    <h3>Material de estudio:</h3>
     {% if material %}
-      <h3>Material de estudio:</h3>
-      <ul>
+      <ol>
         {% for m in material %}
-          <li><a href="{{ m.link }}"> {{ m.nombre }} </a><span>Sugerido por: {{ m.autor }}</span></li>
+          <li class="big"><a href="{{ m.link }}" class="dark-link"> {{ m.nombre }} </a><span>Sugerido por: {{ m.autor }}</span></li>
         {% endfor %}
-      </ul>
+      </ol>
     {% else %}
       <p>Todavía no hay mateial de estudio cargdo para esta unidad</p>
     {% endif %}
 
+    <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
     {% if preguntas %}
-      <h3>Preguntas para facilitar la comprensión:</h3>
-      <ul>
+      <ol>
         {% for p in preguntas %}
           <li><p> {{ p.pregunta }}</p> <span>Sugerido por: {{ m.autor }}</span></li>
         {% endfor %}
-      </ul>
+      </ol>
     {% else %}
       <p>Todavía no hay preguntas cargadas para esta unidad</p>
   </div>
