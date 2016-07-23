@@ -17,10 +17,23 @@ a:hover {
   text-decoration: none;
 }
 
+.dark-link {
+  color: #404040;
+}
+
+.dark-link:hover {
+  color: #2980B9;
+}
+
+.big {
+  font-size: 18px;
+}
+
 span {
   font-style: italic;
   font-family: monospace;
   color: #2980B9;
+  font-size: 12px;
 }
 
 .btn-soft {
@@ -37,7 +50,21 @@ span {
   color: white
 }
 
-.btn2 {
+.btn-dark {
+  background-color: #404040;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.btn-dark:hover {
+  background-color: #2980B9;
+  color: white
+}
+
+.btn-blue {
   background-color: #2980B9;
   color: white;
   padding: 5px 10px;
@@ -46,7 +73,7 @@ span {
   font-size: 12px;
 }
 
-.btn2:hover {
+.btn-blue:hover {
   background-color: #404040;
   color: white
 }
