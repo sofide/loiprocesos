@@ -16,6 +16,7 @@ class Pregunta(models.Model):
     unidad = models.ForeignKey(Unidad)
     pregunta = models.CharField(max_length=200)
     autor = models.CharField(max_length=200, verbose_name="Sugerido por")
+    fecha = models.DateField()
     vigente = models.BooleanField(default=True)
 
 
@@ -24,6 +25,7 @@ class Material(models.Model):
     nombre = models.CharField(max_length=200)
     link = models.URLField()
     autor = models.CharField(max_length=200, null=True, verbose_name="Sugerido por")
+    fecha = models.DateField()
     vigente = models.BooleanField(default=True)
 
 
