@@ -1,7 +1,37 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <h1>Bienvenido a la página de Procesos Industriales!</h1>
-  <h3>Estamos trabajando para hacer de este un sitio mejor <3</p>
+  <div class="col-sm-6">
+    <h2> Última clase: {{ clase }}</h2>
+    {% if tiempos %}
+      {{ tiempos.0 | safe }}
+      {{ tiempos.1 | safe }}
+    {% endif %}
+    <a href="{% url 'clases_home' %}" class="big"> Ver todas las clases </a>
+
+    <a href="{% url 'trabajos_practicos' %}">
+      <div class="row relleno">
+        Ver guía de trabajos prácticos
+      </div>
+    </a>
+  </div>
+  <div class="col-sm-6">
+
+      <a href="{% url 'grupos_home' %}">
+        <div class="row relleno">
+          Ver grupos de trabajo y Trabajos Finales de años anteriores
+        </div>
+      </a>
+    <h3>Teoría de Procesos Industriales</h3>
+    {% for u in unidades %}
+      <ul>
+        <li><a href="{% url 'ver_unidad' u.id %}"> {{ u }}</a></li>
+      </ul>
+    {% endfor %}
+  </div>
+
+
+
+
 
 {% endblock %}
