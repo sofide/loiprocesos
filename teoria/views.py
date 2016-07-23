@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from teoria.models import Unidad, Pregunta, Material
-from teoria.forms import EditUdForm, MaterialForm
+from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
 
 def teoria_home(request):
     unidades = Unidad.objects.all()
@@ -43,24 +43,33 @@ def edit_ud(request, ud_pk=None):
                                                    }, )
 
 
-def add_material(request):
-    if request.user.grupos.all().exists():
+def add_recurso(request, recurso):
+    if recurso == "m":
+        form_class = MaterialForm
+    else:
+        form_class = PreguntaTeoriaForm
+        
+    if request.user.is_authenticated() and request.user.grupos.all().exists():
         grupo = request.user.grupos.first()
     else:
         grupo = " "
 
     if request.method == "POST":
-        form = MaterialForm(request.POST, initial={'autor':str(grupo), })
+        form = form_class(request.POST, initial={'autor':str(grupo), })
         if form.is_valid():
             material = form.save(commit=False)
+            if request.user.groups.filter(name="staff procesos").exists():
+                material.vigente = True
+            else:
+                material.vigente = False
             material.save()
             ud = material.unidad_id
             if "save" in request.POST:
                 return redirect('teoria.views.ver_unidad', ud)
             if "add" in request.POST:
-                form = MaterialForm(initial={'autor':str(grupo), 'unidad': ud})
+                form = form_class(initial={'autor':str(grupo), 'unidad': ud})
 
     else:
-        form = MaterialForm(initial={'autor':str(grupo), })
+        form = form_class(initial={'autor':str(grupo), })
 
     return render(request, 'teoria/add_material.html', {'material_form': form})

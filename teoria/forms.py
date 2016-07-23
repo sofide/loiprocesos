@@ -1,6 +1,6 @@
 from django import forms
 
-from teoria.models import Unidad, Material
+from teoria.models import Unidad, Material, Pregunta
 
 
 class EditUdForm(forms.ModelForm):
@@ -19,3 +19,8 @@ class MaterialForm(forms.ModelForm):
     class Meta:
         model = Material
         fields = ('unidad', 'nombre', 'link', 'autor')
+
+class PreguntaTeoriaForm(forms.ModelForm):
+    class Meta:
+        model = Pregunta
+        fields = ('unidad', 'pregunta', 'autor')
