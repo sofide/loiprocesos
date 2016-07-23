@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
 
 from teoria.models import Unidad, Pregunta, Material
 from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
@@ -48,7 +49,7 @@ def add_recurso(request, recurso):
         form_class = MaterialForm
     else:
         form_class = PreguntaTeoriaForm
-        
+
     if request.user.is_authenticated() and request.user.grupos.all().exists():
         grupo = request.user.grupos.first()
     else:
@@ -58,6 +59,7 @@ def add_recurso(request, recurso):
         form = form_class(request.POST, initial={'autor':str(grupo), })
         if form.is_valid():
             material = form.save(commit=False)
+            fecha = timezone.now()
             if request.user.groups.filter(name="staff procesos").exists():
                 material.vigente = True
             else:
