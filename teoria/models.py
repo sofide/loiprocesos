@@ -18,6 +18,8 @@ class Pregunta(models.Model):
     autor = models.CharField(max_length=200, verbose_name="Sugerido por")
     fecha = models.DateField()
     vigente = models.BooleanField(default=True)
+    class Meta:
+        ordering = ['-fecha']
 
 
 class Material(models.Model):
@@ -27,6 +29,8 @@ class Material(models.Model):
     autor = models.CharField(max_length=200, null=True, verbose_name="Sugerido por")
     fecha = models.DateField()
     vigente = models.BooleanField(default=True)
+    class Meta:
+        ordering = ['-fecha']
 
 
 class Voto(models.Model):
