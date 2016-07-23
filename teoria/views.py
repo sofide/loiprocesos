@@ -23,8 +23,11 @@ def ver_unidad(request, unidad_pk):
 def edit_ud(request, ud_pk=None):
     if ud_pk:
         ud = get_object_or_404(Unidad, pk=ud_pk)
+        warn = "Estás editando la unidad {}".format(ud)
+
     else:
         ud = None
+        warn = "Estás agregando una nueva unidad"
 
     if request.method == "POST":
             form = EditUdForm(request.POST, instance=ud)
@@ -35,7 +38,9 @@ def edit_ud(request, ud_pk=None):
     else:
         form = EditUdForm(instance=ud)
 
-    return render(request, 'teoria/edit_ud.html', {'unidad_form': form})
+    return render(request, 'teoria/edit_ud.html', {'unidad_form': form,
+                                                   'warn': warn,
+                                                   }, )
 
 
 def add_material(request):
@@ -45,12 +50,16 @@ def add_material(request):
         grupo = " "
 
     if request.method == "POST":
-            form = MaterialForm(request.POST, initial={'autor':str(grupo), })
-            if form.is_valid():
-                material = form.save(commit=False)
-                material.save()
-                ud = material.unidad_id
+        form = MaterialForm(request.POST, initial={'autor':str(grupo), })
+        if form.is_valid():
+            material = form.save(commit=False)
+            material.save()
+            ud = material.unidad_id
+            if "save" in request.POST:
                 return redirect('teoria.views.ver_unidad', ud)
+            if "add" in request.POST:
+                form = MaterialForm(initial={'autor':str(grupo), 'unidad': ud})
+
     else:
         form = MaterialForm(initial={'autor':str(grupo), })
 
