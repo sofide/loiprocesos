@@ -5,36 +5,49 @@
     <div class="col-sm-8">
       <h1>{{ unidad }}</h1>
     </div>
-    <div class="col-sm-4">
-      {% if perms.teoria and unidad_form %}
-        <p>Agregar una nuevas preguntas y material (proximamente):</p>
-        </form>
+  </div>
+  <div class="row">
+    <a class="btn-soft inline-title" href="{% url 'add_recurso' 'm' %}">
+      {% if staff %}
+        Agregar
+      {% else %}
+        Sugerir
+      {% endif %}
+    </a>
+    <div class="inline-title">
+      <h3>Material de estudio:</h3>
+      {% if material %}
+        <ol>
+          {% for m in material %}
+            <li class="big"><a href="{{ m.link }}" class="dark-link"> {{ m.nombre }} </a><span>Sugerido por: {{ m.autor }}</span></li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p>Todavía no hay mateial de estudio cargdo para esta unidad</p>
       {% endif %}
     </div>
   </div>
   <div class="row">
-
-    <h3>Material de estudio:</h3>
-    {% if material %}
-      <ol>
-        {% for m in material %}
-          <li class="big"><a href="{{ m.link }}" class="dark-link"> {{ m.nombre }} </a><span>Sugerido por: {{ m.autor }}</span></li>
-        {% endfor %}
-      </ol>
-    {% else %}
-      <p>Todavía no hay mateial de estudio cargdo para esta unidad</p>
-    {% endif %}
-
-    <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
-    {% if preguntas %}
-      <ol>
-        {% for p in preguntas %}
-          <li><p> {{ p.pregunta }}</p> <span>Sugerido por: {{ m.autor }}</span></li>
-        {% endfor %}
-      </ol>
-    {% else %}
-      <p>Todavía no hay preguntas cargadas para esta unidad</p>
+    <a class="btn-soft inline-title" href="{% url 'add_recurso' 'p' %}">
+      {% if staff %}
+        Agregar
+      {% else %}
+        Sugerir
+      {% endif %}
+    </a>
+    <div class="inline-title">
+      <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
+      {% if preguntas %}
+        <ol>
+          {% for p in preguntas %}
+            <li class="big"><p> {{ p.pregunta }}</p> <span>Sugerido por: {{ p.autor }}</span></li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p>Todavía no hay preguntas cargadas para esta unidad</p>
+    </div>
   </div>
+
     {% endif %}
 
 {% endblock %}

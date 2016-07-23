@@ -1,6 +1,12 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+  {% if is_material %}
+    <h2>Agregar material para mejorar el aprendizaje de una unidad</h2>
+  {% else %}
+    <h2>Agregar pregunta para mejorar la comprensión de una unidad</h2>
+  {% endif %}
+
   <form method="POST" class="extended-input">{% csrf_token %}
     {{ material_form.as_p }}
     <input type="submit" name="save" class="btn-dark" value="Cargar"></input>

@@ -17,9 +17,16 @@ def ver_unidad(request, unidad_pk):
 
     material = Material.objects.filter(unidad=unidad)
 
+    if request.user.groups.filter(name="staff procesos").exists():
+        staff = True
+    else:
+        staff = False
+
     return render(request, 'teoria/ver_unidad.html', {'unidad': unidad,
                                                       'preguntas': preguntas,
-                                                      'material': material})
+                                                      'material': material,
+                                                      'staff': staff,
+                                                      })
 
 def edit_ud(request, ud_pk=None):
     if ud_pk:
@@ -47,8 +54,10 @@ def edit_ud(request, ud_pk=None):
 def add_recurso(request, recurso):
     if recurso == "m":
         form_class = MaterialForm
+        is_material = True
     else:
         form_class = PreguntaTeoriaForm
+        is_material = False
 
     if request.user.is_authenticated() and request.user.grupos.all().exists():
         grupo = request.user.grupos.first()
@@ -58,14 +67,14 @@ def add_recurso(request, recurso):
     if request.method == "POST":
         form = form_class(request.POST, initial={'autor':str(grupo), })
         if form.is_valid():
-            material = form.save(commit=False)
-            fecha = timezone.now()
+            recurso = form.save(commit=False)
+            recurso.fecha = timezone.now()
             if request.user.groups.filter(name="staff procesos").exists():
-                material.vigente = True
+                recurso.vigente = True
             else:
-                material.vigente = False
-            material.save()
-            ud = material.unidad_id
+                recurso.vigente = False
+            recurso.save()
+            ud = recurso.unidad_id
             if "save" in request.POST:
                 return redirect('teoria.views.ver_unidad', ud)
             if "add" in request.POST:
@@ -74,4 +83,6 @@ def add_recurso(request, recurso):
     else:
         form = form_class(initial={'autor':str(grupo), })
 
-    return render(request, 'teoria/add_material.html', {'material_form': form})
+    return render(request, 'teoria/add_recurso.html', {'material_form': form,
+                                                        'is_material': is_material,
+                                                        })
