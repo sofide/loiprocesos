@@ -28,7 +28,7 @@ class TP(models.Model):
 
 
 class Exposicion(models.Model):
-    clase = models.ForeignKey(Clase)
+    clase = models.ForeignKey(Clase, related_name='exposiciones')
     grupo = models.ForeignKey('grupos.Grupo', null=True)
     tp = models.ForeignKey(TP)
     start_expo = models.DateTimeField(null=True, default=None)
