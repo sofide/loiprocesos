@@ -18,7 +18,7 @@ class Grupo(models.Model):
         ordering = ['-año', 'numero']
 
     def __str__(self):
-        return '{} - G{} - {} - {}'.format(str(self.año), self.numero, self.empresa, self.producto)
+        return '{} - G{} - {} - {}'.format(str(self.año), self.numero, self.producto, self.empresa)
 
 
 class Pertenencia(models.Model):
