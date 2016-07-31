@@ -19,7 +19,7 @@ class Pregunta(models.Model):
     fecha = models.DateField()
     vigente = models.BooleanField(default=True)
     class Meta:
-        ordering = ['-fecha']
+        ordering = ['autor', 'pregunta']
 
 
 class Material(models.Model):
@@ -30,7 +30,7 @@ class Material(models.Model):
     fecha = models.DateField()
     vigente = models.BooleanField(default=True)
     class Meta:
-        ordering = ['-fecha']
+        ordering = ['autor', 'nombre']
 
 
 class Voto(models.Model):
