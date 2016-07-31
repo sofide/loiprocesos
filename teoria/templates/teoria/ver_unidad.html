@@ -19,7 +19,7 @@
       {% if material %}
         <ol>
           {% for m in material %}
-            <li class="big"><a href="{{ m.link }}" class="dark-link"> {{ m.nombre }} </a><span>Sugerido por: {{ m.autor }}</span></li>
+            <li class="big"><a href="{{ m.link }}" target="_blank" class="dark-link"> {{ m.nombre }} </a><span>Sugerido por: {{ m.autor }}</span></li>
           {% endfor %}
         </ol>
       {% else %}
