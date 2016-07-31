@@ -105,6 +105,10 @@ div #agregar {
   text-align: right;
 }
 
+.photo-home {
+  width: 100%;
+}
+
 
 /* Formularios */
 .extended-form textarea {
