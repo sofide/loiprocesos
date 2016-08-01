@@ -20,6 +20,8 @@ class Pregunta(models.Model):
     vigente = models.BooleanField(default=True)
     class Meta:
         ordering = ['autor', 'pregunta']
+    def __str__(self):
+        return "{} - {}".format(self.pregunta, self.autor)
 
 
 class Material(models.Model):
@@ -31,6 +33,8 @@ class Material(models.Model):
     vigente = models.BooleanField(default=True)
     class Meta:
         ordering = ['autor', 'nombre']
+    def __str__(self):
+        return "{} - {}".format(self.nombre, self.autor)
 
 
 class Voto(models.Model):
