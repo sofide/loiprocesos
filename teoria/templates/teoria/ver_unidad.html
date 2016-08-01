@@ -18,8 +18,14 @@
       <h3>Material de estudio:</h3>
       {% if material %}
         <ol>
-          {% for m in material %}
-            <li class="big"><a href="{{ m.link }}" target="_blank" class="dark-link"> {{ m.nombre }} </a><span>Sugerido por: {{ m.autor }}</span></li>
+          {% for mat in material %}
+            <li class="big">
+              {% if staff %}
+                <a href="{% url 'del_recurso' 'm' mat.id %}"><span>[quitar] </span></a>
+              {% endif %}
+              <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
+              <span>Sugerido por: {{ mat.autor }}</span>
+            </li>
           {% endfor %}
         </ol>
       {% else %}
@@ -39,8 +45,14 @@
       <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
       {% if preguntas %}
         <ol>
-          {% for p in preguntas %}
-            <li class="big"><p> {{ p.pregunta }}</p> <span>Sugerido por: {{ p.autor }}</span></li>
+          {% for preg in preguntas %}
+            <li class="big">
+              {% if staff %}
+                <a href="{% url 'del_recurso' 'p' preg.id %}" class="in-line-preg"><span>[quitar] </span></a>
+              {% endif %}
+              <p class="in-line-preg"> {{ preg.pregunta }}</p>
+              <span class="in-line-preg">Sugerido por: {{ preg.autor }}</span>
+            </li>
           {% endfor %}
         </ol>
       {% else %}

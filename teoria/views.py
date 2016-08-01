@@ -86,3 +86,17 @@ def add_recurso(request, recurso):
     return render(request, 'teoria/add_recurso.html', {'material_form': form,
                                                         'is_material': is_material,
                                                         })
+
+
+def del_recurso(request, recurso, pk):
+    if recurso == 'm':
+        material = get_object_or_404(Material, pk=pk)
+        material.vigente = False
+        material.save()
+        ud = material.unidad_id
+    else:
+        pregunta = get_object_or_404(Pregunta, pk=pk)
+        pregunta.vigente = False
+        pregunta.save()
+        ud = pregunta.unidad_id
+    return redirect('teoria.views.ver_unidad', ud)
