@@ -13,9 +13,9 @@ def teoria_home(request):
 def ver_unidad(request, unidad_pk):
     unidad = get_object_or_404(Unidad, pk=unidad_pk)
 
-    preguntas = Pregunta.objects.filter(unidad=unidad)
+    preguntas = Pregunta.objects.filter(unidad=unidad, vigente=True)
 
-    material = Material.objects.filter(unidad=unidad)
+    material = Material.objects.filter(unidad=unidad, vigente=True)
 
     if request.user.groups.filter(name="staff procesos").exists():
         staff = True
