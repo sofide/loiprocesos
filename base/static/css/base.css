@@ -136,6 +136,12 @@ div #agregar {
   z-index: 10000;
 }
 
+.navbar {
+  background-color: #2980B9;
+  color: white;
+  padding: 10px;
+}
+
 a.ph-title {
   color: white;
   text-decoration: none;
@@ -231,8 +237,17 @@ a.menu-button:hover {
 
 
 /* Retoques a la sidebar */
+#sidebar-wrapper {
+  background-color: #f5f5f5;
+}
 
+.sidebar-nav li a {
+  color: #2980B9;
+}
 
+.sidebar-nav li a:hover {
+  background-color: #2980B9;
+}
 
 /*! REEMPLAZADO POR SIMPLE-SIDEBAR
 .lateral{
