@@ -186,6 +186,7 @@ a#ph-grupo:hover {
 }
 
 a.seccion {
+  vertical-align: top;
   margin: 0px;
   border-radius: 4px;
   display: inline-block;
@@ -205,6 +206,7 @@ a.seccion:hover {
 }
 
 a.menu-button {
+  vertical-align: top;
   margin: 0px 15px;
   border-radius: 4px;
   display: inline-block;
