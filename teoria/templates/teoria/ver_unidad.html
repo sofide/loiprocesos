@@ -46,7 +46,7 @@
       {% if preguntas %}
         <ol>
           {% for preg in preguntas %}
-            <li class="big">
+            <li>
               {% if staff %}
                 <a href="{% url 'del_recurso' 'p' preg.id %}" class="in-line-preg"><span>[quitar] </span></a>
               {% endif %}
