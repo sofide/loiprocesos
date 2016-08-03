@@ -20,11 +20,13 @@
     <div class="col-sm-4">
       {% if perms.grupos.can_edit_pertenencia %}
         {% if pertenencia_form %}
-          <p>Agregar usuario a este grupo</p>
-          <form method="POST">{% csrf_token %}
-            {{ pertenencia_form.as_p }}
-            <input type="submit" class="save btn btn-default" value="Cargar!"></input>
-          </form>
+          <div class="side-form">
+            <p>Agregar usuario a este grupo</p>
+            <form method="POST">{% csrf_token %}
+              {{ pertenencia_form.as_p }}
+              <input type="submit" class="save btn btn-default" value="Cargar!"></input>
+            </form>
+          </div>
         {% endif %}
 
       {% endif %}

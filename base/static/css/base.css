@@ -226,7 +226,10 @@ a.menu-button:hover {
 /* Configs del cuerpo */
 .container-loi {
   padding-top: 150px;
+}
 
+.side-form {
+  margin-top: 20px;
 }
 
 /* Configs de bokeh */
