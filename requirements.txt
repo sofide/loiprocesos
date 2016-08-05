@@ -3,3 +3,4 @@ django-toolbelt
 django-registration
 bokeh
 pandas
+django-debug-toolbar

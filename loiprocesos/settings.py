@@ -36,7 +36,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -46,6 +45,8 @@ INSTALLED_APPS = [
     'grupos',
     'base',
     'teoria',
+    'django.contrib.admin',
+    'debug_toolbar',  # siempre ultimo
 ]
 
 MIDDLEWARE_CLASSES = [
