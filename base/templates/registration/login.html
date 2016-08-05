@@ -9,6 +9,10 @@
     {{ form.as_p }}
     <button type="submit">Acceder!</button>
 </form>
-
-<p>¿Todavía no tenés cuenta? </p><a href="/accounts/register">¡Registrate ahora!</a>
+<div class="row">
+  <p class="in-line-preg">¿Te olvidaste la contraseña?  -  </p><a class="in-line-preg" href="/accounts/password/reset">  Cambiar la contraseña</a>
+</div>
+<div class="row">
+  <p class="in-line-preg">¿Todavía no tenés cuenta?  -  </p><a class="in-line-preg" href="/accounts/register">  ¡Registrate ahora!</a>
+</div>
 {% endblock %}
