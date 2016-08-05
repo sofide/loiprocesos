@@ -65,32 +65,32 @@
     </nav>
 
     <div class="container-fluid">
-    <div class="row">
-      <div id="wrapper">
-        <div class="container-loi">
+      <div class="row">
+        <div id="wrapper">
+          <div class="container-loi">
 
-          <!-- Sidebar -->
-          <div id="sidebar-wrapper">
-            <div class="sidebar-loi">
-              <ul class="sidebar-nav">
-                  <li class="sidebar-brand">
-                      <a href="{% url 'home' %}">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+              <div class="sidebar-loi">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="{% url 'home' %}">
 
-                      </a>
-                  </li>
-                {% if side_bar %}
-                  {% for item in side_bar %}
-                  <li><a href= "{{ item.1 }}">{{ item.0 }}</a></li>
-                  {% endfor %}
-                {% endif %}
-            	  <li><a href= "{% url 'preguntas' %}"> Cargar preguntas </a></li>
-                <li><a href= "{% url 'trabajos_practicos' %}"> Guía de Trabajos Prácticos </a></li>
-              </ul>
+                        </a>
+                    </li>
+                  {% if side_bar %}
+                    {% for item in side_bar %}
+                    <li><a href= "{{ item.1 }}">{{ item.0 }}</a></li>
+                    {% endfor %}
+                  {% endif %}
+              	  <li><a href= "{% url 'preguntas' %}"> Cargar preguntas </a></li>
+                  <li><a href= "{% url 'trabajos_practicos' %}"> Guía de Trabajos Prácticos </a></li>
+                </ul>
+              </div>
             </div>
-          </div>
 
 
-          <div id="page-content-wrapper">
+            <div id="page-content-wrapper" class="body-procesos">
 
               {% block content %}
               {% endblock %}
