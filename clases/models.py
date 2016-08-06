@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 class Clase(models.Model):
-    fecha = models.DateField(default=timezone.now, unique=True)
+    fecha = models.DateField(default=timezone.now, unique=True, index=True)
     def __str__(self):
         return str(self.fecha.strftime(settings.DATE_INPUT_FORMATS[0]))
 
@@ -13,7 +13,7 @@ class Clase(models.Model):
 
 
 class TP(models.Model):
-    numero = models.IntegerField(null=True, blank=True, default=None)
+    numero = models.IntegerField(null=True, blank=True, default=None, index=True)
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
 
@@ -28,8 +28,8 @@ class TP(models.Model):
 
 
 class Exposicion(models.Model):
-    clase = models.ForeignKey(Clase, related_name='exposiciones')
-    grupo = models.ForeignKey('grupos.Grupo', null=True)
+    clase = models.ForeignKey(Clase, related_name='exposiciones', index=True)
+    grupo = models.ForeignKey('grupos.Grupo', null=True, index=True)
     tp = models.ForeignKey(TP)
     start_expo = models.DateTimeField(null=True, default=None)
     start_ques = models.DateTimeField(null=True, default=None)
@@ -38,6 +38,7 @@ class Exposicion(models.Model):
     class Meta:
         verbose_name_plural = "Exposiciones"
         ordering = ['clase', 'grupo', 'tp']
+        index_together = ['clase', 'grupo', 'tp']
 
     def __str__(self):
         return '{} - G{} - TP {}'.format(str(self.clase), self.grupo.numero, self.tp)
