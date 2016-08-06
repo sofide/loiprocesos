@@ -16,6 +16,7 @@ class Grupo(models.Model):
 
     class Meta:
         ordering = ['-año', 'numero']
+        index_together = ['año', 'numero']
 
     def __str__(self):
         return '{} - G{} - {} - {}'.format(str(self.año), self.numero, self.producto, self.empresa)
