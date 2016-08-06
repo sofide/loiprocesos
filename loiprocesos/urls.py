@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^clases/', include('clases.urls')),
     url(r'^grupos/', include('grupos.urls')),
     url(r'^teoria/', include('teoria.urls')),
+    url(r'^gallery/', include('gallery.urls')),
 ]

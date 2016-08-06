@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 class Clase(models.Model):
-    fecha = models.DateField(default=timezone.now, unique=True, index=True)
+    fecha = models.DateField(default=timezone.now, unique=True, db_index=True)
     def __str__(self):
         return str(self.fecha.strftime(settings.DATE_INPUT_FORMATS[0]))
 
@@ -13,7 +13,7 @@ class Clase(models.Model):
 
 
 class TP(models.Model):
-    numero = models.IntegerField(null=True, blank=True, default=None, index=True)
+    numero = models.IntegerField(null=True, blank=True, default=None, db_index=True)
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
 
@@ -28,8 +28,8 @@ class TP(models.Model):
 
 
 class Exposicion(models.Model):
-    clase = models.ForeignKey(Clase, related_name='exposiciones', index=True)
-    grupo = models.ForeignKey('grupos.Grupo', null=True, index=True)
+    clase = models.ForeignKey(Clase, related_name='exposiciones', db_index=True)
+    grupo = models.ForeignKey('grupos.Grupo', null=True, db_index=True)
     tp = models.ForeignKey(TP)
     start_expo = models.DateTimeField(null=True, default=None)
     start_ques = models.DateTimeField(null=True, default=None)

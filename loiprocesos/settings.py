@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'grupos',
     'base',
     'teoria',
+    'gallery',
     'django.contrib.admin',
     'debug_toolbar',  # siempre ultimo
 ]

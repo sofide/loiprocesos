@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h1>Galería de imágenes de Procesos Industriales</h1>
+
+  {% if sections %}
+    {% for section in sections %}
+      <h3>{{ section.name }}</h3>
+    {% endfor %}
+  {% else %}
+    <h3> Todavía no hay imagenes para mostrar </h3>
+
+  {% endif %}
+{% endblock %}
