@@ -3,6 +3,12 @@
   font-family: verdana;
 }
 
+.errorlist {
+  padding: 5px;
+  background-color: #FFB5C5;
+  color: #90142f;
+}
+
 body {
   margin: 0;
 
