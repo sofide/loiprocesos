@@ -19,6 +19,7 @@ def teoria_home(request):
 
 def ver_unidad(request, unidad_pk):
     unidad = get_object_or_404(Unidad, pk=unidad_pk)
+    texts = Text.objects.filter(reference = "teoria")
 
     preguntas = Pregunta.objects.filter(unidad=unidad, vigente=True)
 
@@ -33,6 +34,7 @@ def ver_unidad(request, unidad_pk):
                                                       'preguntas': preguntas,
                                                       'material': material,
                                                       'staff': staff,
+                                                      'texts': texts,
                                                       })
 
 def edit_ud(request, ud_pk=None):
