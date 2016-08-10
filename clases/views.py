@@ -2,16 +2,17 @@ import itertools
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
 from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm,
                           AddPreguntasForm, EditTPForm)
 from clases.models import (Clase, Exposicion, Pregunta, ContadorPreguntas, TP,
                            Pregunta)
-
 from clases.graphics import tiempo_expo_graphic, q_pregs_graphic
-
 from grupos.models import Pertenencia
+from base.models import Text
+from base.forms import EditTextForm
 
 
 def clases_home(request):
@@ -195,5 +196,28 @@ def edit_tp(request, tp_pk=None):
     return render(
         request,
         'clases/editar_tp.html',
+        {'form': form}
+    )
+
+def edit_text(request, text_pk=None):
+    if text_pk:
+        tp = get_object_or_404(Text, pk=text_pk)
+    else:
+        text = None
+
+    if request.method == "POST":
+            form = EditTextForm(request.POST, instance=text)
+            if form.is_valid():
+                new_text = form.save(commit=False)
+                new_text.reference = "clases"
+                new_text.edited = timezone.now()
+                new_text.save()
+                return redirect('clases_home')
+    else:
+        form = EditTextForm(instance=text)
+
+    return render(
+        request,
+        'clases/edit_text.html',
         {'form': form}
     )
