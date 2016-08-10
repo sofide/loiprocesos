@@ -17,6 +17,7 @@ from base.forms import EditTextForm
 
 def clases_home(request):
     clases = Clase.objects.all().order_by('-fecha')
+    texts = Text.objects.filter(reference = "clases")
     if request.method == "POST":
             form = ClaseForm(request.POST)
             if form.is_valid():
@@ -29,7 +30,7 @@ def clases_home(request):
     return render(
         request,
         'clases/clases_home.html',
-        {'clases': clases, 'form': form}
+        {'clases': clases, 'form': form, 'texts': texts}
     )
 
 
@@ -218,6 +219,6 @@ def edit_text(request, text_pk=None):
 
     return render(
         request,
-        'clases/edit_text.html',
-        {'form': form}
+        'base/edit_text.html',
+        {'form': form, 'reference': "Clases"}
     )
