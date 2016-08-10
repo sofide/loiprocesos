@@ -3,7 +3,7 @@
 {% block content %}
 
   {% if perms.clases %}
-    <h2> Editar descripción de la página "Clases" </h2>
+    <h2> Editar descripción de la página "{{reference}}" </h2>
     <form method="POST" class="extended-form">{% csrf_token %}
       {{ form.as_p }}
       <trix-editor input="id_text"></trix-editor>
