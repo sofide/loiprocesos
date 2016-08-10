@@ -4,10 +4,17 @@ from django.utils import timezone
 from teoria.models import Unidad, Pregunta, Material
 from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
 
+from base.models import Text
+from base.forms import EditTextForm
+
+
 def teoria_home(request):
     unidades = Unidad.objects.all()
+    texts = Text.objects.filter(reference = "teoria")
 
-    return render(request, 'teoria/teoria_home.html', {'unidades': unidades})
+    return render(request, 'teoria/teoria_home.html', {'unidades': unidades,
+                                                       'texts': texts,
+                                                      })
 
 
 def ver_unidad(request, unidad_pk):
@@ -100,3 +107,27 @@ def del_recurso(request, recurso, pk):
         pregunta.save()
         ud = pregunta.unidad_id
     return redirect('teoria.views.ver_unidad', ud)
+
+
+def edit_text(request, text_pk=None):
+    if text_pk:
+        tp = get_object_or_404(Text, pk=text_pk)
+    else:
+        text = None
+
+    if request.method == "POST":
+            form = EditTextForm(request.POST, instance=text)
+            if form.is_valid():
+                new_text = form.save(commit=False)
+                new_text.reference = "teoria"
+                new_text.edited = timezone.now()
+                new_text.save()
+                return redirect('teoria_home')
+    else:
+        form = EditTextForm(instance=text)
+
+    return render(
+        request,
+        'base/edit_text.html',
+        {'form': form, 'reference': 'Teoría',}
+    )

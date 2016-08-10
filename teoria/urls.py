@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from teoria.views import (teoria_home, ver_unidad, edit_ud, add_recurso, del_recurso)
+from teoria.views import (teoria_home, ver_unidad, edit_ud, add_recurso,
+                          del_recurso, edit_text)
 
 urlpatterns = [
     url(r'^$', teoria_home, name='teoria_home'),
@@ -7,6 +8,7 @@ urlpatterns = [
     url(r'^ud/edit/(?P<ud_pk>[0-9]+)?/?$', edit_ud, name='edit_ud'),
     url(r'^recurso/(?P<recurso>[mp])/$', add_recurso, name='add_recurso'),
     url(r'^quitar/(?P<recurso>[mp])/(?P<pk>[0-9]+)/$', del_recurso, name='del_recurso'),
+    url(r'^text/edit/(?P<text_pk>[0-9]+)?/?$', edit_text, name='edit_text'),
 
 
 

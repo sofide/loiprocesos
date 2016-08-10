@@ -11,6 +11,11 @@
       {% endif %}
     </div>
   </div>
+  {% if texts %}
+    {% for text in texts %}
+      {{text | safe}}
+    {% endfor %}
+  {% endif %}
   <div class="row">
       {% for unidad in unidades %}
         <h3><a href="{% url 'ver_unidad' unidad.id %}"> {{ unidad }} </a></h3>
