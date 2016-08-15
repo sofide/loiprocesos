@@ -46,7 +46,8 @@ class Exposicion(models.Model):
 
 class Pregunta(models.Model):
     exposicion = models.ForeignKey(Exposicion, related_name='preguntas')
-    grupo = models.ForeignKey('grupos.Grupo', null=True)
+    grupo = models.ForeignKey('grupos.Grupo', null=True, blank=True)
+    usuario = models.ForeignKey('auth.User', null=True, blank=True, related_name='preg_clases')
     pregunta = models.TextField()
     mejor = models.BooleanField(default=False)
 

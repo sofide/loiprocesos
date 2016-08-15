@@ -140,12 +140,20 @@ def ver_exposicion(request, expo_pk):
     )
 
 def preguntas(request):
-    grupo = request.user.grupos.order_by('-año').first()
+    if request.user.is_authenticated():
+        if request.user.grupos.all().exists():
+            grupo = request.user.grupos.order_by('-año').first()
+        else:
+            grupo = None
+        user = request.user
+    else:
+        user = None
+        grupo = None
 
     if grupo:
         warn = "Estás registrado en el grupo {}. Las preguntas que cargues se registrarán a nombre de ese grupo.".format(grupo)
     else:
-        warn = "No estás registrado en ningún grupo. Se cargará la pregunta anónimamente"
+        warn = "No estás registrado en ningún grupo."
 
 
     if request.method == "POST":
@@ -154,6 +162,8 @@ def preguntas(request):
             pregunta = form.save(commit=False)
             if grupo:
                 pregunta.grupo = grupo
+            if user:
+                pregunta.usuario = user
             pregunta.save()
             if "add" in request.POST:
                 initial = pregunta.exposicion.id
