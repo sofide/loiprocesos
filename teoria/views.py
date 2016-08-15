@@ -76,8 +76,16 @@ def add_recurso(request, recurso):
     if request.method == "POST":
         form = form_class(request.POST, initial={'autor':str(grupo), })
         if form.is_valid():
+
+            if request.user.is_authenticated():
+                user = request.user
+            else:
+                user = None
+
             recurso = form.save(commit=False)
             recurso.fecha = timezone.now()
+            recurso.usuario = user
+
             if request.user.groups.filter(name="staff procesos").exists():
                 recurso.vigente = True
             else:
