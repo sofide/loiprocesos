@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load admin_urls %}
 
 {% block content %}
   <div class="row">
@@ -71,7 +72,11 @@
       <h3>Material</h3>
       <ol>
       {% for mat in material_extra %}
-        <li><a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
+        <li>
+        {% if request.user.is_staff %}
+          <a href="{% url 'admin:teoria_material_change' mat.pk %}" target="_blank">[x]</a>
+        {% endif %}
+        <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
         <span>Sugerido por: {{ mat.autor }}</span></li>
       {% endfor %}
       </ol>
@@ -80,7 +85,11 @@
       <h3>Preguntas</h3>
       <ol>
       {% for preg in preguntas_extra %}
-      <li><p class="in-line-preg"> {{ preg.pregunta }}</p>
+      <li>
+      {% if request.user.is_staff %}
+        <a href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
+      {% endif %}
+      <p class="in-line-preg"> {{ preg.pregunta }}</p>
       <span class="in-line-preg">Sugerido por: {{ preg.autor }}</span></li>
       {% endfor %}
       </ol>
