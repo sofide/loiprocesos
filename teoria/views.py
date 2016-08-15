@@ -22,8 +22,10 @@ def ver_unidad(request, unidad_pk):
     texts = Text.objects.filter(reference = "teoria")
 
     preguntas = Pregunta.objects.filter(unidad=unidad, vigente=True)
-
     material = Material.objects.filter(unidad=unidad, vigente=True)
+
+    material_extra = Material.objects.filter(unidad=unidad, vigente=False)
+    preguntas_extra = Pregunta.objects.filter(unidad=unidad, vigente=False)
 
     if request.user.groups.filter(name="staff procesos").exists():
         staff = True
@@ -33,6 +35,8 @@ def ver_unidad(request, unidad_pk):
     return render(request, 'teoria/ver_unidad.html', {'unidad': unidad,
                                                       'preguntas': preguntas,
                                                       'material': material,
+                                                      'preguntas_extra': preguntas_extra,
+                                                      'material_extra': material_extra,
                                                       'staff': staff,
                                                       'texts': texts,
                                                       })

@@ -62,9 +62,29 @@
         </ol>
       {% else %}
         <p>Todavía no hay preguntas cargadas para esta unidad</p>
+      {% endif %}
     </div>
   </div>
-
-    {% endif %}
+  <div class="row">
+    <h2> Otros recursos sugeridos: </h2>
+    <div class="col-sm-6">
+      <h3>Material</h3>
+      <ol>
+      {% for mat in material_extra %}
+        <li><a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
+        <span>Sugerido por: {{ mat.autor }}</span></li>
+      {% endfor %}
+      </ol>
+    </div>
+    <div class="col-sm-6">
+      <h3>Preguntas</h3>
+      <ol>
+      {% for preg in preguntas_extra %}
+      <li><p class="in-line-preg"> {{ preg.pregunta }}</p>
+      <span class="in-line-preg">Sugerido por: {{ preg.autor }}</span></li>
+      {% endfor %}
+      </ol>
+    </div>
+  </div>
 
 {% endblock %}

@@ -33,7 +33,7 @@ class Material(models.Model):
     autor = models.CharField(max_length=200, null=True, verbose_name="Sugerido por")
     fecha = models.DateField()
     vigente = models.BooleanField(default=True)
-    usuario = models.ForeignKey('auth.User', default=None, null=True)
+    usuario = models.ForeignKey('auth.User', default=None, null=True, blank=True)
     class Meta:
         ordering = ['autor', 'nombre']
         index_together = ['autor', 'nombre']
