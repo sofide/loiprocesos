@@ -18,7 +18,7 @@ class Pregunta(models.Model):
     autor = models.CharField(max_length=200, verbose_name="Sugerido por")
     fecha = models.DateField()
     vigente = models.BooleanField(default=True)
-    usuario = models.ForeignKey('auth.User', default=None, null=True)
+    usuario = models.ForeignKey('auth.User', default=None, null=True, blank=True)
     class Meta:
         ordering = ['autor', 'pregunta']
         index_together = ['autor', 'pregunta']
