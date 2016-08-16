@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
-from teoria.models import Unidad, Pregunta, Material
+from teoria.models import Unidad, Pregunta, Material, Voto
 from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
 
 from base.models import Text
@@ -145,3 +148,49 @@ def edit_text(request, text_pk=None):
         'base/edit_text.html',
         {'form': form, 'reference': 'Teoría',}
     )
+
+
+@login_required
+def voto_recurso(request, voto, recurso, rec_pk):
+    if recurso == "m":
+        recurso = get_object_or_404(Material, pk=rec_pk)
+        material = True
+    else:
+        recurso = get_object_or_404(Pregunta, pk=rec_pk)
+        material = False
+
+    if request.user.grupos.all().exists():
+        grupo = request.user.grupos.first()
+    else:
+        grupo = None
+
+    if material:
+        if grupo:
+            if Voto.objects.filter(grupo=grupo, material=recurso).exists():
+                return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
+        else:
+            if Voto.objects.filter(usuario=request.user, material=recurso).exists():
+                return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
+
+        if voto == "+":
+            voto = Voto(grupo=grupo,
+                        usuario=request.user,
+                        material=recurso,
+                        voto=1)
+            voto.save()
+    else:
+        if grupo:
+            if Voto.objects.filter(grupo=grupo, pregunta=recurso).exists():
+                return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
+        else:
+            if Voto.objects.filter(usuario=request.user, pregunta=recurso).exists():
+                return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
+
+        if voto == "+":
+            voto = Voto(grupo=grupo,
+                        usuario=request.user,
+                        pregunta=recurso,
+                        voto=1)
+            voto.save()
+
+    return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
