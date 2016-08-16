@@ -91,7 +91,9 @@
 
 
             <div id="page-content-wrapper" class="body-procesos">
-
+              {% if warn_base %}
+                <p class="errorlist"> {{ warn_base }} </p>
+              {% endif %}
               {% block content %}
               {% endblock %}
             </div>
