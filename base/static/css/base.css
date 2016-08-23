@@ -24,6 +24,11 @@ a:hover {
   text-decoration: none;
 }
 
+.foot {
+  padding-left: 30px;
+  font-size: 8px;
+}
+
 .dark-link {
   color: #404040;
 }
