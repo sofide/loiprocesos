@@ -103,9 +103,9 @@
           <li>
             <p>
               {% if request.user.is_staff %}
-                <a href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
+                <a class="in-line-preg" href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
               {% endif %}
-              <p class="in-line-preg"> {{ preg.pregunta }}</p>
+              {{ preg.pregunta }}
               <span class="in-line-preg">Sugerido por: {{ preg.autor }}</span>
             </p>
           </li>
