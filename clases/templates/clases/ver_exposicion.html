@@ -58,23 +58,24 @@
           {{ cont_preg_form.as_p }}
           <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
         </form>
+      {% endif %}
 
-        {% if preguntas_agrupadas %}
-          <h2> Preguntas: </h2>
-          {% for grupo, preguntas in preguntas_agrupadas %}
-            <h4>{{grupo}}</h4>
-            <ul>
-              {% for pregunta in preguntas %}
-                <li>
-                  {{ pregunta }}
-                  {% if pregunta.mejor %}
-                    <span>Seleccionada como Mejor</span>
-                  {% endif %}
-                </li>
-              {% endfor %}
-            </ul>
-          {% endfor %}
-        {% endif %}
+      {% if preguntas_agrupadas %}
+        <h2> Preguntas: </h2>
+        {% for grupo, preguntas in preguntas_agrupadas %}
+          <h4>{{grupo}}</h4>
+          <ul>
+            {% for pregunta in preguntas %}
+              <li>
+                {{ pregunta }}
+                {% if pregunta.mejor %}
+                  <span>Seleccionada como Mejor</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      {% endif %}
 
 
         <script type="text/javascript">
@@ -84,7 +85,7 @@
                 });
             });
         </script>
-      {% endif %}
+
     </div>
     <div class="col-sm-4">
       {% if tiempos_graph %}
