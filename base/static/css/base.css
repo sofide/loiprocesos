@@ -52,6 +52,21 @@ span {
   font-size: 10px;
 }
 
+.positivo {
+  font-size: 15px;
+  color: green;
+}
+
+.negativo {
+  color: red;
+  font-size: 15px;
+}
+
+.votaste {
+  background-color: #ecf0f4;
+  color: #404040;
+}
+
 .relleno {
   width: 100%;
   padding: 20px;

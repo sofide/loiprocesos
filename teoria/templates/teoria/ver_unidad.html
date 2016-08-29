@@ -24,9 +24,29 @@
       <div class="inline-title">
         <h3>Material de estudio:</h3>
         {% if material %}
-          <ol>
-            {% for mat in material %}
-              <li class="big">
+          <ol class="list-group">
+            {% for mat, votos, votado in material %}
+              <li class="big list-group-item">
+                <span class="badge">Votos: {{ votos }}</span>
+                {% if user.is_authenticated %}
+                  <span class="badge votaste">
+                    {% if votado %}
+                      {% if votado.voto > 0 %}
+                        Votaste <span class="glyphicon glyphicon-ok positivo" ></span>
+                      {% else %}
+                        Votaste <span class="glyphicon glyphicon-remove negativo" ></span>
+                      {% endif %}
+                    {% else %}
+                      Votá:
+                      <a href=" {% url 'voto_recurso' '+' 'm' mat.id %}">
+                        <span class="glyphicon glyphicon-ok positivo" ></span>
+                      </a>
+                      <a href=" {% url 'voto_recurso' '-' 'm' mat.id %}">
+                        <span class="glyphicon glyphicon-remove negativo" ></span>
+                      </a>
+                    {% endif %}
+                  </span>
+                {% endif %}
                 <p class="in-line-p">
                   {% if staff %}
                     <a href="{% url 'del_recurso' 'm' mat.id %}" class="in-line-p"><span class="in-line-p">[quitar] </span></a>

@@ -25,7 +25,23 @@ def ver_unidad(request, unidad_pk):
     texts = Text.objects.filter(reference = "teoria")
 
     preguntas = Pregunta.objects.filter(unidad=unidad, vigente=True)
-    material = Material.objects.filter(unidad=unidad, vigente=True)
+    if request.user.is_authenticated():
+        if request.user.grupos.all().exists():
+            material = [(m,
+                        sum(v.voto for v in Voto.objects.filter(material=m)),
+                        Voto.objects.filter(material=m, grupo=request.user.grupos.first()).first())
+                            for m in Material.objects.filter(unidad=unidad, vigente=True)]
+        else:
+            material = [(m,
+                        sum(v.voto for v in Voto.objects.filter(material=m)),
+                        Voto.objects.filter(material=m, usuario=request.user).first())
+                            for m in Material.objects.filter(unidad=unidad, vigente=True)]
+    else:
+        material = [(m,
+                    sum(v.voto for v in Voto.objects.filter(material=m)),
+                    False)
+                        for m in Material.objects.filter(unidad=unidad, vigente=True)]
+
 
     material_extra = Material.objects.filter(unidad=unidad, vigente=False)
     preguntas_extra = Pregunta.objects.filter(unidad=unidad, vigente=False)
@@ -173,11 +189,15 @@ def voto_recurso(request, voto, recurso, rec_pk):
                 return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
 
         if voto == "+":
-            voto = Voto(grupo=grupo,
-                        usuario=request.user,
-                        material=recurso,
-                        voto=1)
-            voto.save()
+            valor = 1
+        else:
+            valor = -1
+
+        voto = Voto(grupo=grupo,
+                    usuario=request.user,
+                    material=recurso,
+                    voto=valor)
+        voto.save()
     else:
         if grupo:
             if Voto.objects.filter(grupo=grupo, pregunta=recurso).exists():
@@ -187,10 +207,13 @@ def voto_recurso(request, voto, recurso, rec_pk):
                 return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
 
         if voto == "+":
-            voto = Voto(grupo=grupo,
-                        usuario=request.user,
-                        pregunta=recurso,
-                        voto=1)
-            voto.save()
+            valor = 1
+        else:
+            valor = -1
+        voto = Voto(grupo=grupo,
+                    usuario=request.user,
+                    pregunta=recurso,
+                    voto=valor)
+        voto.save()
 
     return HttpResponseRedirect(reverse('ver_unidad', args=[recurso.unidad.pk]))
