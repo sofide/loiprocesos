@@ -5,6 +5,7 @@ from grupos.models import Grupo, Pertenencia
 from grupos.forms import DescripcionGrupoForm, PertenenciaForm
 from clases.models import Exposicion
 from clases.graphics import tiempo_expo_graphic
+from django.contrib.auth.models import User
 
 
 def grupos_home(request, año=datetime.datetime.now().strftime('%Y')):
@@ -17,6 +18,7 @@ def ver_grupo(request, grupo_pk):
     grupo = get_object_or_404(Grupo, pk=grupo_pk)
     exposiciones = Exposicion.objects.filter(grupo=grupo).select_related('tp', 'clase')
     ultima_exp = exposiciones[0]
+    integrantes = grupo.integrantes.all()
 
     expos_chart = [x for x in exposiciones if x.start_expo and x.start_ques and x.finish_expo]
 
@@ -46,6 +48,7 @@ def ver_grupo(request, grupo_pk):
                                                      'pertenece': pertenece,
                                                      'pertenencia_form': form,
                                                      'tiempos_chart': tiempos_chart,
+                                                     'integrantes': integrantes,
                                                      })
 
 

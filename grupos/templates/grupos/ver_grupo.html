@@ -35,6 +35,16 @@
   </div>
   <div class="col-sm-12">
     <div class="row">
+      {% if integrantes %}
+      <h5>Integrantes:</h5>
+        <ul>
+        {% for int in integrantes %}
+          <li><p>{{int}}</p></li>
+        {% endfor %}
+      {% else %}
+        <p> Este grupo todavía no tiene integrantes </p>
+      {% endif %}
+    <div class="row">
       {% if grupo.descripcion %}
         <div class="panel panel-primary">
           <div class="panel-body">
