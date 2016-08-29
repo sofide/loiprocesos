@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-
+<div class="col-sm-12">
   {% if perms.clases %}
     <h2> Editar descripción de la página "{{reference}}" </h2>
     <form method="POST" class="extended-form">{% csrf_token %}
@@ -12,6 +12,6 @@
   {% else %}
     <h4> No tenés autorización para editar los trabajos prácticos </h4>
   {% endif %}
-
+</div>
 
 {% endblock %}

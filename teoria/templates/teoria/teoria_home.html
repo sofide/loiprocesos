@@ -11,16 +11,20 @@
       {% endif %}
     </div>
   </div>
-  {% if texts %}
-    {% for text in texts %}
-      {{text | safe}}
-    {% endfor %}
-  {% endif %}
+  <div class="col-sm-12">
+    {% if texts %}
+      {% for text in texts %}
+        {{text | safe}}
+      {% endfor %}
+    {% endif %}
+  </div>
   <div class="row">
+    <div class="col-sm-12">
       {% for unidad in unidades %}
         <h3><a href="{% url 'ver_unidad' unidad.id %}"> {{ unidad }} </a></h3>
         <p>{{ unidad.descripcion | safe }}</p>
       {% endfor %}
+    </div>
   </div>
 
 {% endblock %}

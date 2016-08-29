@@ -2,105 +2,119 @@
 {% load admin_urls %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-sm-8">
-      <h1>{{ unidad }}</h1>
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-8">
+        <h1>{{ unidad }}</h1>
+      </div>
+    </div>
+    {% if texts %}
+      {% for text in texts %}
+        {{text | safe}}
+      {% endfor %}
+    {% endif %}
+    <div class="row">
+      <a class="btn-soft inline-title" href="{% url 'add_recurso' 'm' %}">
+        {% if staff %}
+          Agregar
+        {% else %}
+          Sugerir
+        {% endif %}
+      </a>
+      <div class="inline-title">
+        <h3>Material de estudio:</h3>
+        {% if material %}
+          <ol>
+            {% for mat in material %}
+              <li class="big">
+                <p class="in-line-p">
+                  {% if staff %}
+                    <a href="{% url 'del_recurso' 'm' mat.id %}" class="in-line-p"><span class="in-line-p">[quitar] </span></a>
+                  {% endif %}
+                  <a href="{{ mat.link }}" target="_blank" class="dark-link in-line-p"> {{ mat.nombre }} </a>
+                  <span class="in-line-p">Sugerido por: {{ mat.autor }}</span>
+                </p>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p>Todavía no hay mateial de estudio cargdo para esta unidad</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row">
+      <a class="btn-soft inline-title" href="{% url 'add_recurso' 'p' %}">
+        {% if staff %}
+          Agregar
+        {% else %}
+          Sugerir
+        {% endif %}
+      </a>
+      <div class="inline-title">
+        <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
+        {% if preguntas %}
+          <ol>
+            {% for preg in preguntas %}
+              <li>
+                <p class="in-line-p">
+                  {% if staff %}
+                    <a href="{% url 'del_recurso' 'p' preg.id %}"><span> [quitar] </span></a>
+                  {% endif %}
+                  <p class="in-line-p"> {{ preg.pregunta }}</p>
+                  <span class="in-line-p"> Sugerido por: {{ preg.autor }}</span>
+                </p>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p>Todavía no hay preguntas cargadas para esta unidad</p>
+        {% endif %}
+      </div>
     </div>
   </div>
-  {% if texts %}
-    {% for text in texts %}
-      {{text | safe}}
-    {% endfor %}
-  {% endif %}
-  <div class="row">
-    <a class="btn-soft inline-title" href="{% url 'add_recurso' 'm' %}">
-      {% if staff %}
-        Agregar
-      {% else %}
-        Sugerir
-      {% endif %}
-    </a>
-    <div class="inline-title">
-      <h3>Material de estudio:</h3>
-      {% if material %}
-        <ol>
-          {% for mat in material %}
-            <li class="big">
-              {% if staff %}
-                <a href="{% url 'del_recurso' 'm' mat.id %}"><span>[quitar] </span></a>
-              {% endif %}
-              <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
-              <span>Sugerido por: {{ mat.autor }}</span>
-            </li>
+  <div class="col-sm-12">
+    <div class="row">
+      <h2> Otros recursos sugeridos: </h2>
+      <div class="col-sm-6">
+        <h3>Material</h3>
+        {% if material_extra %}
+          <ol>
+          {% for mat in material_extra %}
+              <li>
+                <p>
+                  {% if request.user.is_staff %}
+                    <a href="{% url 'admin:teoria_material_change' mat.pk %}" target="_blank">[x]</a>
+                  {% endif %}
+                  <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
+                  <span>Sugerido por: {{ mat.autor }}</span>
+                </p>
+              </li>
           {% endfor %}
-        </ol>
-      {% else %}
-        <p>Todavía no hay mateial de estudio cargdo para esta unidad</p>
-      {% endif %}
-    </div>
-  </div>
-  <div class="row">
-    <a class="btn-soft inline-title" href="{% url 'add_recurso' 'p' %}">
-      {% if staff %}
-        Agregar
-      {% else %}
-        Sugerir
-      {% endif %}
-    </a>
-    <div class="inline-title">
-      <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
-      {% if preguntas %}
-        <ol>
-          {% for preg in preguntas %}
-            <li>
-              {% if staff %}
-                <a href="{% url 'del_recurso' 'p' preg.id %}" class="in-line-preg"><span>[quitar] </span></a>
+          </ol>
+        {% else %}
+          <p>Toavía no hay preguntas sugeridas para esta unidad</p>
+        {% endif %}
+      </div>
+      <div class="col-sm-6">
+        <h3>Preguntas</h3>
+        {% if preguntas_extra %}
+          <ol>
+          {% for preg in preguntas_extra %}
+          <li>
+            <p>
+              {% if request.user.is_staff %}
+                <a href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
               {% endif %}
               <p class="in-line-preg"> {{ preg.pregunta }}</p>
               <span class="in-line-preg">Sugerido por: {{ preg.autor }}</span>
-            </li>
+            </p>
+          </li>
           {% endfor %}
-        </ol>
-      {% else %}
-        <p>Todavía no hay preguntas cargadas para esta unidad</p>
-      {% endif %}
-    </div>
-  </div>
-  <div class="row">
-    <h2> Otros recursos sugeridos: </h2>
-    <div class="col-sm-6">
-      <h3>Material</h3>
-      {% if material_extra %}
-        <ol>
-        {% for mat in material_extra %}
-          <li>
-          {% if request.user.is_staff %}
-            <a href="{% url 'admin:teoria_material_change' mat.pk %}" target="_blank">[x]</a>
-          {% endif %}
-          <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
-          <span>Sugerido por: {{ mat.autor }}</span></li>
-        {% endfor %}
-        </ol>
-      {% else %}
-        <p>Toavía no hay preguntas sugeridas para esta unidad</p>
-      {% endif %}
-    </div>
-    <div class="col-sm-6">
-      <h3>Preguntas</h3>
-      {% if preguntas_extra %}
-        <ol>
-        {% for preg in preguntas_extra %}
-        <li>
-        {% if request.user.is_staff %}
-          <a href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
+          </ol>
+        {% else %}
+          <p>Toavía no hay preguntas sugeridas para esta unidad</p>
         {% endif %}
-        <p class="in-line-preg"> {{ preg.pregunta }}</p>
-        <span class="in-line-preg">Sugerido por: {{ preg.autor }}</span></li>
-        {% endfor %}
-        </ol>
-      {% else %}
-        <p>Toavía no hay preguntas sugeridas para esta unidad</p>
-      {% endif %}
+      </div>
     </div>
   </div>
 

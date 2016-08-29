@@ -1,8 +1,9 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+<div class="col-sm-12">
   <div class="row">
-    <div class="col-sm-8" id="agregar">
+    <div class="col-sm-8">
       <h1>{{ grupo }}</h1>
       {% if editar_form %}
         <form method="POST" class="extended-form">{% csrf_token %}
@@ -32,31 +33,34 @@
       {% endif %}
     </div>
   </div>
-  <div class="row">
-    {% if grupo.descripcion %}
-      <div class="panel panel-primary">
-        <div class="panel-body">
-          {{ grupo.descripcion | safe }}
+  <div class="col-sm-12">
+    <div class="row">
+      {% if grupo.descripcion %}
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            {{ grupo.descripcion | safe }}
+          </div>
         </div>
-      </div>
+      {% endif %}
+    </div>
+    {% if tiempos_chart %}
+     {{tiempos_chart.0 | safe}}
+     {{tiempos_chart.1 | safe}}
     {% endif %}
+
+    <div class="row">
+      {% if user.is_authenticated %}
+        {% if grupo.id_carpeta_drive %}
+        <h2> Trabajos prácticos en curso: </h2>
+        <iframe src="https://drive.google.com/embeddedfolderview?id={{ grupo.id_carpeta_drive }}"
+                style="width:100%; height:600px; border:0;"></iframe>
+        {% endif %}
+      {% else %}
+        <p> Para ver los trabajos prácticos de este grupo tenés que estar logueado</p>
+      {% endif %}
+    </div>
   </div>
-  {% if tiempos_chart %}
-   {{tiempos_chart.0 | safe}}
-   {{tiempos_chart.1 | safe}}
-  {% endif %}
-
-
-  {% if user.is_authenticated %}
-    {% if grupo.id_carpeta_drive %}
-    <h2> Trabajos prácticos en curso: </h2>
-    <iframe src="https://drive.google.com/embeddedfolderview?id={{ grupo.id_carpeta_drive }}"
-            style="width:100%; height:600px; border:0;"></iframe>
-    {% endif %}
-  {% else %}
-    <p> Para ver los trabajos prácticos de este grupo tenés que estar logueado</p>
-  {% endif %}
-
+</div>
 
 
 {% endblock %}

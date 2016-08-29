@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+<div class="col-sm-12">
 
   {% if perms.clases %}
     <div class="panel panel-primary">
@@ -17,5 +18,5 @@
     <h4> No tenés autorización para editar los trabajos prácticos </h4>
   {% endif %}
 
-
+</div>
 {% endblock %}

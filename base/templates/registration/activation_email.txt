@@ -7,4 +7,6 @@ Estamos necesitando que actives tu cuenta, para eso hacé click en el siguiente 
 
 http://{{ site.domain }}{% url 'registration_activate' activation_key %}
 
+Recordá que tu nombre de usuario para registrarte es {{ user }}
+
 Este link es válido por  {{ expiration_days }} días.

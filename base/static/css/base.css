@@ -41,7 +41,7 @@ a:hover {
   font-size: 18px;
 }
 
-.in-line-preg {
+.in-line-p {
   display: inline-block;
 }
 
@@ -240,6 +240,7 @@ a.menu-button:hover {
 /* Configs del cuerpo */
 .container-loi {
   padding-top: 150px;
+  padding-right: 15px;
 }
 
 .body-procesos {
