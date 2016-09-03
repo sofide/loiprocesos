@@ -20,8 +20,8 @@ def tiempo_expo_graphic(exposiciones):
                          "{} - TP{}".format(exposicion.clase, exposicion.tp.numero)])
     else:
         for exposicion in exposiciones:
-            expo.extend(['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa),
-                         'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.empresa)])
+            expo.extend(['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.producto),
+                         'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.producto)])
 
 
     data = {
