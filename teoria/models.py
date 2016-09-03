@@ -50,4 +50,4 @@ class Voto(models.Model):
     pregunta = models.ForeignKey(Pregunta, null=True, blank=True)
     material = models.ForeignKey(Material, null=True, blank=True)
     voto = models.IntegerField()
-    fecha = models.DateField(default=timezone.now())
+    fecha = models.DateField(default=timezone.now)
