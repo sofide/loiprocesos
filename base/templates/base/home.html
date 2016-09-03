@@ -3,14 +3,20 @@
 {% block content %}
   <div class="col-sm-6">
     <h2> Última clase: {{ clase }}</h2>
-    {% if tiempos %}
-      {{ tiempos.0 | safe }}
-      {{ tiempos.1 | safe }}
-    {% endif %}
-    {% if preguntas %}
-      {{ preguntas.0 | safe }}
-      {{ preguntas.1 | safe }}
-    {% endif %}
+    <div class="row">
+      <div class="col-sm-6">
+        {% if tiempos %}
+          {{ tiempos.0 | safe }}
+          {{ tiempos.1 | safe }}
+        {% endif %}
+      </div>
+      <div class="col-sm-6">
+        {% if preguntas %}
+          {{ preguntas.0 | safe }}
+          {{ preguntas.1 | safe }}
+        {% endif %}
+      </div>
+    </div>
     <a href="{% url 'clases_home' %}" class="big"> Ver todas las clases </a>
 
     <a href="{% url 'trabajos_practicos' %}">
