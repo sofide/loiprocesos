@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from clases.models import Clase, Exposicion
-from clases.graphics import tiempo_expo_graphic
+from clases.models import Clase, Exposicion, ContadorPreguntas
+from clases.graphics import tiempo_expo_graphic, q_pregs_expos_graphic
 
 from teoria.models import Unidad
 
@@ -16,15 +16,21 @@ def home(request):
     expo_chart = [expo for expo in exposiciones
                        if expo.start_expo and expo.start_ques and expo.finish_expo]
 
+    preg_chart = [expo for expo in exposiciones
+                       if ContadorPreguntas.objects.filter(exposicion=expo).exists()]
+
     if expo_chart:
         tiempos = tiempo_expo_graphic(expo_chart)
 
+    if preg_chart:
+        preguntas = q_pregs_expos_graphic(preg_chart)
 
     unidades = Unidad.objects.all()
 
     return render(request, 'base/home.html', {'clase': clase,
                                               'tiempos': tiempos,
                                               'unidades': unidades,
+                                              'preguntas': preguntas,
                                              })
 
 

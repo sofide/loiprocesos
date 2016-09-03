@@ -7,6 +7,10 @@
       {{ tiempos.0 | safe }}
       {{ tiempos.1 | safe }}
     {% endif %}
+    {% if preguntas %}
+      {{ preguntas.0 | safe }}
+      {{ preguntas.1 | safe }}
+    {% endif %}
     <a href="{% url 'clases_home' %}" class="big"> Ver todas las clases </a>
 
     <a href="{% url 'trabajos_practicos' %}">

@@ -52,3 +52,31 @@ def q_pregs_graphic(exposicion):
     )
 
     return components(bar, CDN)
+
+
+def q_pregs_expos_graphic(exposiciones):
+    preguntas_raw = ContadorPreguntas.objects.filter(exposicion__in=exposiciones)
+    tags = []
+    expos = []
+    preguntas = []
+    for e in exposiciones:
+        for p in preguntas_raw:
+            if p.exposicion == e:
+                tags.append(p.preguntador.producto)
+                expos.append(str(e))
+                preguntas.append(p.cantidad)
+    data = {
+        'tags': tags,
+        'expos': expos,
+        'preguntas': preguntas,
+    }
+
+    bar = Bar(data, values='preguntas', label='expos', stack='tags',
+        title="Preguntas realizadas",
+        plot_width=300, plot_height=500,
+        )
+
+    bar.legend.background_fill_alpha = 0.5
+    bar.legend.border_line_color = "#404040"
+
+    return components(bar, CDN)
