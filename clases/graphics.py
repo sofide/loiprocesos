@@ -20,8 +20,7 @@ def tiempo_expo_graphic(exposiciones):
                          "{} - TP{}".format(exposicion.clase, exposicion.tp.numero)])
     else:
         for exposicion in exposiciones:
-            expo.extend(['G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.producto),
-                         'G{} - {}'.format(exposicion.grupo.numero, exposicion.grupo.producto)])
+            expo.extend([exposicion.short_string(), exposicion.short_string()])
 
 
     data = {
@@ -67,7 +66,7 @@ def q_pregs_expos_graphic(exposiciones):
         for p in preguntas_raw:
             if p.exposicion == e:
                 tags.append(p.preguntador.producto)
-                expos.append(str(e))
+                expos.append(e.short_string())
                 preguntas.append(p.cantidad)
     data = {
         'tags': tags,
