@@ -43,6 +43,13 @@ class Exposicion(models.Model):
     def __str__(self):
         return '{} - G{} - TP {}'.format(str(self.clase), self.grupo.numero, self.tp)
 
+    def short_string(self):
+        return '{}/{} - G{} - TP {}'.format(self.clase.fecha.day,
+                                            self.clase.fecha.day,
+                                            self.grupo.numero,
+                                            self.tp.numero,
+                                            )
+
 
 class Pregunta(models.Model):
     exposicion = models.ForeignKey(Exposicion, related_name='preguntas')
