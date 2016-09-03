@@ -25,7 +25,7 @@ def tiempo_expo_graphic(exposiciones):
 
 
     data = {
-        'tags': [t for t in ('T. exposicion', 'T. pregutnas')*len(exposiciones)],
+        'tags': [t for t in ('T. exposicion', 'T. preguntas')*len(exposiciones)],
         'expo': expo,
         'tiempos': tiempos,
     }
@@ -33,6 +33,10 @@ def tiempo_expo_graphic(exposiciones):
         palette=['#2980B9', '#404040'], title="Tiempos de exposicion",
         plot_width=300, plot_height=500, legend="bottom_center"
         )
+
+    bar.legend.background_fill_alpha = 0.5
+    bar.legend.border_line_color = "#404040"
+
     return components(bar, CDN)
 
 
