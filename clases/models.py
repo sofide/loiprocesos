@@ -45,7 +45,7 @@ class Exposicion(models.Model):
 
     def short_string(self):
         return '{}/{} - G{} - TP {}'.format(self.clase.fecha.day,
-                                            self.clase.fecha.day,
+                                            self.clase.fecha.month,
                                             self.grupo.numero,
                                             self.tp.numero,
                                             )
