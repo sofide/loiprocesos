@@ -220,6 +220,26 @@ def edit_tp(request, tp_pk=None):
         {'form': form}
     )
 
+
+def ver_tp(request, tp_pk):
+    tp = get_object_or_404(TP, pk=tp_pk)
+    exposiciones = Exposicion.objects.filter(tp=tp_pk)
+    preg_grupo = [Pregunta.objects.filter(exposicion__in=exposiciones,
+                                          exposicion__grupo=grupo)
+                  for grupo in set(expo.grupo
+                                   for expo in exposiciones)]
+
+    return render(
+        request,
+        'clases/ver_tp.html',
+        {'tp': tp,
+         'exposiciones': exposiciones,
+         'preguntas': preg_grupo,
+        }
+    )
+
+
+
 def edit_text(request, text_pk=None):
     if text_pk:
         tp = get_object_or_404(Text, pk=text_pk)
