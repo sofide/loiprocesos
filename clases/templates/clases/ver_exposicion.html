@@ -8,18 +8,18 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-12">
 
       <div class="container-fluid section">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-3">
             <a href="{% url 'ver_grupo' exposicion.grupo.id %}">
               <div class="row relleno">
                 Ver G{{exposicion.grupo.numero}} - {{exposicion.grupo.producto}}
               </div>
             </a>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-3">
             <a href="{% url 'ver_tp' exposicion.tp.id %}">
               <div class="row relleno">
                 Ver {{exposicion.tp}}
@@ -80,7 +80,7 @@
         {% else %}
          <p>Todavía no se registraron las cantidades de preguntas por grupos hechas en clases</p>
         {% endif %}
-          
+
       </div>
 
       <div class="container-fluid section">
@@ -123,18 +123,22 @@
         </script>
 
     </div>
-    <div class="col-sm-4">
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
       {% if tiempos_graph %}
         {{tiempos_graph.0|safe}}
         {{tiempos_graph.1|safe}}
       {% endif %}
-
+    </div>
+    <div class="col-sm-6">
       {% if preguntas_graph %}
         {{preguntas_graph.0|safe}}
         {{preguntas_graph.1|safe}}
       {% endif %}
     </div>
-
   </div>
+
 </div>
 {% endblock %}
