@@ -12,11 +12,11 @@
 
   <h3>Listado de clases</h3>
   {% if clases %}
-  <ul>
+  <div class="list-group">
     {% for clase in clases %}
-    <li><a href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a></li>
+      <a type="button" class="list-group-item" href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a>
     {% endfor %}
-  </ul>
+  </div>
   {% endif %}
   {% if perms.clases %}
     <p> Agregar otra clase!: </p>

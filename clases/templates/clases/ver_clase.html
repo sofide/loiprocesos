@@ -7,11 +7,11 @@
   <h2>Hay {{ exposiciones|length }} exposicion/es en esta clase </h2>
 
   {% if exposiciones %}
-    <ul>
+    <div class="list-group">
     {% for exp in exposiciones %}
-    <li><a href="{% url 'ver_exposicion' exp.id %}"> {{ exp }} </a></li>
+        <a type="button" class="list-group-item" href="{% url 'ver_exposicion' exp.id %}"> {{ exp }} </a>
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
   {% if perms.clases %}
     <p> Agregar otra exposicion a esta clase!: </p>
