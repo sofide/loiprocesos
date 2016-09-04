@@ -27,10 +27,16 @@
     <div class="col-sm-12">
       {% if perms.teoria %}
         <a class="btn-blue inline-title" href="{% url 'edit_ud' %}">Agregar Unidad</a>
+        <br />
+        <br />
       {% endif %}
       {% for unidad in unidades %}
-        <h3><a href="{% url 'ver_unidad' unidad.id %}"> {{ unidad }} </a></h3>
-        <p>{{ unidad.descripcion | safe }}</p>
+        <div class="list-group">
+          <a href="{% url 'ver_unidad' unidad.id %}" class="list-group-item">
+            <h4 class="list-group-item-heading">{{ unidad }}</h4>
+            <p class="list-group-item-text">{{ unidad.descripcion | safe }}</p>
+          </a>
+        </div>
       {% endfor %}
     </div>
   </div>
