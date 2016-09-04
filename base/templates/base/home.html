@@ -1,66 +1,101 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <div class="col-sm-6">
-    <h2><a href="{% url 'ver_clase' clase.id %}"> Última clase: {{ clase }}</a></h2>
-    <div class="row">
-      <div class="col-sm-6">
-        {% if tiempos %}
-          {{ tiempos.0 | safe }}
-          {{ tiempos.1 | safe }}
-        {% endif %}
+  <div class="col-sm-12">
+    <!-- TITLE -->
+    <div class="container section">
+      <h1 class="home">¡Bienvenido a la cátedra Procesos Industriales!</h1>
+    </div>
+
+    <!-- FOTO PORTADA
+    <div class="container section">
+      <div class="row">
+        <img class="photo-home" src="https://lh3.googleusercontent.com/hAGqR4NrzkwV_fAFTErUmwG02IYNr684DojoQIYTcETOGe7lAk7l6bvjLNI2vEKS5_uxYWofpkJqKdgbCSdpk5U5DxarPG-m79ScUwHBJhcNHke9TjDQ_Vtj9xoeOOIE6HES0wTjY_xGUn9bR470EIrFLrgLhG4WLpLWbXJBmbxn8uhfw2cHJX4f5fs_auHUj7EkpVbEpzF1hiPxs5K88f1xOiF5g--ar5UOSMWAXERSern24b8cY3MzIwx915e-KM_OXLBqRxOr8pJQx8LV-8_R-FStupL269dbVCXFTL5HwvrLaz4B5m5n9i2yUUXhaqAjPsKbNSPexu9pboF1MbTKkHR3SoN91PgWW9mNKARkWovj6gwoci-7sIGDEfYJyp7AN05j5TElFFfmC9k8KK6k2B2C0ywmzZzQBXlltrRAVSIsBJxXLuwFife5MDgFyZmcelyzOxvlcoR_BVDgHFC-bDhlCIx3MNPnSZ8vnWgS1pqOclSuNMYZZnFq86lVvRmc0aMunRNuHW4iqjVHi5gR6QFoUhjIrR3N6Ti5dYR2p9C-4DF0aHboClx94nFsk1uEw8qLG28Rvb7Gb7X8T6LAQ0-iHHo=w829-h622-no">
       </div>
-      <div class="col-sm-6">
-        {% if preguntas %}
-          {{ preguntas.0 | safe }}
-          {{ preguntas.1 | safe }}
-        {% endif %}
+    </div> -->
+
+    <!-- TEORÍA -->
+    <div class="container section">
+      <h2 class="home"><a href="{% url 'teoria_home'%}"> Teoría de Procesos Industriales: </a></h2>
+      <p class="home">¡Aprendé mirando!</p>
+      <p class="home">¿Querés conocer más sobre algún proceso en particular? Mirá los videos y el material que seleccionamos.</p>
+      <p class="home">¿Conocés nuevos materiales o proyectos que nos puedan servir para aprender mejor? ¡Animate a sugerirlo en nuestras unidades!</p>
+      {% for u in unidades %}
+        <div class="list-group">
+          <a type="button" class="list-group-item" href="{% url 'ver_unidad' u.id %}"> {{ u }}</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- PRACTICA DE PROCESOS -->
+    <div class="container section">
+      <h2 class="home">Práctica de Procesos Industriales</h2>
+      <p class="home"> La práctica de procesos industriales tiene como objetivo formar profesionales con conocimientos de las problemáticas reales de las empresas de la región. </p>
+      <p class="home"> ¿Te animás a conocer todo lo que se puede lograr en un cuatrimestre? ¡Mirá los trabajos finales de los años anteriores y conocé los grupos de trabajo de este año!</p>
+      <div class="row">
+        <div class="col-sm-6">
+          <a href="{% url 'grupos_home' %}">
+            <div class="row relleno">
+              Ver grupos y TP finales
+            </div>
+          </a>
+        </div>
+        <div class="col-sm-6">
+          <a href="{% url 'trabajos_practicos' %}">
+            <div class="row relleno">
+              Ver guía de trabajos prácticos
+            </div>
+          </a>
+        </div>
       </div>
     </div>
-    <h2><a href="{% url 'ver_clase' clase_ant.id %}"> Clase anterior: {{ clase_ant }}</a></h2>
-    <div class="row">
-      <div class="col-sm-6">
-        {% if tiempos_ant %}
-          {{ tiempos_ant.0 | safe }}
-          {{ tiempos_ant.1 | safe }}
-        {% endif %}
-      </div>
-      <div class="col-sm-6">
-        {% if preguntas_ant %}
-          {{ preguntas_ant.0 | safe }}
-          {{ preguntas_ant.1 | safe }}
-        {% endif %}
+
+    <!-- ÚLTIMA CLASE -->
+    <div class="container section">
+      <h3 class="home"><a href="{% url 'ver_clase' clase.id %}"> Última clase: {{ clase }}</a></h3>
+      <div class="row">
+        <div class="col-sm-6">
+          {% if tiempos %}
+            {{ tiempos.0 | safe }}
+            {{ tiempos.1 | safe }}
+          {% endif %}
+        </div>
+        <div class="col-sm-6">
+          {% if preguntas %}
+            {{ preguntas.0 | safe }}
+            {{ preguntas.1 | safe }}
+          {% endif %}
+        </div>
       </div>
     </div>
-    <a href="{% url 'clases_home' %}" class="big">
-      <div class="row relleno">
-        Ver todas las clases
+
+    <!-- CLASE ANTERIOR -->
+    <div class="container section">
+      <h3 class="home"><a href="{% url 'ver_clase' clase_ant.id %}"> Clase anterior: {{ clase_ant }}</a></h3>
+      <div class="row">
+        <div class="col-sm-6">
+          {% if tiempos_ant %}
+            {{ tiempos_ant.0 | safe }}
+            {{ tiempos_ant.1 | safe }}
+          {% endif %}
+        </div>
+        <div class="col-sm-6">
+          {% if preguntas_ant %}
+            {{ preguntas_ant.0 | safe }}
+            {{ preguntas_ant.1 | safe }}
+          {% endif %}
+        </div>
       </div>
-    </a>
-    <br />
-    <a href="{% url 'trabajos_practicos' %}">
-      <div class="row relleno">
-        Ver guía de trabajos prácticos
-      </div>
-    </a>
-  </div>
-  <div class="col-sm-6">
-    <img class="photo-home" src="https://lh3.googleusercontent.com/hAGqR4NrzkwV_fAFTErUmwG02IYNr684DojoQIYTcETOGe7lAk7l6bvjLNI2vEKS5_uxYWofpkJqKdgbCSdpk5U5DxarPG-m79ScUwHBJhcNHke9TjDQ_Vtj9xoeOOIE6HES0wTjY_xGUn9bR470EIrFLrgLhG4WLpLWbXJBmbxn8uhfw2cHJX4f5fs_auHUj7EkpVbEpzF1hiPxs5K88f1xOiF5g--ar5UOSMWAXERSern24b8cY3MzIwx915e-KM_OXLBqRxOr8pJQx8LV-8_R-FStupL269dbVCXFTL5HwvrLaz4B5m5n9i2yUUXhaqAjPsKbNSPexu9pboF1MbTKkHR3SoN91PgWW9mNKARkWovj6gwoci-7sIGDEfYJyp7AN05j5TElFFfmC9k8KK6k2B2C0ywmzZzQBXlltrRAVSIsBJxXLuwFife5MDgFyZmcelyzOxvlcoR_BVDgHFC-bDhlCIx3MNPnSZ8vnWgS1pqOclSuNMYZZnFq86lVvRmc0aMunRNuHW4iqjVHi5gR6QFoUhjIrR3N6Ti5dYR2p9C-4DF0aHboClx94nFsk1uEw8qLG28Rvb7Gb7X8T6LAQ0-iHHo=w829-h622-no">
-      <a href="{% url 'grupos_home' %}">
+    </div>
+    <!-- CLASES ANTERIORES -->
+    <div class="container section">
+      <a href="{% url 'clases_home' %}" class="big">
         <div class="row relleno">
-          Ver grupos de trabajo y Trabajos Finales de años anteriores
+          Ver todas las clases
         </div>
       </a>
-    <h2><a href="{% url 'teoria_home'%}"> Teoría de procesos industriales: </a></h2>
-    {% for u in unidades %}
-      <div class="list-group">
-        <a type="button" class="list-group-item" href="{% url 'ver_unidad' u.id %}"> {{ u }}</a>
-      </div>
-    {% endfor %}
+    </div>
+
+
   </div>
-
-
-
-
-
 {% endblock %}

@@ -140,8 +140,20 @@ div #agregar {
   text-align: right;
 }
 
+/* HOME */
 .photo-home {
   width: 100%;
+}
+
+.home {
+  text-align: center;
+  color: #2980B9;
+}
+
+p.home {
+  color: #404040;
+  text-align: left;
+
 }
 
 
