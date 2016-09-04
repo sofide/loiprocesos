@@ -2,72 +2,87 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <div class="row">
-    <div class="col-sm-8">
-      <h1>{{ grupo }}</h1>
-      {% if editar_form %}
-        <form method="POST" class="extended-form">{% csrf_token %}
-          {{ editar_form.as_p }}
-          <trix-editor input="id_descripcion"></trix-editor>
-          <input type="submit" class="save btn btn-default" value="Guardar cambios"></input>
-        </form>
-
-      {% else %}
-        {% if pertenece %}
-          <a class="btn2" href="{% url 'edit_grupo' grupo.pk %}">Editar descripcion del grupo</a>
+  <div class="container section">
+    <div class="row">
+      <div class="col-sm-8">
+        <!-- TITLE AND MEMBERS -->
+          <h1>{{ grupo }}</h1>
+          {% if integrantes %}
+          <p>Integrantes:
+            {% for int in integrantes %}
+              {{int}},
+            {% endfor %}
+          </p>
+          {% else %}
+            <p> Este grupo todavía no tiene integrantes </p>
+          {% endif %}
+        </div>
+      <div class="col-sm-4">
+      <!-- FORMULARIO PARA AGREGAR INTEGRANTES -->
+        {% if perms.grupos.can_edit_pertenencia %}
+          {% if pertenencia_form %}
+            <div class="side-form">
+              <p>Agregar usuario a este grupo</p>
+              <form method="POST">{% csrf_token %}
+                {{ pertenencia_form.as_p }}
+                <input type="submit" class="save btn btn-default" value="Cargar!"></input>
+              </form>
+            </div>
+          {% endif %}
         {% endif %}
-      {% endif %}
-    </div>
-    <div class="col-sm-4">
-      {% if perms.grupos.can_edit_pertenencia %}
-        {% if pertenencia_form %}
-          <div class="side-form">
-            <p>Agregar usuario a este grupo</p>
-            <form method="POST">{% csrf_token %}
-              {{ pertenencia_form.as_p }}
-              <input type="submit" class="save btn btn-default" value="Cargar!"></input>
-            </form>
-          </div>
-        {% endif %}
-
-      {% endif %}
+      </div>
     </div>
   </div>
   <div class="col-sm-12">
     <div class="row">
-      {% if integrantes %}
-      <h5>Integrantes:</h5>
-        <ul>
-        {% for int in integrantes %}
-          <li><p>{{int}}</p></li>
-        {% endfor %}
-      {% else %}
-        <p> Este grupo todavía no tiene integrantes </p>
-      {% endif %}
-    <div class="row">
-      {% if grupo.descripcion %}
-        <div class="panel panel-primary">
-          <div class="panel-body">
-            {{ grupo.descripcion | safe }}
-          </div>
-        </div>
-      {% endif %}
-    </div>
-    {% if tiempos_chart %}
-     {{tiempos_chart.0 | safe}}
-     {{tiempos_chart.1 | safe}}
-    {% endif %}
+      <!-- PARA EDITAR EL GRUPO -->
+      <div class="container section">
+        {% if editar_form %}
+          <form method="POST" class="extended-form">{% csrf_token %}
+            {{ editar_form.as_p }}
+            <trix-editor input="id_descripcion"></trix-editor>
+            <input type="submit" class="save btn btn-default" value="Guardar cambios"></input>
+          </form>
 
-    <div class="row">
-      {% if user.is_authenticated %}
-        {% if grupo.id_carpeta_drive %}
-        <h2> Trabajos prácticos en curso: </h2>
-        <iframe src="https://drive.google.com/embeddedfolderview?id={{ grupo.id_carpeta_drive }}"
-                style="width:100%; height:600px; border:0;"></iframe>
+        {% else %}
+          {% if pertenece %}
+            <a class="btn-blue" href="{% url 'edit_grupo' grupo.pk %}">Editar descripcion del grupo</a>
+          {% endif %}
         {% endif %}
-      {% else %}
-        <p> Para ver los trabajos prácticos de este grupo tenés que estar logueado</p>
-      {% endif %}
+        </div>
+        <div class="container section">
+        {% if grupo.descripcion %}
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              {{ grupo.descripcion | safe }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <!-- GRAFICOS -->
+    <div class="container section">
+      <div class="row">
+        {% if tiempos_chart %}
+         {{tiempos_chart.0 | safe}}
+         {{tiempos_chart.1 | safe}}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- TRABAJOS EN CURSO -->
+    <div class="container section">
+      <div class="row">
+        {% if user.is_authenticated %}
+          {% if grupo.id_carpeta_drive %}
+          <h2> Trabajos prácticos en curso: </h2>
+          <iframe src="https://drive.google.com/embeddedfolderview?id={{ grupo.id_carpeta_drive }}"
+                  style="width:100%; height:600px; border:0;"></iframe>
+          {% endif %}
+        {% else %}
+          <p> Para ver los trabajos prácticos de este grupo tenés que estar logueado</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
