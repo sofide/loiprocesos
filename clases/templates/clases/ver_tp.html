@@ -36,12 +36,12 @@
     </div>
     <div class="col-sm-4">
       {% if exposiciones %}
-        <h3>Exposiciones realizadas de este TP:</h3>
+        <h3>Exposiciones:</h3>
+        <div class="list-group">
         {% for expo in exposiciones %}
-          <div class="list-group">
             <a type="button" class="list-group-item" href="{% url 'ver_exposicion' expo.id %}"> {{ expo }}</a>
-          </div>
         {% endfor %}
+        </div>
       {% else %}
         <p>Todavía no hubo ninguna exposicion de este </p>
       {% endif %}
