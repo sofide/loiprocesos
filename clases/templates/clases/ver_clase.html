@@ -20,9 +20,21 @@
       <button type="submit" class="save btn btn-default">Cargar!</button>
     </form>
   {% endif %}
-  {% if tiempos_chart %}
-    {{tiempos_chart.0|safe}}
-    {{tiempos_chart.1|safe}}
-  {% endif %}
+
+  <div class="row">
+    <div class="col-sm-6">
+      {% if tiempos %}
+        {{ tiempos.0 | safe }}
+        {{ tiempos.1 | safe }}
+      {% endif %}
+    </div>
+    <div class="col-sm-6">
+      {% if preguntas %}
+        {{ preguntas.0 | safe }}
+        {{ preguntas.1 | safe }}
+      {% endif %}
+    </div>
+  </div>
+
 </div>
 {% endblock %}

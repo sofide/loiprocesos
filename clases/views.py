@@ -9,7 +9,7 @@ from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           AddPreguntasForm, EditTPForm)
 from clases.models import (Clase, Exposicion, Pregunta, ContadorPreguntas, TP,
                            Pregunta)
-from clases.graphics import tiempo_expo_graphic, q_pregs_graphic
+from clases.graphics import tiempo_expo_graphic, q_pregs_graphic, q_pregs_expos_graphic
 from grupos.models import Pertenencia
 from base.models import Text
 from base.forms import EditTextForm
@@ -40,12 +40,19 @@ def ver_clase(request, pk):
                                      .order_by('grupo__numero')\
                                      .select_related('grupo')
 
-    tiempos_chart = None
-    expo_chart = [expo for expo in exposiciones
+    tiempos = None
+    tiempos_chart = [expo for expo in exposiciones
                        if expo.start_expo and expo.start_ques and expo.finish_expo]
 
-    if expo_chart:
-        tiempos_chart = tiempo_expo_graphic(expo_chart)
+    if tiempos_chart:
+        tiempos = tiempo_expo_graphic(tiempos_chart)
+
+    preguntas = None
+    preg_chart = [expo for expo in exposiciones
+                       if ContadorPreguntas.objects.filter(exposicion=expo).exists()]
+
+    if preg_chart:
+        preguntas = q_pregs_expos_graphic(preg_chart)
 
     if request.method == "POST":
             form = ExposicionForm(request.POST)
@@ -60,8 +67,11 @@ def ver_clase(request, pk):
     return render(
         request,
         'clases/ver_clase.html',
-        {'clase': clase, 'exposiciones': exposiciones, 'form': form,
-         'tiempos_chart': tiempos_chart,
+        {'clase': clase,
+         'exposiciones': exposiciones,
+         'form': form,
+         'tiempos': tiempos,
+         'preguntas': preguntas,
          }
     )
 
