@@ -1,30 +1,38 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-sm-8">
+<div class="col-sm-12">
       <h1 class="inline-title">Teoría de Procesos industriales</h1>
-    </div>
-    <div class="col-sm-4">
-      {% if perms.teoria %}
-        <a class="btn2 inline-title" href="{% url 'edit_ud' %}">Agregar Unidad</a>
+  <div class="row">
+    <div class="col-sm-12">
+      {% if texts %}
+        {% for text in texts %}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              {{text | safe}}
+              {% if perms.teoria %}
+                <a class="btn-soft inline-title" href="{% url 'edit_text' text.pk%}">Editar texto</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% if perms.teoria %}
+          <a class="btn-dark inline-title" href="{% url 'edit_text' %}">Agregar texto</a>
+        {% endif %}
       {% endif %}
     </div>
   </div>
-  <div class="col-sm-12">
-    {% if texts %}
-      {% for text in texts %}
-        {{text | safe}}
-      {% endfor %}
-    {% endif %}
-  </div>
   <div class="row">
     <div class="col-sm-12">
+      {% if perms.teoria %}
+        <a class="btn-blue inline-title" href="{% url 'edit_ud' %}">Agregar Unidad</a>
+      {% endif %}
       {% for unidad in unidades %}
         <h3><a href="{% url 'ver_unidad' unidad.id %}"> {{ unidad }} </a></h3>
         <p>{{ unidad.descripcion | safe }}</p>
       {% endfor %}
     </div>
   </div>
-
+</div>
 {% endblock %}

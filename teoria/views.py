@@ -144,7 +144,7 @@ def del_recurso(request, recurso, pk):
 
 def edit_text(request, text_pk=None):
     if text_pk:
-        tp = get_object_or_404(Text, pk=text_pk)
+        text = get_object_or_404(Text, pk=text_pk)
     else:
         text = None
 
