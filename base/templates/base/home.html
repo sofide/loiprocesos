@@ -132,7 +132,7 @@
     </div>
     <div class="container section">
       <a href="{% url 'teoria_home' %}" class="big">
-        <div class="row relleno">
+        <div class="row relleno tercio">
           Ver todas las unidades
         </div>
       </a>
@@ -168,16 +168,20 @@
       <h3 class="home"><a href="{% url 'ver_clase' clase.id %}"> Última clase: {{ clase }}</a></h3>
       <div class="row">
         <div class="col-sm-6">
-          {% if tiempos %}
-            {{ tiempos.0 | safe }}
-            {{ tiempos.1 | safe }}
-          {% endif %}
+          <div class="center-content">
+            {% if tiempos %}
+              {{ tiempos.0 | safe }}
+              {{ tiempos.1 | safe }}
+            {% endif %}
+          </div>
         </div>
         <div class="col-sm-6">
-          {% if preguntas %}
-            {{ preguntas.0 | safe }}
-            {{ preguntas.1 | safe }}
-          {% endif %}
+          <div class="center-content">
+            {% if preguntas %}
+              {{ preguntas.0 | safe }}
+              {{ preguntas.1 | safe }}
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
@@ -187,23 +191,27 @@
       <h3 class="home"><a href="{% url 'ver_clase' clase_ant.id %}"> Clase anterior: {{ clase_ant }}</a></h3>
       <div class="row">
         <div class="col-sm-6">
-          {% if tiempos_ant %}
-            {{ tiempos_ant.0 | safe }}
-            {{ tiempos_ant.1 | safe }}
-          {% endif %}
+          <div class="center-content">
+            {% if tiempos_ant %}
+              {{ tiempos_ant.0 | safe }}
+              {{ tiempos_ant.1 | safe }}
+            {% endif %}
+          </div>
         </div>
         <div class="col-sm-6">
-          {% if preguntas_ant %}
-            {{ preguntas_ant.0 | safe }}
-            {{ preguntas_ant.1 | safe }}
-          {% endif %}
+          <div class="center-content">
+            {% if preguntas_ant %}
+              {{ preguntas_ant.0 | safe }}
+              {{ preguntas_ant.1 | safe }}
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
-    <!-- CLASES ANTERIORES -->
+    <!-- TODAS LAS CLASES -->
     <div class="container section">
       <a href="{% url 'clases_home' %}" class="big">
-        <div class="row relleno">
+        <div class="row relleno tercio">
           Ver todas las clases
         </div>
       </a>
