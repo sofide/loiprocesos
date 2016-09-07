@@ -21,20 +21,26 @@
     </form>
   {% endif %}
 
+  <!-- CHARTS -->
   <div class="row">
     <div class="col-sm-6">
-      {% if tiempos %}
-        {{ tiempos.0 | safe }}
-        {{ tiempos.1 | safe }}
-      {% endif %}
+      <div class="center-content">
+        {% if tiempos %}
+          {{ tiempos.0 | safe }}
+          {{ tiempos.1 | safe }}
+        {% endif %}
+      </div>
     </div>
     <div class="col-sm-6">
-      {% if preguntas %}
-        {{ preguntas.0 | safe }}
-        {{ preguntas.1 | safe }}
-      {% endif %}
+      <div class="center-content">
+        {% if preguntas %}
+          {{ preguntas.0 | safe }}
+          {{ preguntas.1 | safe }}
+        {% endif %}
+      </div>
     </div>
   </div>
+  <!-- /CHARTS -->
 
 </div>
 {% endblock %}
