@@ -68,9 +68,9 @@ span {
 }
 
 .relleno {
-  width: 100%;
   padding: 20px;
   margin: 10px;
+  width: 100%;
   background-color: #2980B9;
   text-align: center;
   font-size: 20px;
@@ -141,31 +141,50 @@ div #agregar {
 }
 
 /* HOME */
-.photo-home {
-  width: 100%;
+
+#carousel-loi {
+  width: 960;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.img-home {
-  background-image: url(/static/img/procesos_blur.png);
-  height: 671px;
-  width: 894px;
+.buttons-carousel {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top: 20%;
+  z-index: 10;
 }
 
 .home-img-btn {
-  height: 120px;
-  width: 180px;
-  margin-top: 200px;
-  border: 5px solid white;
-  border-radius: 4px;
-  opacity: 0.5;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 300px;
+  max-width: 80%;
+  max-height: 80%;
+  opacity: 1;
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 .home-img-btn:hover {
   opacity: 0.5;
 }
 
-.home-img-btn p {
+.home-btn-text {
+  font-size: 40px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
   vertical-align: middle;
+  width: 260px;
+  max-width: 100%;
+  text-align: center;
   color: white;
   font-weight: bold;
   opacity: 1;
@@ -175,6 +194,10 @@ div #agregar {
 .home {
   text-align: center;
   color: #2980B9;
+}
+
+.home-subtitle {
+  padding-top: 140px;
 }
 
 p.home {
