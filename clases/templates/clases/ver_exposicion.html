@@ -3,23 +3,23 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <div class="container-fluid section">
+  <div class="container section">
     <h1>Exposición: {{ exposicion }}</h1>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
 
-      <div class="container-fluid section">
+      <div class="container section">
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-6">
             <a href="{% url 'ver_grupo' exposicion.grupo.id %}">
               <div class="row relleno">
                 Ver G{{exposicion.grupo.numero}} - {{exposicion.grupo.producto}}
               </div>
             </a>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-6">
             <a href="{% url 'ver_tp' exposicion.tp.id %}">
               <div class="row relleno">
                 Ver {{exposicion.tp}}
@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div class="container-fluid section">
+      <div class="container section">
         <div class="panel panel-primary">
           <div class="panel-body">
             {% if exposicion.start_expo %}
@@ -62,7 +62,24 @@
         </div>
       </div>
 
-      <div class="container-fluid section">
+      <div class="container section">
+        <div class="row">
+          <div class="col-sm-6">
+            {% if tiempos_graph %}
+              {{tiempos_graph.0|safe}}
+              {{tiempos_graph.1|safe}}
+            {% endif %}
+          </div>
+          <div class="col-sm-6">
+            {% if preguntas_graph %}
+              {{preguntas_graph.0|safe}}
+              {{preguntas_graph.1|safe}}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="container section">
         <h2>Preguntas realizadas en esta exposicion: </h2>
         <ul>
         {% if q_preguntas %}
@@ -83,7 +100,7 @@
 
       </div>
 
-      <div class="container-fluid section">
+      <div class="container section">
         {% if perms.clases %}
           <h2> Agregar preguntas por grupo a esta clase: </h2>
 
@@ -94,7 +111,7 @@
         {% endif %}
       </div>
 
-      <div class="container-fluid section">
+      <div class="container section">
         {% if preguntas_agrupadas %}
           <h2> Preguntas: </h2>
           {% for grupo, preguntas in preguntas_agrupadas %}
@@ -113,32 +130,16 @@
         {% endif %}
       </div>
 
-
-        <script type="text/javascript">
-            $(function () {
-                $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({
-                    format: 'DD/MM/YYYY HH:mm:ss'
-                });
-            });
-        </script>
-
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-6">
-      {% if tiempos_graph %}
-        {{tiempos_graph.0|safe}}
-        {{tiempos_graph.1|safe}}
-      {% endif %}
-    </div>
-    <div class="col-sm-6">
-      {% if preguntas_graph %}
-        {{preguntas_graph.0|safe}}
-        {{preguntas_graph.1|safe}}
-      {% endif %}
-    </div>
-  </div>
+  <script type="text/javascript">
+      $(function () {
+          $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({
+              format: 'DD/MM/YYYY HH:mm:ss'
+          });
+      });
+  </script>
 
 </div>
 {% endblock %}

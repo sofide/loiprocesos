@@ -145,6 +145,33 @@ div #agregar {
   width: 100%;
 }
 
+.img-home {
+  background-image: url(/static/img/procesos_blur.png);
+  height: 671px;
+  width: 894px;
+}
+
+.home-img-btn {
+  height: 120px;
+  width: 180px;
+  margin-top: 200px;
+  border: 5px solid white;
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+.home-img-btn:hover {
+  opacity: 0.5;
+}
+
+.home-img-btn p {
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  opacity: 1;
+}
+
+
 .home {
   text-align: center;
   color: #2980B9;
