@@ -25,12 +25,16 @@
     <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.js"></script>
     <script type="text/javascript" src="{% static 'vendor/js/trix.js' %}"></script>
 
+    <!--boostrap mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
   </head>
   <body>
+    <!-- PANEL SUPERIOR VIEJO
     <nav class="navbar navbar-fixed-top">
       <div class="container-fluid">
         <div class = "row">
-          <div class="col-xs-12 col-sm-6 col-md-8">
+          <div class="col-md-8">
             <a href="{% url 'home' %}"class="ph-title"><h1>LOI Procesos!</h1></a>
             <p> Cátedra Procesos Industriales - Licenciatura en Organización Industrial - UTN Facultad Regional Rafaela </p>
             <div class="row">
@@ -42,7 +46,7 @@
                 <a href= "{% url 'clases_home' %}" class="seccion"> Clases </a>
             </div>
           </div>
-          <div class="col-xs-6 col-md-4">
+          <div class="col-md-4">
             <div class="in-line-account">
               {% if user.is_authenticated %}
 
@@ -61,11 +65,56 @@
                 <p id="ph-link">  |  </p>
                 <a href="/accounts/register" class="account-request" id="ph-link"><p>Registrarme</p></a>
               {% endif %}
-          </div>
+            </div>
           </div>
         </div>
       </div>
     </nav>
+    /PANELK SUPERIOR VIEJO-->
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'home' %}">LOI Procesos!</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'teoria_home' %}"> Teoría </a></li>
+            <li><a href= "{% url 'grupos_home' %}"> Grupos </a></li>
+            <li><a href= "{% url 'clases_home' %}"> Clases </a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+
+              <li>
+                <a href="{% url 'ver_grupo' user.grupos.first.pk %}">
+                  {{ user.username }}
+                  {% if user.grupos.first.pk %}
+                    | {{ user.grupos.first }}
+                  {% endif %}
+                  </a>
+                </li>
+              <li><a href="/accounts/logout">Salir</a></li>
+
+            {% else %}
+              <li><a href="/accounts/login">Iniciar Sesión</a></li>
+              <li><a href="/accounts/register">Registrarme</a></li>
+            {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <!-- /NAVBAR -->
 
     <div class="container-fluid">
       <div class="row">
