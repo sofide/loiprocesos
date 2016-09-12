@@ -100,11 +100,6 @@ def ver_exposicion(request, expo_pk):
     if ContadorPreguntas.objects.filter(exposicion=exposicion):
         preguntas_graph = q_pregs_graphic(exposicion)
 
-    cont_preg_form = ContadorPreguntasForm(exposicion.grupo)
-    st_expo_form = StartExpoForm()
-    st_ques_form = StartQuestionsForm()
-    fi_expo_form = FinishExpoForm()
-
     if request.method == "POST":
 
         if 'pregunta' in request.POST:
@@ -132,6 +127,11 @@ def ver_exposicion(request, expo_pk):
             if fi_expo_form.is_valid():
                 exposicion.finish_expo = fi_expo_form.cleaned_data["finish_expo"]
                 exposicion.save()
+
+    cont_preg_form = ContadorPreguntasForm(exposicion.grupo)
+    st_expo_form = StartExpoForm()
+    st_ques_form = StartQuestionsForm()
+    fi_expo_form = FinishExpoForm()
 
     side_bar = [
         ["Ver más expos del {}".format(exposicion.clase),
