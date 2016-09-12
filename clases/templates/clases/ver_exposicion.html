@@ -16,17 +16,31 @@
       <!--buttons-->
       <div class="container section">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-xs-12 col-sm-6">
             <a href="{% url 'ver_grupo' exposicion.grupo.id %}">
-              <div class="row relleno">
+              <div class="relleno">
                 Ver G{{exposicion.grupo.numero}} - {{exposicion.grupo.producto}}
               </div>
             </a>
           </div>
-          <div class="col-sm-6">
+          <div class="col-xs-12 col-sm-6">
             <a href="{% url 'ver_tp' exposicion.tp.id %}">
-              <div class="row relleno">
+              <div class="relleno">
                 Ver {{exposicion.tp}}
+              </div>
+            </a>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <a href="{% url 'ver_clase' exposicion.clase.id %}">
+              <div class="relleno">
+                Exposiciones del {{exposicion.clase}}
+              </div>
+            </a>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <a href="{% url 'preguntas'%}">
+              <div class="relleno">
+                Cargar preguntas
               </div>
             </a>
           </div>
