@@ -3,13 +3,17 @@
 
 {% block content %}
 <div class="col-sm-12">
+  <!--title-->
   <div class="container section">
     <h1>Exposición: {{ exposicion }}</h1>
   </div>
+  <!--/title-->
+
 
   <div class="row">
     <div class="col-sm-12">
 
+      <!--buttons-->
       <div class="container section">
         <div class="row">
           <div class="col-sm-6">
@@ -28,7 +32,9 @@
           </div>
         </div>
       </div>
+      <!--/buttons-->
 
+      <!--tiempos-->
       <div class="container section">
         <div class="panel panel-primary">
           <div class="panel-body">
@@ -61,7 +67,9 @@
           </div>
         </div>
       </div>
+      <!--/tiempos-->
 
+      <!--gráficos-->
       <div class="container section">
         <div class="row">
           <div class="col-sm-6">
@@ -78,7 +86,9 @@
           </div>
         </div>
       </div>
+      <!--/graficos-->
 
+      <!--cantidad de preguntas-->
       <div class="container section">
         <h2>Preguntas realizadas en esta exposicion: </h2>
         <ul>
@@ -110,7 +120,9 @@
           </form>
         {% endif %}
       </div>
+      <!--/cantidad de preguntas-->
 
+      <!--preguntas por grupos-->
       <div class="container section">
         {% if preguntas_agrupadas %}
           <h2> Preguntas: </h2>
@@ -129,6 +141,7 @@
           {% endfor %}
         {% endif %}
       </div>
+      <!--/preguntas por grupos-->
 
     </div>
   </div>
