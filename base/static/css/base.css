@@ -83,6 +83,12 @@ span {
   margin-right: auto;
 }
 
+@media (max-width: 767px) {
+  .tercio {
+    width: 80%;
+  }
+}
+
 .section {
   margin-bottom: 30px;
 }
@@ -168,6 +174,7 @@ div #agregar {
   position: absolute;
   top: 20%;
   z-index: 10;
+  max-height: 100%;
 }
 
 .home-img-btn {
@@ -200,6 +207,15 @@ div #agregar {
   color: white;
   font-weight: bold;
   opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .home-img-btn {
+    height: inherit;
+  }
+  .home-btn-text {
+    font-size: 15px;
+  }
 }
 
 
