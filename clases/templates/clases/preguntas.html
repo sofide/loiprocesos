@@ -2,16 +2,20 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <div class="panel panel-primary">
-    <div class="panel-body">
-      {{ warn }}
+  <div class="container section">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        {{ warn }}
+      </div>
     </div>
   </div>
-  <form method="POST" class="extended-form">{% csrf_token %}
-    {{ preguntas_form.as_p }}
-    <input type="submit" name="save" class="save btn btn-default" value="Cargar"></input>
-    <input type="submit" name="add" class="save btn btn-default" value="Cargar y agregar otra"></input>
+  <div class="container section">
+    <form method="POST" class="extended-form">{% csrf_token %}
+      {{ preguntas_form.as_p }}
+      <input type="submit" name="save" class="save btn btn-default" value="Cargar"></input>
+      <input type="submit" name="add" class="save btn btn-default" value="Cargar y agregar otra"></input>
 
-  </form>
-<div class="col-sm-12">
+    </form>
+  </div>
+</div>
 {% endblock %}

@@ -2,16 +2,20 @@
 
 {% block content %}
 <div class="col-sm-12">
-  {% if perms.clases %}
-    <h2> Editar descripción de la página "{{reference}}" </h2>
-    <form method="POST" class="extended-form">{% csrf_token %}
-      {{ form.as_p }}
-      <trix-editor input="id_text"></trix-editor>
-      <input type="submit" class="save btn btn-default" value="Guardar cambios"></input>
-    </form>
-  {% else %}
-    <h4> No tenés autorización para editar los trabajos prácticos </h4>
-  {% endif %}
+  <div class="container section">
+    {% if perms.clases %}
+      <h2> Editar descripción de la página "{{reference}}" </h2>
+    </div>
+    <div class="container section">
+      <form method="POST" class="extended-form">{% csrf_token %}
+        {{ form.as_p }}
+        <trix-editor input="id_text"></trix-editor>
+        <input type="submit" class="save btn btn-default" value="Guardar cambios"></input>
+      </form>
+    {% else %}
+      <h4> No tenés autorización para editar los trabajos prácticos </h4>
+    {% endif %}
+  </div>
 </div>
 
 {% endblock %}

@@ -2,22 +2,28 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <h1>Clases de Procesos!!</h1>
-  {% if texts %}
-    {% for text in texts %}
-      {{text | safe}}
-    {% endfor %}
-  {% endif %}
-
-
-  <h3>Listado de clases</h3>
-  {% if clases %}
-  <div class="list-group">
-    {% for clase in clases %}
-      <a type="button" class="list-group-item" href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a>
-    {% endfor %}
+  <div class="container section">
+    <h1>Clases de Procesos!!</h1>
+    {% if texts %}
+      {% for text in texts %}
+        {{text | safe}}
+      {% endfor %}
+    {% endif %}
   </div>
-  {% endif %}
+
+  <div class="container section">
+    <h3>Listado de clases</h3>
+  </div>
+  <div class="container section">
+    {% if clases %}
+    <div class="list-group">
+      {% for clase in clases %}
+        <a type="button" class="list-group-item" href="{% url 'ver_clase' clase.id %}"> {{ clase }} </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="container section">
   {% if perms.clases %}
     <p> Agregar otra clase!: </p>
       <div class="row">
@@ -38,6 +44,7 @@
     </script>
 
   {% endif %}
+  </div>
 
-<div class="col-sm-12">
+</div>
 {% endblock %}
