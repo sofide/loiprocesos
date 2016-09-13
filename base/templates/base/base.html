@@ -97,12 +97,15 @@
             {% if user.is_authenticated %}
 
               <li>
-                <a href="{% url 'ver_grupo' user.grupos.first.pk %}">
-                  {{ user.username }}
-                  {% if user.grupos.first.pk %}
-                    | {{ user.grupos.first }}
-                  {% endif %}
+                {% if user.grupos.first.pk %}
+                  <a href="{% url 'ver_grupo' user.grupos.first.pk %}">
+                    {{ user.username }} | {{ user.grupos.first }}
                   </a>
+                {% else %}
+                  <a href="#">
+                    Bienvenido {{ user.username }}!
+                  </a>
+                {% endif %}
                 </li>
               <li><a href="/accounts/logout">Salir</a></li>
 
