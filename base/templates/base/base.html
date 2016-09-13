@@ -4,7 +4,7 @@
 <html>
   <head>
     <title>LOI Procesos</title>
-    <link rel="icon" href="http://drive.google.com/uc?export=view&id=0B6B1OSj94GfIcVhLQkJMQmxodkE">
+    <link rel="icon" type="image/png" href="{% static 'img/base/favicon.png' %}">
 
 
     <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
@@ -83,7 +83,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'home' %}">LOI Procesos!</a>
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'img/base/logo.png' %}" id="logo"/>
+          </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

@@ -263,6 +263,11 @@ p.home {
   padding: 10px;
 }
 
+#logo {
+  max-height: 40px;
+  vertical-align: top;
+}
+
 a.ph-title {
   color: white;
   text-decoration: none;
