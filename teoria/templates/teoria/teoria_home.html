@@ -2,42 +2,50 @@
 
 {% block content %}
 <div class="col-sm-12">
-      <h1 class="inline-title">Teoría de Procesos industriales</h1>
-  <div class="row">
-    <div class="col-sm-12">
-      {% if texts %}
-        {% for text in texts %}
-          <div class="panel panel-default">
-            <div class="panel-body">
-              {{text | safe}}
-              {% if perms.teoria %}
-                <a class="btn-soft inline-title" href="{% url 'edit_text' text.pk%}">Editar texto</a>
-              {% endif %}
+  <div class="container section">
+    <h1 class="inline-title">Teoría de Procesos industriales</h1>
+  </div>
+
+  <div class="container section">
+    <div class="row">
+      <div class="col-sm-12">
+        {% if texts %}
+          {% for text in texts %}
+            <div class="panel panel-default">
+              <div class="panel-body">
+                {{text | safe}}
+                {% if perms.teoria %}
+                  <a class="btn-soft inline-title" href="{% url 'edit_text' text.pk%}">Editar texto</a>
+                {% endif %}
+              </div>
             </div>
-          </div>
-        {% endfor %}
-      {% else %}
-        {% if perms.teoria %}
-          <a class="btn-dark inline-title" href="{% url 'edit_text' %}">Agregar texto</a>
+          {% endfor %}
+        {% else %}
+          {% if perms.teoria %}
+            <a class="btn-dark inline-title" href="{% url 'edit_text' %}">Agregar texto</a>
+          {% endif %}
         {% endif %}
-      {% endif %}
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-12">
-      {% if perms.teoria %}
-        <a class="btn-blue inline-title" href="{% url 'edit_ud' %}">Agregar Unidad</a>
-        <br />
-        <br />
-      {% endif %}
-      {% for unidad in unidades %}
-        <div class="list-group">
-          <a href="{% url 'ver_unidad' unidad.id %}" class="list-group-item">
-            <h4 class="list-group-item-heading">{{ unidad }}</h4>
-            <p class="list-group-item-text">{{ unidad.descripcion | safe }}</p>
-          </a>
-        </div>
-      {% endfor %}
+
+  <div class="container section">
+    <div class="row">
+      <div class="col-sm-12">
+        {% if perms.teoria %}
+          <a class="btn-blue inline-title" href="{% url 'edit_ud' %}">Agregar Unidad</a>
+          <br />
+          <br />
+        {% endif %}
+        {% for unidad in unidades %}
+          <div class="list-group">
+            <a href="{% url 'ver_unidad' unidad.id %}" class="list-group-item">
+              <h4 class="list-group-item-heading">{{ unidad }}</h4>
+              <p class="list-group-item-text">{{ unidad.descripcion | safe }}</p>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>

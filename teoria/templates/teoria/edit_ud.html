@@ -2,20 +2,26 @@
 
 {% block content %}
 <div class="col-sm-12">
-
   {% if perms.clases %}
-    <div class="panel panel-primary">
-      <div class="panel-body">
-        {{ warn }}
+    <div class="container section">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          {{ warn }}
+        </div>
       </div>
     </div>
-    <form method="POST" class="extended-input">{% csrf_token %}
-      {{ unidad_form.as_p }}
-      <trix-editor input="id_descripcion"></trix-editor>
-      <input type="submit" class="save btn2" value="Guardar cambios"></input>
-    </form>
+
+    <div class="container section">
+      <form method="POST" class="extended-input">{% csrf_token %}
+        {{ unidad_form.as_p }}
+        <trix-editor input="id_descripcion"></trix-editor>
+        <input type="submit" class="save btn2" value="Guardar cambios"></input>
+      </form>
+    </div>
   {% else %}
-    <h4> No tenés autorización para editar los trabajos prácticos </h4>
+    <div class="container section">
+      <h4> No tenés autorización para editar los trabajos prácticos </h4>
+    </div>
   {% endif %}
 
 </div>

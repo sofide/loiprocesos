@@ -2,14 +2,22 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <h1>Grupos del año {{ año }}:</h1>
-  <div class="list-group">
-    {% for grupo in grupos %}
-      <a type="button" class="list-group-item" href="{% url 'ver_grupo' grupo.id %}"> {{ grupo }} </a>
-    {% endfor %}
+  <div class="container section">
+    <h1>Grupos del año {{ año }}:</h1>
   </div>
-  <h1>Ver grupos y trabajos prácticos de años anteriores: </h1>
-  <iframe src="https://drive.google.com/embeddedfolderview?id=0B6B1OSj94GfIYXpjUGlRQWthRDQ#grid"
-          style="width:100%; height:600px; border:0;"></iframe>
+
+  <div class="container section">
+    <div class="list-group">
+      {% for grupo in grupos %}
+        <a type="button" class="list-group-item" href="{% url 'ver_grupo' grupo.id %}"> {{ grupo }} </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="container section">
+    <h1>Ver grupos y trabajos prácticos de años anteriores: </h1>
+    <iframe src="https://drive.google.com/embeddedfolderview?id=0B6B1OSj94GfIYXpjUGlRQWthRDQ#grid"
+            style="width:100%; height:600px; border:0;"></iframe>
+  </div>
 </div>
 {% endblock %}

@@ -2,17 +2,21 @@
 
 {% block content %}
 <div class="col-sm-12">
-  {% if is_material %}
-    <h2>Agregar material para mejorar el aprendizaje de una unidad</h2>
-  {% else %}
-    <h2>Agregar pregunta para mejorar la comprensión de una unidad</h2>
-  {% endif %}
+  <div class="container section">
+    {% if is_material %}
+      <h2>Agregar material para mejorar el aprendizaje de una unidad</h2>
+    {% else %}
+      <h2>Agregar pregunta para mejorar la comprensión de una unidad</h2>
+    {% endif %}
+  </div>
 
-  <form method="POST" class="extended-input">{% csrf_token %}
-    {{ material_form.as_p }}
-    <input type="submit" name="save" class="btn-dark" value="Cargar"></input>
-    <input type="submit" name="add" class="btn-dark" value="Cargar y agregar nuevo"></input>
+  <div class="container section">
+    <form method="POST" class="extended-input">{% csrf_token %}
+      {{ material_form.as_p }}
+      <input type="submit" name="save" class="btn-dark" value="Cargar"></input>
+      <input type="submit" name="add" class="btn-dark" value="Cargar y agregar nuevo"></input>
 
-  </form>
+    </form>
+  </div>
 </div>
 {% endblock %}

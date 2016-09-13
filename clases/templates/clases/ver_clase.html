@@ -2,45 +2,56 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <h1>Clase {{ clase }}</h1>
-
-  <h2>Hay {{ exposiciones|length }} exposicion/es en esta clase </h2>
-
-  {% if exposiciones %}
-    <div class="list-group">
-    {% for exp in exposiciones %}
-        <a type="button" class="list-group-item" href="{% url 'ver_exposicion' exp.id %}"> {{ exp }} </a>
-    {% endfor %}
-    </div>
-  {% endif %}
-  {% if perms.clases %}
-    <p> Agregar otra exposicion a esta clase!: </p>
-    <form method="POST" class="post-form">{% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="save btn btn-default">Cargar!</button>
-    </form>
-  {% endif %}
-
-  <!-- CHARTS -->
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="center-content">
-        {% if tiempos %}
-          {{ tiempos.0 | safe }}
-          {{ tiempos.1 | safe }}
-        {% endif %}
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="center-content">
-        {% if preguntas %}
-          {{ preguntas.0 | safe }}
-          {{ preguntas.1 | safe }}
-        {% endif %}
-      </div>
-    </div>
+  <div class="container section">
+    <h1>Clase {{ clase }}</h1>
   </div>
-  <!-- /CHARTS -->
+
+  <div class="container section">
+    <h2>Hay {{ exposiciones|length }} exposicion/es en esta clase </h2>
+  </div>
+
+  <div class="container section">
+    {% if exposiciones %}
+      <div class="list-group">
+      {% for exp in exposiciones %}
+          <a type="button" class="list-group-item" href="{% url 'ver_exposicion' exp.id %}"> {{ exp }} </a>
+      {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="container section">
+    {% if perms.clases %}
+      <p> Agregar otra exposicion a esta clase!: </p>
+      <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Cargar!</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <div class="container section">
+    <!-- CHARTS -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="center-content">
+          {% if tiempos %}
+            {{ tiempos.0 | safe }}
+            {{ tiempos.1 | safe }}
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="center-content">
+          {% if preguntas %}
+            {{ preguntas.0 | safe }}
+            {{ preguntas.1 | safe }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- /CHARTS -->
+  </div>
 
 </div>
 {% endblock %}

@@ -2,15 +2,22 @@
 
 {% block content %}
 <div class="col-sm-12">
-<h3> Bienvenido a Loiprocesos.com</h3>
+  <div class="container section">
+    <h3> Bienvenido a Loiprocesos.com</h3>
+  </div>
 
-<p>Registrate en Loiprocesos.com y solicitá autorización para acceder a todo el material y las funciones del sitio web.</p>
+  <div class="container section">
+    <p>Registrate en Loiprocesos.com y solicitá autorización para acceder a todo el material y las funciones del sitio web.</p>
 
-<form method="POST">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrarme!</button>
-</form>
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarme!</button>
+    </form>
+  </div>
 
-<p>¿Ya tenés una cuenta? </p><a href="/accounts/login">Logueate haciendo click aquí</a>
+  <div class="container section">
+    <p>¿Ya tenés una cuenta? </p><a href="/accounts/login">Logueate haciendo click aquí</a>
+  </div>
+
 </div>
 {% endblock %}

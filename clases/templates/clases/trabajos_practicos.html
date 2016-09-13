@@ -2,34 +2,38 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <div class="row">
-    <div class="col-sm-8">
-      <h1 class="inline-title"> Trabajos prácticos de Procesos Industriales</h1>
-    </div>
-    <div class="col-sm-4" id="agregar">
-      {% if perms.clases %}
-        <a class="btn-blue inline-title" href="{% url 'edit_tp' %}">Agregar Trabajo práctico</a>
-      {% endif %}
+  <div class="container section">
+    <div class="row">
+      <div class="col-sm-8">
+        <h1 class="inline-title"> Trabajos prácticos de Procesos Industriales</h1>
+      </div>
+      <div class="col-sm-4" id="agregar">
+        {% if perms.clases %}
+          <a class="btn-blue inline-title" href="{% url 'edit_tp' %}">Agregar Trabajo práctico</a>
+        {% endif %}
+      </div>
     </div>
   </div>
 
-  {% if trabajos %}
-    {% for trabajo in trabajos %}
-      <div class="row">
-        <div class="col-sm-12">
-        {% if perms.clases %}
-          <a class="btn-soft inline-title" href="{% url 'edit_tp' trabajo.id %}">Editar</a>
-        {% endif %}
+  <div class="container section">
+    {% if trabajos %}
+      {% for trabajo in trabajos %}
+        <div class="row">
+          <div class="col-sm-12">
+          {% if perms.clases %}
+            <a class="btn-soft inline-title" href="{% url 'edit_tp' trabajo.id %}">Editar</a>
+          {% endif %}
 
-          <div class="list-group">
-            <a href="{% url 'ver_tp' trabajo.id %}" class="list-group-item">
-              <h4 class="list-group-item-heading">{{ trabajo }}</h4>
-              <p class="list-group-item-text">{{ trabajo.descripcion | safe }}</p>
-            </a>
+            <div class="list-group">
+              <a href="{% url 'ver_tp' trabajo.id %}" class="list-group-item">
+                <h4 class="list-group-item-heading">{{ trabajo }}</h4>
+                <p class="list-group-item-text">{{ trabajo.descripcion | safe }}</p>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
-  {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

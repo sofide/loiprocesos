@@ -2,7 +2,8 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <h1>{{ tp }}</h1>
+  <div class="container section">
+    <h1>{{ tp }}</h1>
       <div class="panel panel-default">
         <div class="panel-body">
           {{ tp.descripcion | safe }}
@@ -11,42 +12,46 @@
           {% endif %}
         </div>
       </div>
+    </div>
 
-  <div class="row">
-    <div class="col-sm-8">
-      {% if preguntas %}
-        <h2>Preguntas realizadas a este TP:</h2>
-        {% for preg_agrupadas in preguntas %}
-          {% if preg_agrupadas %}
-            <h3>En el trabajo de:
-              <a href="{% url 'ver_grupo' preg_agrupadas.0.exposicion.grupo.id %}">
-                {{preg_agrupadas.0.exposicion.grupo}}
-              </a>
-            </h3>
-            <ul>
-            {% for preg in preg_agrupadas %}
-              <li>{{preg.pregunta}} <span> Preguntó {{preg.grupo}}</span></li>
+    <div class="container section">
+
+      <div class="row">
+        <div class="col xs-12 col-sm-4">
+          {% if exposiciones %}
+            <h3>Exposiciones:</h3>
+            <div class="list-group">
+            {% for expo in exposiciones %}
+                <a type="button" class="list-group-item" href="{% url 'ver_exposicion' expo.id %}"> {{ expo }}</a>
             {% endfor %}
-            </ul>
+            </div>
+          {% else %}
+            <p>Todavía no hubo ninguna exposicion de este </p>
           {% endif %}
-        {% endfor %}
-      {% else %}
-        <p>Todavía no hay preguntas cargadas a este TP</p>
-      {% endif %}
-    </div>
-    <div class="col-sm-4">
-      {% if exposiciones %}
-        <h3>Exposiciones:</h3>
-        <div class="list-group">
-        {% for expo in exposiciones %}
-            <a type="button" class="list-group-item" href="{% url 'ver_exposicion' expo.id %}"> {{ expo }}</a>
-        {% endfor %}
         </div>
-      {% else %}
-        <p>Todavía no hubo ninguna exposicion de este </p>
-      {% endif %}
+        <div class="col xs-12 col-sm-8">
+          {% if preguntas %}
+            <h2>Preguntas realizadas a este TP:</h2>
+            {% for preg_agrupadas in preguntas %}
+              {% if preg_agrupadas %}
+                <h3>En el trabajo de:
+                  <a href="{% url 'ver_grupo' preg_agrupadas.0.exposicion.grupo.id %}">
+                    {{preg_agrupadas.0.exposicion.grupo}}
+                  </a>
+                </h3>
+                <ul>
+                {% for preg in preg_agrupadas %}
+                  <li>{{preg.pregunta}} <span> Preguntó {{preg.grupo}}</span></li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <p>Todavía no hay preguntas cargadas a este TP</p>
+          {% endif %}
+        </div>
+      </div>
     </div>
-  </div>
 
 </div>
 {% endblock %}

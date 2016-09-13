@@ -2,19 +2,25 @@
 
 {% block content %}
 <div class="col-sm-12">
-  <h3> Bienvenido a Loiprocesos.com</h3>
-
-  <p>Logueate con tu cuenta:</p>
-
-  <form method="POST">{% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Acceder!</button>
-  </form>
-  <div class="row">
-    <p class="in-line-preg">¿Te olvidaste la contraseña?  -  </p><a class="in-line-preg" href="/accounts/password/reset">  Cambiar la contraseña</a>
+  <div class="container section">
+    <h3> Bienvenido a Loiprocesos.com</h3>
   </div>
-  <div class="row">
-    <p class="in-line-preg">¿Todavía no tenés cuenta?  -  </p><a class="in-line-preg" href="/accounts/register">  ¡Registrate ahora!</a>
+
+  <div class="container section">
+    <p>Logueate con tu cuenta:</p>
+
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Acceder!</button>
+    </form>
+  </div>
+  <div class="container section">
+    <div class="row">
+      <p class="in-line-preg">¿Te olvidaste la contraseña?  -  </p><a class="in-line-preg" href="/accounts/password/reset">  Cambiar la contraseña</a>
+    </div>
+    <div class="row">
+      <p class="in-line-preg">¿Todavía no tenés cuenta?  -  </p><a class="in-line-preg" href="/accounts/register">  ¡Registrate ahora!</a>
+    </div>
   </div>
 </div>
 {% endblock %}
