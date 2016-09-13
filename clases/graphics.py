@@ -2,6 +2,7 @@ from bokeh.plotting import figure
 from bokeh.embed import components
 from bokeh.resources import CDN
 from bokeh.charts import Bar, output_file, show, hplot
+from bokeh.charts.attributes import CatAttr
 
 from clases.models import Exposicion, ContadorPreguntas
 
@@ -28,9 +29,9 @@ def tiempo_expo_graphic(exposiciones):
         'expo': expo,
         'tiempos': tiempos,
     }
-    bar = Bar(data, values='tiempos', label='expo', stack='tags',
-        palette=['#2980B9', '#404040'], title="Tiempos de exposicion",
-        plot_width=300, plot_height=500, legend="bottom_center"
+    bar = Bar(data, values='tiempos', label=CatAttr(columns=['expo'], sort=False),
+        stack='tags', palette=['#2980B9', '#404040'], title="Tiempos de exposicion",
+        plot_width=300, plot_height=500, legend="bottom_center",
         )
 
     bar.legend.background_fill_alpha = 0.5
