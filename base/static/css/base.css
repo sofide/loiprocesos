@@ -264,8 +264,8 @@ p.home {
 }
 
 #logo {
-  max-height: 40px;
-  vertical-align: top;
+  max-height: 45px;
+  margin-top: -9px;
 }
 
 a.ph-title {
