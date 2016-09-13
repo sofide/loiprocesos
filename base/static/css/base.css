@@ -349,7 +349,8 @@ a.menu-button:hover {
 /* Configs del cuerpo */
 
 .body-procesos {
-  padding-left: 5px;
+  min-height: 800px;
+
 }
 
 .side-form {
