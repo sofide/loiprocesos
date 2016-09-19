@@ -61,6 +61,10 @@ class Pregunta(models.Model):
     def __str__(self):
         return self.pregunta
 
+    class Meta:
+        ordering = ['exposicion', 'grupo']
+        index_together = ['exposicion', 'grupo']
+
 
 class ContadorPreguntas(models.Model):
     exposicion = models.ForeignKey(Exposicion)
