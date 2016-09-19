@@ -37,7 +37,7 @@ class Exposicion(models.Model):
 
     class Meta:
         verbose_name_plural = "Exposiciones"
-        ordering = ['clase__fecha', 'grupo', 'tp']
+        ordering = ['clase', 'grupo', 'tp']
         index_together = ['clase', 'grupo', 'tp']
 
     def __str__(self):
