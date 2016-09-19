@@ -151,7 +151,7 @@ def ver_exposicion(request, expo_pk):
 
 def preguntas(request):
     if request.user.is_authenticated():
-        if request.user.grupos.all().exists():
+        if request.user.grupos.exists():
             grupo = request.user.grupos.order_by('-año').first()
         else:
             grupo = None
@@ -242,7 +242,7 @@ def ver_tp(request, tp_pk):
 
 def edit_text(request, text_pk=None):
     if text_pk:
-        tp = get_object_or_404(Text, pk=text_pk)
+        text = get_object_or_404(Text, pk=text_pk)
     else:
         text = None
 
@@ -262,3 +262,21 @@ def edit_text(request, text_pk=None):
         'base/edit_text.html',
         {'form': form, 'reference': "Clases"}
     )
+
+
+def votar_preg(request, preg_pk, voto):
+    pregunta = get_object_or_404(Pregunta, pk=preg_pk)
+    if request.user.is_authenticated() and request.user.grupos.exists():
+        grupo = request.user.grupos.first()
+    else:
+        return redirect('ver_grupo', pregunta.exposicion.grupo.pk)
+
+    if grupo == pregunta.exposicion.grupo:
+        if pregunta.mejor and voto == '-':
+            pregunta.mejor = False
+            pregunta.save()
+        elif not pregunta.mejor and voto == '+':
+            pregunta.mejor = True
+            pregunta.save()
+
+    return redirect('ver_grupo', grupo.pk)
