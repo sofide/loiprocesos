@@ -5,6 +5,7 @@ from django.conf import settings
 
 class Clase(models.Model):
     fecha = models.DateField(default=timezone.now, unique=True, db_index=True)
+
     def __str__(self):
         return str(self.fecha.strftime(settings.DATE_INPUT_FORMATS[0]))
 
@@ -24,7 +25,7 @@ class TP(models.Model):
             return self.nombre
 
     class Meta:
-        ordering = ['numero',]
+        ordering = ['numero', ]
 
 
 class Exposicion(models.Model):
@@ -45,14 +46,21 @@ class Exposicion(models.Model):
         index_together = ['clase', 'grupo', 'tp']
 
     def __str__(self):
-        return '{} - G{} - TP {}'.format(str(self.clase), self.grupo.numero, self.tp)
+        if self.virtual:
+            clase = "virtual"
+        else:
+            clase = str(self.clase)
+
+        return '{} - G{} - TP {}'.format(clase, self.grupo.numero, self.tp)
 
     def short_string(self):
-        return '{}/{} - G{} - TP {}'.format(self.clase.fecha.day,
-                                            self.clase.fecha.month,
-                                            self.grupo.numero,
-                                            self.tp.numero,
-                                            )
+        if self.virtual:
+            return str(self)
+        else:
+            return '{}/{} - G{} - TP {}'.format(self.clase.fecha.day,
+                                                self.clase.fecha.month,
+                                                self.grupo.numero,
+                                                self.tp.numero)
 
 
 class Pregunta(models.Model):
