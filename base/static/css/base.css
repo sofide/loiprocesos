@@ -365,6 +365,11 @@ a.menu-button:hover {
   height:auto;
 }
 
+.bk-toolbar-wrapper {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 
 
 /* Retoques a la sidebar */
