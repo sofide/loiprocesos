@@ -28,12 +28,15 @@ class TP(models.Model):
 
 
 class Exposicion(models.Model):
-    clase = models.ForeignKey(Clase, related_name='exposiciones', db_index=True)
+    clase = models.ForeignKey(Clase, related_name='exposiciones', db_index=True,
+                              null=True, default=None)
     grupo = models.ForeignKey('grupos.Grupo', null=True, db_index=True)
     tp = models.ForeignKey(TP)
     start_expo = models.DateTimeField(null=True, default=None)
     start_ques = models.DateTimeField(null=True, default=None)
     finish_expo = models.DateTimeField(null=True, default=None)
+    virtual = models.BooleanField(default=False)
+    video = models.CharField(max_length=200, null=True, default=None)
 
     class Meta:
         verbose_name_plural = "Exposiciones"
