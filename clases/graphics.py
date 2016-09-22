@@ -23,16 +23,15 @@ def tiempo_expo_graphic(exposiciones):
         for exposicion in exposiciones:
             expo.extend([exposicion.short_string(), exposicion.short_string()])
 
-
     data = {
         'tags': [t for t in ('T. exposicion', 'T. preguntas')*len(exposiciones)],
         'expo': expo,
         'tiempos': tiempos,
     }
     bar = Bar(data, values='tiempos', label=CatAttr(columns=['expo'], sort=False),
-        stack='tags', palette=['#2980B9', '#404040'], title="Tiempos de exposicion",
-        plot_width=300, plot_height=500, legend="bottom_center",
-        )
+              stack='tags', palette=['#2980B9', '#404040'], title="Tiempos de exposicion",
+              plot_width=300, plot_height=500, legend="bottom_center",
+              )
 
     bar.legend.background_fill_alpha = 0.5
     bar.legend.border_line_color = "#404040"
@@ -50,10 +49,9 @@ def q_pregs_graphic(exposicion):
     }
 
     bar = Bar(data, label="grupos", values="cantidad",
-        plot_width=300, plot_height=500, legend=False,
-        palette=['#2980B9',],
-        title="Cantidad de preguntas"
-    )
+              plot_width=300, plot_height=500, legend=False,
+              palette=['#2980B9',],
+              title="Cantidad de preguntas")
 
     return components(bar, CDN)
 
