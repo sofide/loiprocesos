@@ -37,6 +37,7 @@ class Exposicion(models.Model):
     finish_expo = models.DateTimeField(null=True, default=None)
     virtual = models.BooleanField(default=False)
     video = models.CharField(max_length=200, null=True, default=None)
+    description = models.TextField(blank=True, null=True, default=None)
 
     class Meta:
         verbose_name_plural = "Exposiciones"
