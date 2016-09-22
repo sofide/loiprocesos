@@ -36,6 +36,13 @@ class ExposicionForm(forms.ModelForm):
         fields = ('grupo', 'tp')
 
 
+class ExposicionVirtualForm(forms.ModelForm):
+
+    class Meta:
+        model = Exposicion
+        fields = ('tp', 'video', 'description')
+
+
 class StartExpoForm(forms.ModelForm):
     start_expo = forms.DateTimeField(
         input_formats=settings.DATETIME_INPUT_FORMATS,
