@@ -154,7 +154,7 @@ def ver_exposicion(request, expo_pk):
     )
 
 
-def preguntas(request):
+def preguntas(request, expo_pk=None):
     if request.user.is_authenticated():
         if request.user.grupos.exists():
             grupo = request.user.grupos.order_by('-año').first()
@@ -164,6 +164,11 @@ def preguntas(request):
     else:
         user = None
         grupo = None
+
+    if expo_pk:
+        expo = get_object_or_404(Exposicion, pk=expo_pk)
+    else:
+        expo = None
 
     if grupo:
         warn = "Estás registrado en el grupo {}. Las preguntas que cargues se registrarán a nombre de ese grupo.".format(grupo)
@@ -186,7 +191,7 @@ def preguntas(request):
                 initial = None
             form = AddPreguntasForm(initial={'exposicion':initial})
     else:
-        form = AddPreguntasForm()
+        form = AddPreguntasForm(initial={'exposicion':expo})
 
     return render(
         request,
