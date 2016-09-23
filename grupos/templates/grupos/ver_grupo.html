@@ -4,7 +4,7 @@
 <div class="col-sm-12">
   <div class="container section">
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <!-- TITLE AND MEMBERS -->
           <h1>{{ grupo }}</h1>
           {% if integrantes %}
@@ -61,6 +61,7 @@
       </div>
     </div>
   </div>
+
     <!-- EXPOSICIONES -->
     <div class="container section">
       <div class="row">
@@ -68,6 +69,16 @@
           <h2>Nuestras exposiciones: </h2>
         </div>
       </div>
+      <!-- Expo virtual -->
+      {% if pertenece %}
+      <div class="row">
+        <div class="col-sm-12 section">
+             <a class="btn-dark" href="{% url 'virtual_expo' %}">Agregar exposicion virtual</a> 
+             <br />
+        </div>
+      </div>
+      {% endif %}
+      <!-- Listado de exposiciones -->
         <div class="row">
           <div class="col-sm-8 col-sx-12">
             {% if exposiciones %}

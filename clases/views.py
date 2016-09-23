@@ -1,4 +1,5 @@
 import itertools
+import re
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -6,7 +7,7 @@ from django.utils import timezone
 
 from clases.forms import (ContadorPreguntasForm, ClaseForm, ExposicionForm,
                           StartExpoForm, StartQuestionsForm, FinishExpoForm,
-                          AddPreguntasForm, EditTPForm)
+                          AddPreguntasForm, EditTPForm, ExposicionVirtualForm)
 from clases.models import (Clase, Exposicion, Pregunta, ContadorPreguntas, TP,
                            Pregunta)
 from clases.graphics import tiempo_expo_graphic, q_pregs_graphic, q_pregs_expos_graphic
@@ -17,7 +18,7 @@ from base.forms import EditTextForm
 
 def clases_home(request):
     clases = Clase.objects.all().order_by('-fecha')
-    texts = Text.objects.filter(reference = "clases")
+    texts = Text.objects.filter(reference="clases")
     if request.method == "POST":
             form = ClaseForm(request.POST)
             if form.is_valid():
@@ -42,14 +43,14 @@ def ver_clase(request, pk):
 
     tiempos = None
     tiempos_chart = [expo for expo in exposiciones
-                       if expo.start_expo and expo.start_ques and expo.finish_expo]
+                     if expo.start_expo and expo.start_ques and expo.finish_expo]
 
     if tiempos_chart:
         tiempos = tiempo_expo_graphic(tiempos_chart)
 
     preguntas = None
     preg_chart = [expo for expo in exposiciones
-                       if ContadorPreguntas.objects.filter(exposicion=expo).exists()]
+                  if ContadorPreguntas.objects.filter(exposicion=expo).exists()]
 
     if preg_chart:
         preguntas = q_pregs_expos_graphic(preg_chart)
@@ -75,16 +76,12 @@ def ver_clase(request, pk):
          }
     )
 
+
 def ver_exposicion(request, expo_pk):
     exposicion = get_object_or_404(Exposicion, pk=expo_pk)
-    q_preguntas = ContadorPreguntas.objects.filter(exposicion = exposicion)\
+    q_preguntas = ContadorPreguntas.objects.filter(exposicion=exposicion)\
                                            .order_by('preguntador__numero')\
                                            .select_related('preguntador')
-    preguntas_query = Pregunta.objects.filter(exposicion=exposicion)\
-                                      .order_by('grupo')\
-                                      .select_related('grupo')
-
-    preguntas = {}
 
     preguntas = exposicion.preguntas.select_related('grupo').all()
     preguntas_agrupadas = [(grupo, list(preguntas_grupo))
@@ -133,10 +130,16 @@ def ver_exposicion(request, expo_pk):
     st_ques_form = StartQuestionsForm()
     fi_expo_form = FinishExpoForm()
 
-    side_bar = [
-        ["Ver más expos del {}".format(exposicion.clase),
-            reverse('ver_clase', args=[exposicion.clase.id])],
-    ]
+    if exposicion.virtual:
+        video_id = re.findall(r'v=[\d|\w]+&?', exposicion.video)[0].replace('v=', '').replace('&', '')
+    else:
+        video_id = None
+
+    if request.user in [pert.usuario for pert in Pertenencia.objects\
+                                                            .filter(grupo=exposicion.grupo)]:
+        pertenece = True
+    else:
+        pertenece = False
 
     return render(
         request,
@@ -145,9 +148,11 @@ def ver_exposicion(request, expo_pk):
          'cont_preg_form': cont_preg_form, 'st_expo_form': st_expo_form,
          'st_ques_form': st_ques_form, 'fi_expo_form': fi_expo_form,
          'preguntas_graph': preguntas_graph, 'tiempos_graph': tiempos_graph,
-         'side_bar': side_bar, 'preguntas_agrupadas': preguntas_agrupadas,
+         'preguntas_agrupadas': preguntas_agrupadas,
+         'video_id': video_id, 'pertenece': pertenece,
          }
     )
+
 
 def preguntas(request):
     if request.user.is_authenticated():
@@ -280,3 +285,30 @@ def votar_preg(request, preg_pk, voto):
             pregunta.save()
 
     return redirect('ver_grupo', grupo.pk)
+
+
+def virtual_expo(request):
+    if request.user.is_authenticated() and request.user.grupos.exists():
+        grupo = request.user.grupos.first()
+    else:
+        return redirect('home')
+
+    if request.method == "POST":
+            form = ExposicionVirtualForm(request.POST)
+            if form.is_valid():
+                expo = form.save(commit=False)
+                expo.grupo = grupo
+                expo.start_expo = timezone.now()
+                expo.virtual = True
+                expo.save()
+                return redirect('ver_grupo', grupo.pk)
+    else:
+        form = ExposicionVirtualForm()
+
+    return render(
+        request,
+        'clases/expo_virtual.html',
+        {'form': form, 'grupo': grupo}
+
+    )
+
