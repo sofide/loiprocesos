@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="col-sm-12">
+  <div class="container section">
+      <h2>Cargar exposición virtual del grupo {{grupo}}</h3>
+    <form method="POST" class="extended-form">{% csrf_token %}
+      {{ form.as_p }}
+      <trix-editor input="id_description"></trix-editor>
+      <input type="submit" name="save" class="save btn btn-default" value="Cargar"></input>
+    </form>
+  </div>
+</div>
+{% endblock %}

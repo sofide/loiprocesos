@@ -37,6 +37,9 @@ class ExposicionForm(forms.ModelForm):
 
 
 class ExposicionVirtualForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super(ExposicionVirtualForm, self).__init__(*args,**kwargs)
+        self.fields['description'].widget = forms.HiddenInput()
 
     class Meta:
         model = Exposicion
