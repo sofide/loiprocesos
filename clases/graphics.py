@@ -10,18 +10,20 @@ from clases.models import Exposicion, ContadorPreguntas
 def tiempo_expo_graphic(exposiciones):
     expo = []
     tiempos = []
-    for exposicion in exposiciones:
-        t_expo = (exposicion.start_ques - exposicion.start_expo).seconds/60.
-        t_preg = (exposicion.finish_expo - exposicion.start_ques).seconds/60.
-        tiempos.extend([t_expo, t_preg])
 
     if len(set(e.grupo for e in exposiciones)) == 1 and len(exposiciones) > 1:
+        exposiciones = list(reversed(exposiciones))
         for exposicion in exposiciones:
             expo.extend(["{} - TP{}".format(exposicion.clase, exposicion.tp.numero),
                          "{} - TP{}".format(exposicion.clase, exposicion.tp.numero)])
     else:
         for exposicion in exposiciones:
             expo.extend([exposicion.short_string(), exposicion.short_string()])
+
+    for exposicion in exposiciones:
+        t_expo = (exposicion.start_ques - exposicion.start_expo).seconds/60.
+        t_preg = (exposicion.finish_expo - exposicion.start_ques).seconds/60.
+        tiempos.extend([t_expo, t_preg])
 
     data = {
         'tags': [t for t in ('T. exposicion', 'T. preguntas')*len(exposiciones)],
