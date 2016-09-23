@@ -30,47 +30,6 @@
 
   </head>
   <body>
-    <!-- PANEL SUPERIOR VIEJO
-    <nav class="navbar navbar-fixed-top">
-      <div class="container-fluid">
-        <div class = "row">
-          <div class="col-md-8">
-            <a href="{% url 'home' %}"class="ph-title"><h1>LOI Procesos!</h1></a>
-            <p> Cátedra Procesos Industriales - Licenciatura en Organización Industrial - UTN Facultad Regional Rafaela </p>
-            <div class="row">
-                <a href="#menu-toggle" class="menu-button" id="menu-toggle">
-                  <span class="glyphicon glyphicon-menu-hamburger" ></span>
-                </a>
-                <a href="{% url 'teoria_home' %}" class="seccion"> Teoría </a>
-                <a href= "{% url 'grupos_home' %}" class="seccion"> Grupos </a>
-                <a href= "{% url 'clases_home' %}" class="seccion"> Clases </a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="in-line-account">
-              {% if user.is_authenticated %}
-
-                <p id="ph-link">Bienvenido {{ user.username }}!</p>
-                <p id="ph-link">  |  </p>
-                <a href="/accounts/logout" class="account-request" id="ph-link"><p>Salir</p></a>
-
-                {% if user.grupos.first.pk %}
-                  <a href="{% url 'ver_grupo' user.grupos.first.pk %}" id="ph-grupo">
-                    {{ user.grupos.first }}
-                  </a>
-                {% endif %}
-
-              {% else %}
-                <a href="/accounts/login" class="account-request" id="ph-link"><p>Iniciar Sesión</p></a>
-                <p id="ph-link">  |  </p>
-                <a href="/accounts/register" class="account-request" id="ph-link"><p>Registrarme</p></a>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-    /PANELK SUPERIOR VIEJO-->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
