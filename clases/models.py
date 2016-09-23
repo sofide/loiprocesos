@@ -47,11 +47,11 @@ class Exposicion(models.Model):
 
     def __str__(self):
         if self.virtual:
-            clase = "virtual"
+            clase = "{}/{}/{} VIRTUAL".format(self.start_expo.day,self.start_expo.month, self.start_expo.year)
         else:
             clase = str(self.clase)
 
-        return '{} - G{} - TP {}'.format(clase, self.grupo.numero, self.tp)
+        return 'G{} - TP {} - {}'.format(self.grupo.numero, self.tp, clase)
 
     def short_string(self):
         if self.virtual:
