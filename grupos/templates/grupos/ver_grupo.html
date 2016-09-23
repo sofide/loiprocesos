@@ -105,6 +105,24 @@
       </div>
     </div>
 
+    <!-- TRABAJOS EN CURSO -->
+    <div class="container section">
+      <div class="row">
+        <div class="col-sm-12">
+          {% if user.is_authenticated %}
+            {% if grupo.id_carpeta_drive %}
+            <h2> Trabajos prácticos en curso: </h2>
+            <iframe src="https://drive.google.com/embeddedfolderview?id={{ grupo.id_carpeta_drive }}"
+                    style="width:100%; height:600px; border:0;"></iframe>
+            {% endif %}
+          {% else %}
+            <p> Para ver los trabajos prácticos de este grupo tenés que estar logueado</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- PREGUNTAS -->
     <div class="container section">
@@ -158,24 +176,6 @@
           {% endif %}
 
 
-    <!-- TRABAJOS EN CURSO -->
-    <div class="container section">
-      <div class="row">
-        <div class="col-sm-12">
-          {% if user.is_authenticated %}
-            {% if grupo.id_carpeta_drive %}
-            <h2> Trabajos prácticos en curso: </h2>
-            <iframe src="https://drive.google.com/embeddedfolderview?id={{ grupo.id_carpeta_drive }}"
-                    style="width:100%; height:600px; border:0;"></iframe>
-            {% endif %}
-          {% else %}
-            <p> Para ver los trabajos prácticos de este grupo tenés que estar logueado</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 {% endblock %}
