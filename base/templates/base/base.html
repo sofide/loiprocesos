@@ -58,7 +58,11 @@
             {% if user.is_authenticated %}
 
               <li>
-                {% if user.grupos.first.pk %}
+                {% if user.groups %}
+                  <a href="{% url 'dashboard' %}">
+                    {{ user.username }} | Staff de Procesos Industriales 
+                  </a>
+                {% elif user.grupos %}
                   <a href="{% url 'ver_grupo' user.grupos.first.pk %}">
                     {{ user.username }} | {{ user.grupos.first }}
                   </a>
