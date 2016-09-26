@@ -87,15 +87,6 @@
     <div class="container-fluid">
       <div class="row">
 
-            <!-- Sidebar
-            <div id="sidebar-wrapper">
-              <div class="sidebar-loi">
-                <ul class="sidebar-nav">
-                    <li class="sidebar-brand">
-                        <a href="{% url 'home' %}">
-
-                        </a>
-                    </li>
                   {% if side_bar %}
                     {% for item in side_bar %}
                     <li><a href= "{{ item.1 }}">{{ item.0 }}</a></li>
@@ -115,25 +106,8 @@
               {% block content %}
               {% endblock %}
             </div>
-
-            <div class="row">
-              <div class="col-xs-12">
-                <p class="foot">Favicon made by <a href="http://www.flaticon.com/authors/egor-rumyantsev" title="Egor Rumyantsev">Egor Rumyantsev</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
-              </div>
-            </div>
-
-
       </div>
     </div>
-
-   <!-- Menu Toggle Script
-   <script>
-   $("#menu-toggle").click(function(e) {
-       e.preventDefault();
-       $("#wrapper").toggleClass("toggled");
-   });
-   </script>
-   -->
 
    <!-- Google Analytics -->
    <script>
