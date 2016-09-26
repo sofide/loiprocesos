@@ -108,9 +108,9 @@ def dashboard(request):
                       for g in grupos]
         preguntas_sug = [Pregunta_teoria.objects.filter(unidad=u, autor=str(g)).count()
                       for g in grupos]
-        votos_pos = [Voto.objects.filter(material__unidad=u, grupo=g, voto__gt=1).count()
+        votos_pos = [Voto.objects.filter(material__unidad=u, grupo=g, voto__gt=0).count()
                       for g in grupos]
-        votos_neg = [Voto.objects.filter(material__unidad=u, grupo=g, voto__lt=1).count()
+        votos_neg = [Voto.objects.filter(material__unidad=u, grupo=g, voto__lt=0).count()
                       for g in grupos]
         tabla_u = zip(grupos, videos_sug, preguntas_sug, votos_pos, votos_neg)
         tabla_unidades.append((u, tabla_u))
