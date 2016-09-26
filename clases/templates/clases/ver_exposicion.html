@@ -127,6 +127,7 @@
   <!--/graficos-->
 
   <!--cantidad de preguntas-->
+  {% if not exposicion.virtual %}
   <div class="container section">
     <h2>Preguntas realizadas en esta exposicion: </h2>
     <ul>
@@ -145,7 +146,6 @@
     {% else %}
      <p>Todavía no se registraron las cantidades de preguntas por grupos hechas en clases</p>
     {% endif %}
-
   </div>
 
   <div class="container section">
@@ -179,6 +179,7 @@
       {% endfor %}
     {% endif %}
   </div>
+  {% endif %}
   <!--/preguntas por grupos-->
 
 
