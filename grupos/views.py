@@ -5,6 +5,8 @@ from grupos.models import Grupo, Pertenencia
 from grupos.forms import DescripcionGrupoForm, PertenenciaForm
 from clases.models import Exposicion, Pregunta
 from clases.graphics import tiempo_expo_graphic
+from teoria.models import Unidad, Voto, Material
+from teoria.models import Pregunta as Pregunta_teoria
 from django.contrib.auth.models import User
 
 
@@ -95,6 +97,27 @@ def dashboard(request):
     buenas_preguntas = [Pregunta.objects.filter(grupo=grupo, mejor=True).count()
                      for grupo in grupos]
     tabla = zip(grupos, exposiciones_clases, exposiciones_virtual, preguntas_votadas, preguntas_cargadas, buenas_preguntas)
+
+    unidades = Unidad.objects.all()
+    unidades_head = ["Grupos", "Videos sugeridos", "Preguntas sugeridas", "videos votados +", "videos votados -"]
+
+    tabla_unidades = []
+
+    for u in unidades:
+        videos_sug = [Material.objects.filter(unidad=u, autor=str(g)).count()
+                      for g in grupos]
+        preguntas_sug = [Pregunta_teoria.objects.filter(unidad=u, autor=str(g)).count()
+                      for g in grupos]
+        votos_pos = [Voto.objects.filter(material__unidad=u, grupo=g, voto__gt=1).count()
+                      for g in grupos]
+        votos_neg = [Voto.objects.filter(material__unidad=u, grupo=g, voto__lt=1).count()
+                      for g in grupos]
+        tabla_u = zip(grupos, videos_sug, preguntas_sug, votos_pos, votos_neg)
+        tabla_unidades.append((u, tabla_u))
+
+
     return render(request, 'grupos/dashboard.html', {'heads': heads,
-                                                'tabla': tabla,
-                                                })
+                                                     'tabla': tabla,
+                                                     'unidades_head': unidades_head,
+                                                     'tabla_unidades': tabla_unidades,
+                                                    })
