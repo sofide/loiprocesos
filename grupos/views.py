@@ -79,3 +79,20 @@ def edit_grupo(request, grupo_pk):
 
     return render(request, 'grupos/ver_grupo.html', {'grupo': grupo,
                                                      'editar_form': form})
+
+def dashboard(request):
+    año=datetime.datetime.now().strftime('%Y')
+    heads = ["Grupos", "Exposiciones", "Preguntas votadas", "Preguntas cargadas","Buenas preguntas"]
+    grupos = Grupo.objects.filter(año=año)
+    exposiciones = [Exposicion.objects.filter(grupo=grupo).count()
+                    for grupo in grupos]
+    preguntas_votadas = [Pregunta.objects.filter(exposicion__grupo=grupo, mejor=True).count()
+                     for grupo in grupos]
+    preguntas_cargadas = [Pregunta.objects.filter(grupo=grupo).count()
+                     for grupo in grupos]
+    buenas_preguntas = [Pregunta.objects.filter(grupo=grupo, mejor=True).count()
+                     for grupo in grupos]
+    tabla = zip(grupos, exposiciones, preguntas_votadas, preguntas_cargadas, buenas_preguntas)
+    return render(request, 'grupos/dashboard.html', {'heads': heads,
+                                                'tabla': tabla,
+                                                })

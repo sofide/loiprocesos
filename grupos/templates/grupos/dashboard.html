@@ -1,0 +1,29 @@
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="col-sm-12">
+  <div class="container section">
+    {% if perms.clases %}
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tr>
+          {% for h in heads %}
+            <th>{{h}}</th>
+          {% endfor %}
+        </tr>
+        {% for row in tabla %}
+        <tr>
+          {% for cell in row %}
+            <td>{{ cell }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% else %}
+    <h4>No tenés autorización para ver esta página</h4>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
