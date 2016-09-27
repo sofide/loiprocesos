@@ -4,7 +4,7 @@
 {% block content %}
 <div class="col-sm-12">
   <div class="container section">
-    {% if perms.grupos %}
+    {% if user.is_authenticated %}
     <h1>Overview de todos los grupos</h1>
     <div class="table-responsive">
       <table class="table table-striped">
