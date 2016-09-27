@@ -3,8 +3,8 @@
 
 {% block content %}
 <div class="col-sm-12">
+{% if user.is_authenticated %}
   <div class="container section">
-    {% if user.is_authenticated %}
     <h1>Overview de todos los grupos</h1>
     <div class="table-responsive">
       <table class="table table-striped">
@@ -22,30 +22,35 @@
         {% endfor %}
       </table>
     </div>
+  </div>
+  <div class="container section">
     <h1>Control de Teoría</h1>
+  </div>
 
     {% for u, unidades in tabla_unidades %}
-    <h3>{{u}}</h3>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <tr>
-          {% for h in unidades_head %}
-            <th>{{h}}</th>
+    <div class="container section">
+      <h3>{{u}}</h3>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <tr>
+            {% for h in unidades_head %}
+              <th>{{h}}</th>
+            {% endfor %}
+          </tr>
+          {% for row in unidades %}
+          <tr>
+            {% for cell in row %}
+              <td>{{ cell }}</td>
+            {% endfor %}
+          </tr>
           {% endfor %}
-        </tr>
-        {% for row in unidades %}
-        <tr>
-          {% for cell in row %}
-            <td>{{ cell }}</td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
-      </table>
+        </table>
+      </div>
     </div>
     {% endfor %}
-    {% else %}
-    <h4>No tenés autorización para ver esta página</h4>
-    {% endif %}
   </div>
+{% else %}
+  <h4>No tenés autorización para ver esta página</h4>
+{% endif %}
 </div>
 {% endblock %}
