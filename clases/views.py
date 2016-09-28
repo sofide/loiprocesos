@@ -131,7 +131,7 @@ def ver_exposicion(request, expo_pk):
     fi_expo_form = FinishExpoForm()
 
     if exposicion.virtual:
-        video_id = re.findall(r'v=[\d|\w]+&?', exposicion.video)[0].replace('v=', '').replace('&', '')
+        video_id = re.findall(r'v=[\d|\w|-]+&?', exposicion.video)[0].replace('v=', '').replace('&', '')
     else:
         video_id = None
 
@@ -201,13 +201,15 @@ def preguntas(request, expo_pk=None):
          }
     )
 
+
 def trabajos_practicos(request):
     trabajos = TP.objects.all()
     return render(
         request,
         'clases/trabajos_practicos.html',
-        {'trabajos':trabajos,}
+        {'trabajos': trabajos, }
         )
+
 
 def edit_tp(request, tp_pk=None):
     if tp_pk:
@@ -247,7 +249,6 @@ def ver_tp(request, tp_pk):
          'preguntas': preg_grupo,
         }
     )
-
 
 
 def edit_text(request, text_pk=None):
