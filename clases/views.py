@@ -131,7 +131,14 @@ def ver_exposicion(request, expo_pk):
     fi_expo_form = FinishExpoForm()
 
     if exposicion.virtual:
-        video_id = re.findall(r'v=[\d|\w|-]+&?', exposicion.video)[0].replace('v=', '').replace('&', '')
+        video_id = re.findall(r'v=[\d|\w|-]+&?', exposicion.video)
+        if video_id:
+            video_id = video_id[0].replace('v=', '').replace('&', '')
+        else:
+            video_id = re.findall(r'youtu.be/[\d|\w|-]+&?', exposicion.video)
+            if video_id:
+                video_id = video_id[0].replace('youtu.be/', '').replace('&', '')
+
     else:
         video_id = None
 
