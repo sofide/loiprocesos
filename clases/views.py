@@ -193,10 +193,9 @@ def preguntas(request, expo_pk=None):
                 pregunta.usuario = user
             pregunta.save()
             if "add" in request.POST:
-                initial = pregunta.exposicion.id
+                form = AddPreguntasForm(initial={'exposicion':pregunta.exposicion.id})
             else:
-                initial = None
-            form = AddPreguntasForm(initial={'exposicion':initial})
+                return redirect('ver_exposicion', pregunta.exposicion.id)
     else:
         form = AddPreguntasForm(initial={'exposicion':expo})
 
