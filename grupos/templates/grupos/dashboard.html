@@ -16,7 +16,15 @@
         {% for row in tabla %}
         <tr>
           {% for cell in row %}
-            <td>{{ cell }}</td>
+            {% if forloop.first %}
+              <td>
+                <a href="{% url 'dashboard_grupo' cell.id %}">
+                  {{ cell }}
+                </a>
+              </td>
+            {% else %}
+              <td>{{ cell }}</td>
+            {% endif %}
           {% endfor %}
         </tr>
         {% endfor %}
