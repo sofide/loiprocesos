@@ -121,3 +121,34 @@ def dashboard(request):
                                                      'unidades_head': unidades_head,
                                                      'tabla_unidades': tabla_unidades,
                                                     })
+
+
+def dashboard_grupo(request, grupo_pk):
+    grupo = get_object_or_404(Grupo, pk=grupo_pk)
+    exposiciones = Exposicion.objects.filter(grupo=grupo)
+    otras_expo = Exposicion.objects.filter(grupo__año=grupo.año).exclude(grupo=grupo)
+
+    # Exposiciones del grupo
+    expo_heads = ['Exposición', 'Preguntas registradas', 'Preguntas votadas']
+    preguntas = [Pregunta.objects.filter(exposicion=expo).count()
+                 for expo in exposiciones]
+    votos = [Pregunta.objects.filter(exposicion=expo, mejor=True).count()
+             for expo in exposiciones]
+    tabla_expo = zip(exposiciones, preguntas, votos)
+
+    # Exposiciones de los demás grupos
+    otras_expo_heads = ['Exposición', 'Preguntas que hicimos', 'Buenas preguntas que hicimos']
+    preguntas = [Pregunta.objects.filter(exposicion=expo, grupo=grupo).count()
+                 for expo in otras_expo]
+    votos = [Pregunta.objects.filter(exposicion=expo, grupo=grupo, mejor=True).count()
+             for expo in otras_expo]
+    tabla_otras_expo = zip(otras_expo, preguntas, votos)
+
+    return render(request, 'grupos/dashboard_grupo.html', {'grupo': grupo,
+                                                           'expo_heads': expo_heads,
+                                                           'tabla_expo': tabla_expo,
+                                                           'otras_expo_heads': otras_expo_heads,
+                                                           'tabla_otras_expo': tabla_otras_expo,
+
+                                                          })
+

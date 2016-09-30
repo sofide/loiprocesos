@@ -1,0 +1,70 @@
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="col-sm-12">
+{% if user.is_authenticated %}
+  <div class="container section">
+    <h1>{{grupo}}</h1>
+  </div>
+  <div class="container section">
+    <h2>Exposiciones</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tr>
+          {% for h in expo_heads %}
+            <th>{{h}}</th>
+          {% endfor %}
+        </tr>
+        {% for row in tabla_expo %}
+        <tr>
+          {% for cell in row %}
+            {% if forloop.first %}
+              <td>
+                <a href="{% url 'ver_exposicion' cell.id %}">
+                  {{ cell }}
+                </a>
+              </td>
+            {% else %}
+              <td>{{ cell }}</td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+  <div class="container section">
+    <h2>Exposiciones de los otros grupos</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tr>
+          {% for h in otras_expo_heads %}
+            <th>{{h}}</th>
+          {% endfor %}
+        </tr>
+        {% for row in tabla_otras_expo %}
+        <tr>
+          {% for cell in row %}
+            {% if forloop.first %}
+              <td>
+                <a href="{% url 'ver_exposicion' cell.id %}">
+                  {{ cell }}
+                </a>
+              </td>
+            {% else %}
+              <td>{{ cell }}</td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  
+{% else %}
+  <h4>No tenés autorización para ver esta página</h4>
+{% endif %}
+</div>
+{% endblock %}
