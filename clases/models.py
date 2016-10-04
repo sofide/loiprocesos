@@ -37,7 +37,7 @@ class Exposicion(models.Model):
     start_ques = models.DateTimeField(null=True, default=None)
     finish_expo = models.DateTimeField(null=True, default=None)
     virtual = models.BooleanField(default=False)
-    video = models.CharField(max_length=200, null=True, default=None)
+    video = models.CharField(max_length=200, null=True, default=None, blank=True)
     description = models.TextField(blank=True, null=True, default=None)
 
     class Meta:
