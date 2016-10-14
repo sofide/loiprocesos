@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.forms import formset_factory
 import datetime
 
-from grupos.models import Grupo, Pertenencia
-from grupos.forms import DescripcionGrupoForm, PertenenciaForm
+from grupos.models import Grupo, Pertenencia, Autoevaluacion_grupal, Evaluacion, Criterio_evaluacion
+from grupos.forms import DescripcionGrupoForm, PertenenciaForm, AutoevaluacionForm
 from clases.models import Exposicion, Pregunta
 from clases.graphics import tiempo_expo_graphic
 from teoria.models import Unidad, Voto, Material
@@ -152,3 +153,65 @@ def dashboard_grupo(request, grupo_pk):
 
                                                           })
 
+
+def autoevaluacion(request):
+    evaluacionFormFactory = formset_factory(AutoevaluacionForm, extra=0)
+
+    autoevaluaciones = Autoevaluacion_grupal.objects.all()
+    if request.user.is_authenticated() and request.user.grupos.all().exists():
+        grupo = request.user.grupos.first()
+        ultima_autoevaluacion = autoevaluaciones.filter(año=grupo.año)
+        grupos = Grupo.objects.filter(año=grupo.año)
+        form_data_initial = []
+
+        for grupo in Grupo.objects.filter(año=grupo.año):
+            for criterio in Criterio_evaluacion.objects.filter(autoevaluacion=ultima_autoevaluacion):
+                data_initial = {'grupo_evaluado': grupo, 'criterio': criterio}
+                form_data_initial.append(data_initial)
+
+        if request.method == "POST":
+            formset = evaluacionFormFactory(request.POST, request.FILES, initial=form_data_initial)
+            if formset.is_valid():
+                for form in formset:
+                    evaluacion = form.save(commit=False)
+                    evaluacion.evaluador = grupo
+                    evaluacion.save()
+                return redirect('grupos.views.autoevaluacion')
+            else:
+                return render(request, "grupos/autoevaluacion.html", {"evaluacionForms": formset, "grupos_evaluados": grupos})
+
+        if not Evaluacion.objects.filter(criterio__autoevaluacion=ultima_autoevaluacion, evaluador=grupo).exists():
+            evaluacionForms = evaluacionFormFactory(initial=form_data_initial)
+
+            for form in evaluacionForms:
+                form.fields['puntuacion'].label = form.initial["criterio"]
+
+            ultima_evaluacion_heads = None
+            ultima_evaluacion_table = None
+
+        else:
+            ultimas_evaluaciones = Evaluacion.objects.filter(criterio__autoevaluacion=ultima_autoevaluacion, evaluador=grupo)
+            criterios = set(eval.criterio for eval in ultimas_evaluaciones)
+            ultima_evaluacion_heads = ["Grupo"]
+            ultima_evaluacion_heads.extend(criterios)
+            ultima_evaluacion_table = []
+            for grupo_evaluado in grupos:
+                linea_evaluacion = [grupo_evaluado]
+                linea_evaluacion.extend(ultimas_evaluaciones.filter(criterio=criterio, grupo_evaluado=grupo_evaluado).first() for criterio in criterios)
+                ultima_evaluacion_table.append(linea_evaluacion)
+
+            evaluacionForms= None
+            grupos = None
+
+    else:
+        ultima_evaluacion_heads = None
+        ultima_evaluacion_table = None
+        evaluacionForms= None
+        grupos = None
+
+    return render(request, "grupos/autoevaluacion.html", {
+        "evaluacionForms": evaluacionForms,
+        "grupos_evaluados": grupos,
+        "ultima_evaluacion_heads": ultima_evaluacion_heads,
+        "ultima_evaluacion_table": ultima_evaluacion_table,
+    })

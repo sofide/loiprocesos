@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="col-sm-12">
+  <div class="container section">
+    {% if grupos_evaluados %}
+      <h1>Autoevaluacion grupal</h1>
+      <p> Evaluar cada grupo con  un puntaje entre 1 y 5 por cada criterio </p> 
+
+      {{ evaluacionForms.management_form }} 
+      {% for grupo in grupos_evaluados %}
+      <form method="POST" class="post-form">{% csrf_token %}
+        <div class="container section">
+          <h3>{{ grupo }}</h3>
+          <table class="table table-striped">
+          {% for form in evaluacionForms %}
+            {% if form.initial.grupo_evaluado == grupo %}
+              {{ form.as_table }}
+            {% endif %}
+          {% endfor %}
+          </table>
+        </div>
+        <input type="submit" name="st_qu" class="save btn btn-default" value="Cargar!"></input>
+      </form>
+      {% endfor %}
+    {% else %}
+      <div class="container section">
+        <h2> No tenés ninguna evaluación pendiente </h2>
+      </div>
+    {% endif %}
+    
+    {% if ultima_evaluacion_table %}
+      <div class="container section">
+        <h1>Última evaluación enviada por tu grupo: </h1>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              {% for h in ultima_evaluacion_heads %}
+                <th>{{h}}</th>
+              {% endfor %}
+            </tr>
+            {% for row in ultima_evaluacion_table %}
+            <tr>
+              {% for cell in row %}
+                {% if forloop.first %}
+                  <td>
+                    <a href="{% url 'ver_grupo' cell.id %}">
+                      {{ cell }}
+                    </a>
+                  </td>
+                {% else %}
+                  <td>{{ cell.puntuacion }}</td>
+                {% endif %}
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
