@@ -141,7 +141,11 @@
                   <p>
                     {{ pregunta }}
                     <span>
-                      {{exposicion.clase}} - TP{{exposicion.tp.numero}} - preguntó {{grupo}}
+                      {% if exposicion.clase %}
+                        {{exposicion.clase}} - TP{{exposicion.tp.numero}} - preguntó {{grupo}}
+                      {% else %}
+                        Expo Virtual - TP{{exposicion.tp.numero}} - preguntó {{grupo}}
+                      {% endif %}
                     </span>
                   </p>
                 </li>
@@ -165,7 +169,11 @@
                   <p>
                     {{ pregunta }}
                     <span>
-                      {{exposicion.clase}} - TP{{exposicion.tp.numero}} - preguntó {{grupo}}
+                      {% if exposicion.clase %}
+                        {{exposicion.clase}} - TP{{exposicion.tp.numero}} - preguntó {{grupo}}
+                      {% else %}
+                        Expo Virtual - TP{{exposicion.tp.numero}} - preguntó {{grupo}}
+                      {% endif %}
                     </span>
                   </p>
                 </li>
