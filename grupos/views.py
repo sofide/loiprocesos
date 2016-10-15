@@ -21,7 +21,6 @@ def ver_grupo(request, grupo_pk):
     grupo = get_object_or_404(Grupo, pk=grupo_pk)
     exposiciones = Exposicion.objects.filter(grupo=grupo).select_related('tp', 'clase')\
                              .order_by('-tp__numero', 'virtual', '-clase')
-    ultima_exp = exposiciones[0]
     integrantes = grupo.integrantes.all()
     preguntas = Pregunta.objects.filter(exposicion__in=exposiciones)\
                                 .select_related('exposicion', 'grupo')
