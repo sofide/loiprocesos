@@ -7,9 +7,9 @@
       <h1>Autoevaluacion grupal</h1>
       <p> Evaluar cada grupo con  un puntaje entre 1 y 5 por cada criterio </p> 
 
+      <form method="POST" class="post-form">{% csrf_token %}
       {{ evaluacionForms.management_form }} 
       {% for grupo in grupos_evaluados %}
-      <form method="POST" class="post-form">{% csrf_token %}
         <div class="container section">
           <h3>{{ grupo }}</h3>
           <table class="table table-striped">

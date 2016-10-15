@@ -191,7 +191,7 @@ def autoevaluacion(request):
 
         else:
             ultimas_evaluaciones = Evaluacion.objects.filter(criterio__autoevaluacion=ultima_autoevaluacion, evaluador=grupo)
-            criterios = set(eval.criterio for eval in ultimas_evaluaciones)
+            criterios = list(set(eval.criterio for eval in ultimas_evaluaciones))
             ultima_evaluacion_heads = ["Grupo"]
             ultima_evaluacion_heads.extend(criterios)
             ultima_evaluacion_table = []
