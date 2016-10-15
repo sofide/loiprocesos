@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="col-sm-12">
+  <div class="container section">
+    <h1>{{ autoevaluacion }}</h1>
+  </div>
+
+  {% for grupo, evaluacion in evaluaciones %}
+    <div class="container section">
+      <h3>{{grupo}}</h3>
+      {% if evaluacion %}
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              {% for h in tabla_heads %}
+                <th>{{h}}</th>
+              {% endfor %}
+            </tr>
+            {% for row in evaluacion %}
+            <tr>
+              {% for cell in row %}
+                {% if forloop.first %}
+                  <td>
+                    <a href="{% url 'ver_grupo' cell.id %}">
+                      {{ cell }}
+                    </a>
+                  </td>
+                {% else %}
+                  <td>{{ cell }}</td>
+                {% endif %}
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      {% else %}
+        <p> Este grupo todavía no completó la evaluación </p>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+    

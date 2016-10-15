@@ -215,3 +215,38 @@ def autoevaluacion(request):
         "ultima_evaluacion_heads": ultima_evaluacion_heads,
         "ultima_evaluacion_table": ultima_evaluacion_table,
     })
+
+
+def ver_autoevaluacion(request, autoevaluacion_pk):
+    autoevaluacion = get_object_or_404(Autoevaluacion_grupal, pk=autoevaluacion_pk)
+    grupos = Grupo.objects.filter(año=autoevaluacion.año)
+    criterios = Criterio_evaluacion.objects.filter(autoevaluacion=autoevaluacion)
+    tabla_heads = ["Grupo"]
+    tabla_heads.extend(criterios)
+    datos_autoevaluacion = []
+
+    for grupo_evaluador in grupos:
+        evaluacion_data = [grupo_evaluador]
+        if Evaluacion.objects.filter(criterio__autoevaluacion=autoevaluacion, evaluador=grupo_evaluador).exists():
+            evaluacion_tabla =[]
+            for grupo_evaluado in grupos:
+                linea = [grupo_evaluado]
+                for criterio in criterios:
+                    linea.append(Evaluacion.objects.filter(evaluador=grupo_evaluador,
+                                                           grupo_evaluado=grupo_evaluado,
+                                                           criterio=criterio,
+                                                           ).first().puntuacion)
+                evaluacion_tabla.append(linea)
+        else:
+            evaluacion_tabla = []
+        evaluacion_data.append(evaluacion_tabla)
+        datos_autoevaluacion.append(evaluacion_data)
+
+    return render(request, "grupos/ver_autoevaluacion.html", {
+        "autoevaluacion": autoevaluacion,
+        "tabla_heads": tabla_heads,
+        "evaluaciones": datos_autoevaluacion,
+    })
+
+
+

@@ -38,7 +38,7 @@ class Autoevaluacion_grupal(models.Model):
     año = models.IntegerField()
 
     def __str__(self):
-        return str(self.fecha.strftime(settings.DATE_INPUT_FORMATS[0]))
+        return str("Autoevaluación del año {} - {}".format(self.año, self.fecha.strftime(settings.DATE_INPUT_FORMATS[0])))
 
     class Meta:
         ordering = ['-fecha']
