@@ -24,7 +24,7 @@ def ver_grupo(request, grupo_pk):
     integrantes = grupo.integrantes.all()
     preguntas = Pregunta.objects.filter(exposicion__in=exposiciones)\
                                 .select_related('exposicion', 'grupo')
-    preguntas_list = [(preg, preg.exposicion, preg.grupo) for preg in preguntas]
+    preguntas_list = [(preg, preg.exposicion, preg.preguntador) for preg in preguntas]
     preg_votadas = [preg for preg in preguntas_list if preg[0].mejor]
     preg_no_votadas = [preg for preg in preguntas_list if not preg[0].mejor]
 

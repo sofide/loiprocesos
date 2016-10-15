@@ -86,7 +86,7 @@ def ver_exposicion(request, expo_pk):
     preguntas = exposicion.preguntas.select_related('grupo').all()
     preguntas_agrupadas = [(grupo, list(preguntas_grupo))
                             for grupo, preguntas_grupo
-                            in itertools.groupby(preguntas, lambda p: p.grupo)]
+                            in itertools.groupby(preguntas, lambda p: p.preguntador)]
 
     tiempos_graph = None
     preguntas_graph = None

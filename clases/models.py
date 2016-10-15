@@ -64,6 +64,15 @@ class Exposicion(models.Model):
 
 
 class Pregunta(models.Model):
+    def __init__(self, *args, **kwargs):
+        super(Pregunta, self).__init__(*args, **kwargs)
+        if self.grupo:
+            self.preguntador = self.grupo
+        elif self.usuario:
+            self. preguntador = self.usuario
+        else:
+            self.preguntador = "Usuario no registrado"
+
     exposicion = models.ForeignKey(Exposicion, related_name='preguntas')
     grupo = models.ForeignKey('grupos.Grupo', null=True, blank=True)
     usuario = models.ForeignKey('auth.User', null=True, blank=True, related_name='preg_clases')
