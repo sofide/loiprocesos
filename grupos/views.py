@@ -163,9 +163,9 @@ def autoevaluacion(request):
         grupos = Grupo.objects.filter(año=grupo.año)
         form_data_initial = []
 
-        for grupo in Grupo.objects.filter(año=grupo.año):
+        for grupo_a_evaluar in grupos:
             for criterio in Criterio_evaluacion.objects.filter(autoevaluacion=ultima_autoevaluacion):
-                data_initial = {'grupo_evaluado': grupo, 'criterio': criterio}
+                data_initial = {'grupo_evaluado': grupo_a_evaluar, 'criterio': criterio}
                 form_data_initial.append(data_initial)
 
         if request.method == "POST":
@@ -173,6 +173,7 @@ def autoevaluacion(request):
             if formset.is_valid():
                 for form in formset:
                     evaluacion = form.save(commit=False)
+                    evaluacion.usuario = request.user
                     evaluacion.evaluador = grupo
                     evaluacion.save()
                 return redirect('grupos.views.autoevaluacion')

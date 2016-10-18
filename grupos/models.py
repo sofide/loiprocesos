@@ -55,6 +55,7 @@ class Criterio_evaluacion(models.Model):
 
 class Evaluacion(models.Model):
     fecha = models.DateField(default=timezone.now)
+    usuario = models.ForeignKey('auth.User', null=True, blank=True, default=None)
     criterio = models.ForeignKey(Criterio_evaluacion)
     evaluador = models.ForeignKey(Grupo, related_name="evaluador")
     grupo_evaluado = models.ForeignKey(Grupo, related_name="grupo_evaluado")
