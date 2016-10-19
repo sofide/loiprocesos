@@ -6,7 +6,7 @@
     <h1>{{ autoevaluacion }}</h1>
   </div>
 
-  {% if perms.grupos %}
+  {% if perms.grupos or evaluacion_completa%}
     {% for grupo, evaluacion in evaluaciones %}
       <div class="container section">
         <h3>{{grupo}}</h3>
@@ -37,6 +37,11 @@
           </div>
         {% else %}
           <p> Este grupo todavía no completó la evaluación </p>
+          {% if perms.grupos %}
+            <a class="btn-dark" href="{% url 'carga_autoevaluacion' autoevaluacion.id grupo.id  %}">
+              Cargar autoevaluación de este grupo
+            </a>
+          {% endif %}
         {% endif %}
       </div>
     {% endfor %}

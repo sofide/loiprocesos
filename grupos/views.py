@@ -178,7 +178,7 @@ def autoevaluacion(request):
                     evaluacion.save()
                 return redirect('grupos.views.autoevaluacion')
             else:
-                return render(request, "grupos/autoevaluacion.html", {"evaluacionForms": formset, "grupos_evaluados": grupos})
+                return render(request, "grupos/autoevaluacion.html", {"evaluacionForms": formset, "grupos_evaluados": grupos, "evaluador":grupo})
 
         if not Evaluacion.objects.filter(criterio__autoevaluacion=ultima_autoevaluacion, evaluador=grupo).exists():
             evaluacionForms = evaluacionFormFactory(initial=form_data_initial)
@@ -214,6 +214,7 @@ def autoevaluacion(request):
         "grupos_evaluados": grupos,
         "ultima_evaluacion_heads": ultima_evaluacion_heads,
         "ultima_evaluacion_table": ultima_evaluacion_table,
+        "evaluador": grupo,
     })
 
 
@@ -224,6 +225,7 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
     tabla_heads = ["Grupo"]
     tabla_heads.extend(criterios)
     datos_autoevaluacion = []
+    evaluacion_completa = True
 
     for grupo_evaluador in grupos:
         evaluacion_data = [grupo_evaluador]
@@ -239,6 +241,8 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
                 evaluacion_tabla.append(linea)
         else:
             evaluacion_tabla = []
+            evaluacion_completa = False
+
         evaluacion_data.append(evaluacion_tabla)
         datos_autoevaluacion.append(evaluacion_data)
 
@@ -246,7 +250,55 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
         "autoevaluacion": autoevaluacion,
         "tabla_heads": tabla_heads,
         "evaluaciones": datos_autoevaluacion,
+        "evaluacion_completa": evaluacion_completa,
     })
 
 
+def carga_autoevaluacion(request, autoevaluacion_pk, grupo_evaluador_pk):
+    autoevaluacion = get_object_or_404(Autoevaluacion_grupal, pk=autoevaluacion_pk)
+    grupo_evaluador = get_object_or_404(Grupo, pk=grupo_evaluador_pk)
+    evaluacionFormFactory = formset_factory(AutoevaluacionForm, extra=0)
 
+    if request.user.groups.exists():
+
+        if Evaluacion.objects.filter(criterio__autoevaluacion=autoevaluacion, evaluador=grupo_evaluador).exists():
+            return redirect('grupos.views.ver_autoevaluacion', autoevaluacion_pk=autoevaluacion_pk)
+
+        grupos = Grupo.objects.filter(año=grupo_evaluador.año)
+        form_data_initial = []
+
+        for grupo_a_evaluar in grupos:
+            for criterio in Criterio_evaluacion.objects.filter(autoevaluacion=autoevaluacion):
+                data_initial = {'grupo_evaluado': grupo_a_evaluar, 'criterio': criterio}
+                form_data_initial.append(data_initial)
+
+        if request.method == "POST":
+            formset = evaluacionFormFactory(request.POST, request.FILES, initial=form_data_initial)
+            if formset.is_valid():
+                for form in formset:
+                    evaluacion = form.save(commit=False)
+                    evaluacion.usuario = request.user
+                    evaluacion.evaluador = grupo_evaluador
+                    evaluacion.save()
+                return redirect('grupos.views.ver_autoevaluacion', autoevaluacion_pk=autoevaluacion_pk)
+            else:
+                return render(request, "grupos/autoevaluacion.html", {
+                    "evaluacionForms": formset,
+                    "grupos_evaluados": grupos,
+                    "evaluador": grupo_evaluador,
+                })
+
+        evaluacionForms = evaluacionFormFactory(initial=form_data_initial)
+
+        for form in evaluacionForms:
+            form.fields['puntuacion'].label = form.initial["criterio"]
+
+    else:
+        evaluacionForms = None
+        grupos = None
+
+    return render(request, "grupos/autoevaluacion.html", {
+        "evaluacionForms": evaluacionForms,
+        "grupos_evaluados": grupos,
+        "evaluador": grupo_evaluador,
+    })

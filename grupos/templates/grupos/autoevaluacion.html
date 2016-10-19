@@ -4,7 +4,7 @@
 <div class="col-sm-12">
   <div class="container section">
     {% if grupos_evaluados %}
-      <h1>Autoevaluacion grupal</h1>
+    <h1>Autoevaluacion grupal del grupo {{evaluador}}</h1>
       <p> Evaluar cada grupo con  un puntaje entre 1 y 5 por cada criterio </p> 
 
       <form method="POST" class="post-form">{% csrf_token %}
@@ -25,7 +25,7 @@
       </form>
     {% else %}
       <div class="container section">
-        <h2> No tenés ninguna evaluación pendiente </h2>
+        <h2> No tenés ninguna evaluación pendiente, no estas logueado, o no estás autorizado para cargar evaluaciones </h2>
       </div>
     {% endif %}
     
