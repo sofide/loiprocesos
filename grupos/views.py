@@ -12,9 +12,9 @@ from django.contrib.auth.models import User
 
 
 def grupos_home(request, año=datetime.datetime.now().strftime('%Y')):
-    grupos = Grupo.objects.filter(año = año).order_by('numero')
+    grupos = Grupo.objects.filter(año=año).order_by('numero')
 
-    return render(request, 'grupos/grupos_home.html', {'grupos': grupos, 'año': año })
+    return render(request, 'grupos/grupos_home.html', {'grupos': grupos, 'año': año})
 
 
 def ver_grupo(request, grupo_pk):
@@ -46,7 +46,7 @@ def ver_grupo(request, grupo_pk):
         form = PertenenciaForm()
 
 
-    if request.user in [pert.usuario for pert in Pertenencia.objects\
+    if request.user in [pert.usuario for pert in Pertenencia.objects
                                                             .filter(grupo=grupo)]:
         pertenece = True
     else:
