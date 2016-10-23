@@ -1,6 +1,9 @@
+import datetime
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import formset_factory
-import datetime
+from django.contrib.auth.models import User
+from django.db.models import Avg
 
 from grupos.models import Grupo, Pertenencia, Autoevaluacion_grupal, Evaluacion, Criterio_evaluacion
 from grupos.forms import DescripcionGrupoForm, PertenenciaForm, AutoevaluacionForm
@@ -8,7 +11,6 @@ from clases.models import Exposicion, Pregunta
 from clases.graphics import tiempo_expo_graphic
 from teoria.models import Unidad, Voto, Material
 from teoria.models import Pregunta as Pregunta_teoria
-from django.contrib.auth.models import User
 
 
 def grupos_home(request, año=datetime.datetime.now().strftime('%Y')):
@@ -224,6 +226,7 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
     criterios = Criterio_evaluacion.objects.filter(autoevaluacion=autoevaluacion)
     tabla_heads = ["Grupo"]
     tabla_heads.extend(criterios)
+    tabla_heads.append("Promedio")
     datos_autoevaluacion = []
     evaluacion_completa = True
 
@@ -238,6 +241,7 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
                                                            grupo_evaluado=grupo_evaluado,
                                                            criterio=criterio,
                                                            ).first().puntuacion)
+                linea.append(round(sum(linea[1:])/len(linea[1:]), 2))
                 evaluacion_tabla.append(linea)
         else:
             evaluacion_tabla = []
@@ -246,11 +250,36 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
         evaluacion_data.append(evaluacion_tabla)
         datos_autoevaluacion.append(evaluacion_data)
 
+    tabla_resumen = []
+    for grupo_evaluado in grupos:
+        linea_resumen = [grupo_evaluado]
+        for criterio in criterios:
+            evaluaciones = Evaluacion.objects.filter(criterio=criterio, grupo_evaluado=grupo_evaluado)
+            promedio = round(evaluaciones.aggregate(Avg("puntuacion"))["puntuacion__avg"], 2)
+            propia = evaluaciones.filter(evaluador=grupo_evaluado).first()
+            if propia:
+                propia = propia.puntuacion
+                if promedio > propia:
+                    comparacion = "bajo"
+                elif propia > promedio:
+                    comparacion = "alto"
+                else:
+                    comparacion = "igual"
+            else:
+                comparacion = None
+            linea_resumen.append((promedio, comparacion))
+
+        linea_resumen.append(round(sum(celda[0] for celda in linea_resumen[1:])/len(linea_resumen[1:]), 2))
+        print(linea_resumen)
+        tabla_resumen.append(linea_resumen)
+
+
     return render(request, "grupos/ver_autoevaluacion.html", {
         "autoevaluacion": autoevaluacion,
         "tabla_heads": tabla_heads,
         "evaluaciones": datos_autoevaluacion,
         "evaluacion_completa": evaluacion_completa,
+        "tabla_resumen": tabla_resumen,
     })
 
 
