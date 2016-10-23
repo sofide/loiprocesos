@@ -7,6 +7,70 @@
   </div>
 
   {% if perms.grupos or evaluacion_completa%}
+    <div class="col-sm-12">
+      <div class="container section">
+        <h2>Resumen de las autoevaluaciones de todos los grupos</h2>
+
+            <div class="table-responsive">
+            <table class="table table-striped">
+              <tr>
+                <td>
+                  Referencias:
+                </td>
+                <td class="warning">
+                  Autoevaluacion > Promedio
+                </td>
+                <td class="success">
+                  Promedio > Autoevaluacion
+                </td>
+                <td class= "info">
+                  Promedio = Auotevaluacion
+                </td>
+              </tr>
+            </table>
+            </div>
+                  
+            <div class="table-responsive">
+            <table class="table table-striped">
+              <tr>
+                {% for h in tabla_heads %}
+                  <th>{{h}}</th>
+                {% endfor %}
+              </tr>
+              {% for row in tabla_resumen %}
+              <tr>
+                {% for cell in row %}
+                  {% if forloop.first %}
+                    <td>
+                      <a href="{% url 'ver_grupo' cell.id %}">
+                        {{ cell }}
+                      </a>
+                    </td>
+                  {% elif forloop.last %}
+                    <td>
+                      {{ cell }}
+                    </td>
+                  {% else %}
+                    {% if cell.1 == "alto" %}
+                      <td class="warning">
+                    {% elif cell.1 == "bajo" %}
+                      <td class="success">
+                    {% elif cell.1 == "igual" %}
+                      <td class= "info">
+                    {% else %}
+                      <td>
+                    {% endif %}
+                        {{ cell.0 }}
+                      </td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+      </div>
+    </div>
+
     {% for grupo, evaluacion in evaluaciones %}
       <div class="container section">
         <h3>{{grupo}}</h3>
