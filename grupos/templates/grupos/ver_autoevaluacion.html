@@ -12,7 +12,7 @@
         <h2>Resumen de las autoevaluaciones de todos los grupos</h2>
 
             <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped" >
               <tr>
                 <td>
                   Referencias:
@@ -29,14 +29,17 @@
               </tr>
             </table>
             </div>
-                  
+            <p>Para ordenar la tabla, hacer click en el nombre de la columna o criterio</p>      
             <div class="table-responsive">
-            <table class="table table-striped">
-              <tr>
-                {% for h in tabla_heads %}
-                  <th>{{h}}</th>
-                {% endfor %}
-              </tr>
+            <table class="table table-striped table-bordered ordered_table">
+              <thead>
+                <tr>
+                  {% for h in tabla_heads %}
+                    <th class="btn-table">{{h}}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
               {% for row in tabla_resumen %}
               <tr>
                 {% for cell in row %}
@@ -66,6 +69,7 @@
                 {% endfor %}
               </tr>
               {% endfor %}
+              </tbody>
             </table>
           </div>
       </div>
@@ -76,27 +80,30 @@
         <h3>{{grupo}}</h3>
         {% if evaluacion %}
           <div class="table-responsive">
-            <table class="table table-striped">
-              <tr>
-                {% for h in tabla_heads %}
-                  <th>{{h}}</th>
+            <table class="table table-striped table-bordered ordered_table">
+              <thead>
+                <tr>
+                  {% for h in tabla_heads %}
+                    <th class="btn-table">{{h}}</th>
+                  {% endfor %}
+                </tr>
+              <tbody>
+                {% for row in evaluacion %}
+                <tr>
+                  {% for cell in row %}
+                    {% if forloop.first %}
+                      <td>
+                        <a href="{% url 'ver_grupo' cell.id %}">
+                          {{ cell }}
+                        </a>
+                      </td>
+                    {% else %}
+                      <td>{{ cell }}</td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
                 {% endfor %}
-              </tr>
-              {% for row in evaluacion %}
-              <tr>
-                {% for cell in row %}
-                  {% if forloop.first %}
-                    <td>
-                      <a href="{% url 'ver_grupo' cell.id %}">
-                        {{ cell }}
-                      </a>
-                    </td>
-                  {% else %}
-                    <td>{{ cell }}</td>
-                  {% endif %}
-                {% endfor %}
-              </tr>
-              {% endfor %}
+              </tbody>
             </table>
           </div>
         {% else %}
@@ -115,6 +122,11 @@
     </div>
   {% endif %}
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.ordered_table').tablesorter();
+  });
+</script>
 {% endblock %}
 
     

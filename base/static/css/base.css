@@ -132,6 +132,15 @@ span {
   color: white
 }
 
+.btn-table {
+  text-align:center;
+}
+
+.btn-table:hover {
+  background-color: #404040;
+  color:white;
+}
+
 .inline-title {
   display: inline-block;
 }
