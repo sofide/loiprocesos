@@ -4,3 +4,4 @@ django-registration
 bokeh
 pandas
 django-debug-toolbar
+raven
