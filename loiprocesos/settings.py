@@ -176,5 +176,5 @@ if not DEBUG:
         'dsn': 'https://2ae9b8588d5f4c28b1f0f33d1808e4a4:f8593036aab74526bceeb1a34df1c708@sentry.io/110959',
         # If you are using git, you can also automatically configure the
         # release based on the git info.
-        'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+        'release': "1",
     }
