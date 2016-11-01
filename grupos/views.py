@@ -156,17 +156,20 @@ def dashboard_grupo(request, grupo_pk):
 
 
 def autoevaluacion(request):
-    evaluacionFormFactory = formset_factory(AutoevaluacionForm, extra=0)
+    return redirect('base.views.home')
 
-    autoevaluaciones = Autoevaluacion_grupal.objects.all()
+
+def cargar_autoevaluacion(request, autoevaluacion_pk):
+    evaluacionFormFactory = formset_factory(AutoevaluacionForm, extra=0)
+    autoevaluacion = get_object_or_404(Autoevaluacion_grupal, pk=autoevaluacion_pk)
+
     if request.user.is_authenticated() and request.user.grupos.all().exists():
         grupo = request.user.grupos.first()
-        ultima_autoevaluacion = autoevaluaciones.filter(año=grupo.año)
         grupos = Grupo.objects.filter(año=grupo.año)
         form_data_initial = []
 
         for grupo_a_evaluar in grupos:
-            for criterio in Criterio_evaluacion.objects.filter(autoevaluacion=ultima_autoevaluacion):
+            for criterio in Criterio_evaluacion.objects.filter(autoevaluacion=autoevaluacion):
                 data_initial = {'grupo_evaluado': grupo_a_evaluar, 'criterio': criterio}
                 form_data_initial.append(data_initial)
 
@@ -178,11 +181,11 @@ def autoevaluacion(request):
                     evaluacion.usuario = request.user
                     evaluacion.evaluador = grupo
                     evaluacion.save()
-                return redirect('grupos.views.autoevaluacion')
+                return redirect('grupos.views.cargar_autoevaluacion', autoevaluacion_pk=autoevaluacion_pk)
             else:
                 return render(request, "grupos/autoevaluacion.html", {"evaluacionForms": formset, "grupos_evaluados": grupos, "evaluador":grupo})
 
-        if not Evaluacion.objects.filter(criterio__autoevaluacion=ultima_autoevaluacion, evaluador=grupo).exists():
+        if not Evaluacion.objects.filter(criterio__autoevaluacion=autoevaluacion, evaluador=grupo).exists():
             evaluacionForms = evaluacionFormFactory(initial=form_data_initial)
 
             for form in evaluacionForms:
@@ -192,7 +195,7 @@ def autoevaluacion(request):
             ultima_evaluacion_table = None
 
         else:
-            ultimas_evaluaciones = Evaluacion.objects.filter(criterio__autoevaluacion=ultima_autoevaluacion, evaluador=grupo)
+            ultimas_evaluaciones = Evaluacion.objects.filter(criterio__autoevaluacion=autoevaluacion, evaluador=grupo)
             criterios = list(set(eval.criterio for eval in ultimas_evaluaciones))
             ultima_evaluacion_heads = ["Grupo"]
             ultima_evaluacion_heads.extend(criterios)
@@ -210,6 +213,7 @@ def autoevaluacion(request):
         ultima_evaluacion_table = None
         evaluacionForms= None
         grupos = None
+        grupo = None
 
     return render(request, "grupos/autoevaluacion.html", {
         "evaluacionForms": evaluacionForms,
@@ -229,6 +233,7 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
     tabla_heads.append("Promedio")
     datos_autoevaluacion = []
     evaluacion_completa = True
+    faltantes = []
 
     for grupo_evaluador in grupos:
         evaluacion_data = [grupo_evaluador]
@@ -246,6 +251,7 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
         else:
             evaluacion_tabla = []
             evaluacion_completa = False
+            faltantes.append(grupo_evaluador)
 
         evaluacion_data.append(evaluacion_tabla)
         datos_autoevaluacion.append(evaluacion_data)
@@ -255,7 +261,10 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
         linea_resumen = [grupo_evaluado]
         for criterio in criterios:
             evaluaciones = Evaluacion.objects.filter(criterio=criterio, grupo_evaluado=grupo_evaluado)
-            promedio = round(evaluaciones.aggregate(Avg("puntuacion"))["puntuacion__avg"], 2)
+            if evaluaciones:
+                promedio = round(evaluaciones.aggregate(Avg("puntuacion"))["puntuacion__avg"], 2)
+            else:
+                promedio = 0
             propia = evaluaciones.filter(evaluador=grupo_evaluado).first()
             if propia:
                 propia = propia.puntuacion
@@ -280,6 +289,7 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
         "evaluaciones": datos_autoevaluacion,
         "evaluacion_completa": evaluacion_completa,
         "tabla_resumen": tabla_resumen,
+        "faltantes": faltantes,
     })
 
 

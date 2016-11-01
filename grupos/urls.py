@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from grupos.views import grupos_home, ver_grupo, edit_grupo, dashboard,\
-     dashboard_grupo, autoevaluacion, ver_autoevaluacion, carga_autoevaluacion
+     dashboard_grupo, autoevaluacion, ver_autoevaluacion, carga_autoevaluacion, cargar_autoevaluacion
 
 
 urlpatterns = [
@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'^autoevaluacion/$', autoevaluacion, name='autoevaluacion'),
     url(r'^autoevaluacion/(?P<autoevaluacion_pk>[0-9]+)/$', ver_autoevaluacion, name='ver_autoevaluacion'),
     url(r'^autoevaluacion/(?P<autoevaluacion_pk>[0-9]+)/(?P<grupo_evaluador_pk>[0-9]+)/$', carga_autoevaluacion, name='carga_autoevaluacion'),
-
+    url(r'^autoevaluacion/cargar/(?P<autoevaluacion_pk>[0-9]+)/$', cargar_autoevaluacion, name='cargar_autoevaluacion'),
 
 ]

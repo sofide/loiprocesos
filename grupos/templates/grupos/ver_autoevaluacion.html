@@ -118,7 +118,14 @@
     {% endfor %}
   {% else %}
     <div class="container section">
-      <p> No tenes autorizacion para ver esta página </p>
+      <h3>Todos los grupos tienen que tener cargada la autoevaluacion para ver los resultados</h3>
+      <br />
+      <h4>Grupos que todavía no completaron la autoevaluación:</h4>
+      <ul>
+        {% for g_faltante in faltantes %}
+          <li>{{ g_faltante }}</li>
+        {% endfor %}
+      </ul>
     </div>
   {% endif %}
 </div>
