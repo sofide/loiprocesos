@@ -1,27 +1,24 @@
 {% extends 'base/base.html' %}
+{% load staticfiles %}
+
+
+{% block extra_js %}
+    <script src="{% static 'js/select_group.js' %}"></script>
+{% endblock %}
+
 
 {% block content %}
 <div class="col-sm-12">
   <div class="container section">
-    <h1>Grupos del año {{ año }}:</h1>
-  </div>
-
-  <div class="container section">
-    <div class="list-group">
-      {% for grupo in grupos %}
-        <a type="button" class="list-group-item" href="{% url 'ver_grupo' grupo.id %}"> {{ grupo }} </a>
+    <div class="row">
+      {% for year in años %}
+      <a class="btn-soft inline-title btn-year" id="btn-{{year}}">{{year}}</a> 
       {% endfor %}
     </div>
   </div>
-    {% if user.is_authenticated %}
-    <div class="container section">
-      <a href="{% url 'dashboard' %}" class="big">
-        <div class="row relleno tercio">
-         Tablero de Control
-        </div>
-      </a>
-    </div>
-    {% endif %}
+  <div id="grupos_list">
+    {% include "grupos/grupos_list_ajax.html" %}
+  </div>
 
   <div class="container section">
     <h1>Ver grupos y trabajos prácticos de años anteriores: </h1>

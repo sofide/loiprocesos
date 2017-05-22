@@ -1,0 +1,19 @@
+  <div class="container section">
+    <h1>Grupos del año {{ año }}:</h1>
+  </div>
+  <div class="container section">
+    <div class="list-group">
+      {% for grupo in grupos %}
+        <a type="button" class="list-group-item" href="{% url 'ver_grupo' grupo.id %}"> {{ grupo }} </a>
+      {% endfor %}
+    </div>
+  </div>
+    {% if user.is_authenticated %}
+    <div class="container section">
+      <a href="{% url 'dashboard' %}" class="big">
+        <div class="row relleno tercio">
+         Tablero de Control
+        </div>
+      </a>
+    </div>
+    {% endif %}
