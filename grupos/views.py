@@ -15,19 +15,10 @@ from teoria.models import Pregunta as Pregunta_teoria
 
 def grupos_home(request):
     grupos = Grupo.objects.all().order_by("numero")
-    years = list(reversed(sorted([grupo.año for grupo in grupos])))
-    current_year = years[0]
+    years = list(sorted(set([grupo.año for grupo in grupos])))
+    current_year = years[-1]
     current_grupos = [grupo for grupo in grupos if grupo.año == current_year]
 
-    '''
-    grupos_by_year = {}
-    for g in grupos:
-        if g.año in grupos_by_year.keys():
-            grupos_by_year[g.año].append(g)
-        else:
-            grupos_by_year[g.año] = [g]
-
-    '''
     return render(request, 'grupos/grupos_home.html', {'grupos': current_grupos,
                                                        'años': years,
                                                        'año': current_year})
