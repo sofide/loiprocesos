@@ -186,6 +186,10 @@ div #agregar {
   max-height: 100%;
 }
 
+.carousel-indicators .active {
+  background-color:#2980B9;
+}
+
 .home-img-btn {
   margin-left: auto;
   margin-right: auto;
