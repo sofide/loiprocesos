@@ -1,7 +1,7 @@
 django==1.9
-django-toolbelt
-django-registration
-bokeh
-pandas
-django-debug-toolbar
-raven
+django-toolbelt==0.0.1
+django-registration==2.1.2
+bokeh==0.12.0
+pandas==0.18.1
+django-debug-toolbar==1.5
+raven==5.31.0
