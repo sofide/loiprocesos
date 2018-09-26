@@ -38,6 +38,7 @@ class Material(models.Model):
     vigente = models.BooleanField(default=True)
     usuario = models.ForeignKey('auth.User', default=None, null=True,
                                 blank=True,)
+    grupo_autor = models.ForeignKey(Grupo, blank=True, null=True, related_name='material_teoria')
     class Meta:
         ordering = ['autor', 'nombre']
         index_together = ['autor', 'nombre']
