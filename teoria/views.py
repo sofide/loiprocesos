@@ -21,10 +21,16 @@ def teoria_home(request):
 
 
 def ver_unidad(request, unidad_pk):
+    """
+    Página principal de una unidad de estudio.
+    """
     unidad = get_object_or_404(Unidad, pk=unidad_pk)
     texts = Text.objects.filter(reference = "teoria")
 
-    preguntas = Pregunta.objects.filter(unidad=unidad, vigente=True)
+    preguntas_de_la_unidad = Pregunta.objects.filter(unidad=unidad).select_related('grupo_autor')
+    preguntas = [p for p in preguntas_de_la_unidad if p.vigente]
+    preguntas_extra = [p for p in preguntas_de_la_unidad if not p.vigente]
+
     if request.user.is_authenticated():
         if request.user.grupos.all().exists():
             material = [(m,
@@ -44,7 +50,6 @@ def ver_unidad(request, unidad_pk):
 
 
     material_extra = Material.objects.filter(unidad=unidad, vigente=False)
-    preguntas_extra = Pregunta.objects.filter(unidad=unidad, vigente=False)
 
     if request.user.groups.filter(name="staff procesos").exists():
         staff = True
