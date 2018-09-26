@@ -63,7 +63,15 @@
                       <a href="{% url 'del_recurso' 'm' mat.id %}" class="in-line-p"><span class="in-line-p">[quitar] </span></a>
                     {% endif %}
                     <a href="{{ mat.link }}" target="_blank" class="dark-link in-line-p"> {{ mat.nombre }} </a>
-                    <span class="in-line-p">Sugerido por: {{ mat.autor }}</span>
+                    <span class="in-line-p"> Sugerido por:
+                      {% if mat.grupo_autor %}
+                      <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
+                        {{ mat.grupo_autor}}
+                      </a>
+                      {% else %}
+                        {{ mat.autor }}
+                      {% endif %}
+                    </span>
                   </p>
                 </li>
               {% endfor %}
@@ -131,7 +139,15 @@
                       <a href="{% url 'admin:teoria_material_change' mat.pk %}" target="_blank">[x]</a>
                     {% endif %}
                     <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
-                    <span>Sugerido por: {{ mat.autor }}</span>
+                    <span class="in-line-p"> Sugerido por:
+                      {% if mat.grupo_autor %}
+                      <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
+                        {{ mat.grupo_autor}}
+                      </a>
+                      {% else %}
+                        {{ mat.autor }}
+                      {% endif %}
+                    </span>
                   </p>
                 </li>
             {% endfor %}
