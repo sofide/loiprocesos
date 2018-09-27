@@ -42,7 +42,7 @@
                   {% if user.is_authenticated %}
                     <span class="badge votaste">
                       {% if votado %}
-                        {% if votado.voto > 0 %}
+                        {% if votado > 0 %}
                           Votaste <span class="glyphicon glyphicon-ok positivo" ></span>
                         {% else %}
                           Votaste <span class="glyphicon glyphicon-remove negativo" ></span>
@@ -63,7 +63,15 @@
                       <a href="{% url 'del_recurso' 'm' mat.id %}" class="in-line-p"><span class="in-line-p">[quitar] </span></a>
                     {% endif %}
                     <a href="{{ mat.link }}" target="_blank" class="dark-link in-line-p"> {{ mat.nombre }} </a>
-                    <span class="in-line-p">Sugerido por: {{ mat.autor }}</span>
+                    <span class="in-line-p"> Sugerido por:
+                      {% if mat.grupo_autor %}
+                      <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
+                        {{ mat.grupo_autor}}
+                      </a>
+                      {% else %}
+                        {{ mat.autor }}
+                      {% endif %}
+                    </span>
                   </p>
                 </li>
               {% endfor %}
@@ -95,7 +103,15 @@
                       <a href="{% url 'del_recurso' 'p' preg.id %}"><span> [quitar] </span></a>
                     {% endif %}
                     <p class="in-line-p"> {{ preg.pregunta }}</p>
-                    <span class="in-line-p"> Sugerido por: {{ preg.autor }}</span>
+                    <span class="in-line-p"> Sugerido por:
+                      {% if preg.grupo_autor %}
+                      <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
+                        {{ preg.grupo_autor }}
+                      </a>
+                      {% else %}
+                        {{ preg.autor }}
+                      {% endif %}
+                    </span>
                   </p>
                 </li>
               {% endfor %}
@@ -123,7 +139,15 @@
                       <a href="{% url 'admin:teoria_material_change' mat.pk %}" target="_blank">[x]</a>
                     {% endif %}
                     <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
-                    <span>Sugerido por: {{ mat.autor }}</span>
+                    <span class="in-line-p"> Sugerido por:
+                      {% if mat.grupo_autor %}
+                      <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
+                        {{ mat.grupo_autor}}
+                      </a>
+                      {% else %}
+                        {{ mat.autor }}
+                      {% endif %}
+                    </span>
                   </p>
                 </li>
             {% endfor %}
@@ -143,7 +167,15 @@
                   <a class="in-line-preg" href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
                 {% endif %}
                 {{ preg.pregunta }}
-                <span class="in-line-preg">Sugerido por: {{ preg.autor }}</span>
+                <span class="in-line-p"> Sugerido por:
+                  {% if preg.grupo_autor %}
+                  <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
+                    {{ preg.grupo_autor}}
+                  </a>
+                  {% else %}
+                    {{ preg.autor }}
+                  {% endif %}
+                </span>
               </p>
             </li>
             {% endfor %}
