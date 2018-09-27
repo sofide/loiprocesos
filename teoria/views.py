@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Sum
 
 from teoria.models import Unidad, Pregunta, Material, Voto
 from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
@@ -27,29 +28,40 @@ def ver_unidad(request, unidad_pk):
     unidad = get_object_or_404(Unidad, pk=unidad_pk)
     texts = Text.objects.filter(reference = "teoria")
 
+    # preguntas vigentes y no vigentes
     preguntas_de_la_unidad = Pregunta.objects.filter(unidad=unidad).select_related('grupo_autor')
     preguntas = [p for p in preguntas_de_la_unidad if p.vigente]
     preguntas_extra = [p for p in preguntas_de_la_unidad if not p.vigente]
 
+    # material de estudio vigente y no vigente
+    material_de_la_unidad = Material.objects.filter(unidad=unidad).select_related('grupo_autor')
+    material = [m for m in material_de_la_unidad if m.vigente]
+    material_extra = [m for m in material_de_la_unidad if not m.vigente]
+
+    # obtiene conteo de votos por material de la unidad
+    votos_material_queryset = Voto.objects.filter(material__in=material)\
+                                          .values('material')\
+                                          .annotate(Sum('voto'))
+    conteo_votos = {voto['material']: voto['voto__sum'] for voto in votos_material_queryset}
+
+    # obtiene votos de material pertenecientes al grupo o usuario autenticado
     if request.user.is_authenticated():
         if request.user.grupos.all().exists():
-            material = [(m,
-                        sum(v.voto for v in Voto.objects.filter(material=m)),
-                        Voto.objects.filter(material=m, grupo=request.user.grupos.first()).first())
-                            for m in Material.objects.filter(unidad=unidad, vigente=True)]
+            votos_sesion_queryset = Voto.objects.filter(material__in=material,
+                                                        grupo=request.user.grupos.first())\
+                                                .values('material', 'voto')
         else:
-            material = [(m,
-                        sum(v.voto for v in Voto.objects.filter(material=m)),
-                        Voto.objects.filter(material=m, usuario=request.user).first())
-                            for m in Material.objects.filter(unidad=unidad, vigente=True)]
+            votos_sesion_queryset = Voto.objects.filter(material__in=material,
+                                                        usuario=request.user)\
+                                                .values('material', 'voto')
     else:
-        material = [(m,
-                    sum(v.voto for v in Voto.objects.filter(material=m)),
-                    False)
-                        for m in Material.objects.filter(unidad=unidad, vigente=True)]
+        votos_sesion_queryset = []
 
+    votos_sesion = {voto['material']: voto['voto'] for voto in votos_sesion_queryset}
 
-    material_extra = Material.objects.filter(unidad=unidad, vigente=False)
+    # agrupa informacion del material, conteo de votos y voto del grupo o usuario autenticado
+    material = [(m, conteo_votos.get(m.pk, 0), votos_sesion.get(m.pk, 0))
+                for m in material]
 
     if request.user.groups.filter(name="staff procesos").exists():
         staff = True

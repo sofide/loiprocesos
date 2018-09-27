@@ -42,7 +42,7 @@
                   {% if user.is_authenticated %}
                     <span class="badge votaste">
                       {% if votado %}
-                        {% if votado.voto > 0 %}
+                        {% if votado > 0 %}
                           Votaste <span class="glyphicon glyphicon-ok positivo" ></span>
                         {% else %}
                           Votaste <span class="glyphicon glyphicon-remove negativo" ></span>
