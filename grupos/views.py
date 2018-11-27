@@ -161,7 +161,7 @@ def dashboard_grupo(request, grupo_pk):
 
 
 def autoevaluacion(request):
-    return redirect('base.views.home')
+    return redirect('home')
 
 
 def cargar_autoevaluacion(request, autoevaluacion_pk):
