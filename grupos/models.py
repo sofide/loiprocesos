@@ -59,6 +59,7 @@ class Evaluacion(models.Model):
     criterio = models.ForeignKey(Criterio_evaluacion)
     evaluador = models.ForeignKey(Grupo, related_name="evaluador")
     grupo_evaluado = models.ForeignKey(Grupo, related_name="grupo_evaluado")
-    puntuacion = models.IntegerField(validators=[MaxValueValidator(5, "El voto no puede ser superior a 5"),
-                                                 MinValueValidator(1, "El voto no puede ser menor a 1")])
-
+    puntuacion = models.IntegerField(
+        validators=[MaxValueValidator(10, "El voto no puede ser superior a 10"),
+                    MinValueValidator(1, "El voto no puede ser menor a 1")]
+    )
