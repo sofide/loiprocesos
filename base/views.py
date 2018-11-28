@@ -96,3 +96,7 @@ def home_tres(request):
 
 def pruebas(request):
     return render(request, 'base/pruebas.html')
+
+
+def feedback(request):
+    return render(request, 'base/feedback.html')

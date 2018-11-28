@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
-from base.views import home_dos, pruebas, home_original, home_tres
+from base.views import home_dos, pruebas, home_original, home_tres, feedback
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^1/', home_original, name='home_original'),
     url(r'^2/', home_dos, name='home2'),
     url(r'^3/', home_tres, name='home3'),
+    url(r'^feedback/', feedback, name='feedback'),
 ]
