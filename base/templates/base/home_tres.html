@@ -154,7 +154,9 @@
 
     <!-- ÚLTIMA CLASE -->
     <div class="container section">
+      {% if clase %}
       <h3 class="home"><a href="{% url 'ver_clase' clase.id %}"> Última clase: {{ clase }}</a></h3>
+      {% endif %}
       <div class="row">
         <div class="col-sm-6">
           <div class="center-content">
@@ -177,7 +179,9 @@
 
     <!-- CLASE ANTERIOR -->
     <div class="container section">
+      {% if clase_ant %}
       <h3 class="home"><a href="{% url 'ver_clase' clase_ant.id %}"> Clase anterior: {{ clase_ant }}</a></h3>
+      {% endif %}
       <div class="row">
         <div class="col-sm-6">
           <div class="center-content">
