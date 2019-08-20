@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Sum
@@ -77,6 +78,7 @@ def ver_unidad(request, unidad_pk):
                                                       'texts': texts,
                                                       })
 
+@staff_member_required
 def edit_ud(request, ud_pk=None):
     if ud_pk:
         ud = get_object_or_404(Unidad, pk=ud_pk)
@@ -145,6 +147,7 @@ def add_recurso(request, recurso):
                                                         })
 
 
+@staff_member_required
 def del_recurso(request, recurso, pk):
     if recurso == 'm':
         material = get_object_or_404(Material, pk=pk)
@@ -159,6 +162,7 @@ def del_recurso(request, recurso, pk):
     return redirect('teoria.views.ver_unidad', ud)
 
 
+@staff_member_required
 def edit_text(request, text_pk=None):
     if text_pk:
         text = get_object_or_404(Text, pk=text_pk)

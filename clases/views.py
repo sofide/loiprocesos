@@ -1,6 +1,7 @@
 import itertools
 import re
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.utils import timezone
@@ -217,6 +218,7 @@ def trabajos_practicos(request):
         )
 
 
+@staff_member_required
 def edit_tp(request, tp_pk=None):
     if tp_pk:
         tp = get_object_or_404(TP, pk=tp_pk)
@@ -257,6 +259,8 @@ def ver_tp(request, tp_pk):
     )
 
 
+# TODO: repeated view
+@staff_member_required
 def edit_text(request, text_pk=None):
     if text_pk:
         text = get_object_or_404(Text, pk=text_pk)

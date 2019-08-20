@@ -16,7 +16,10 @@ from teoria.models import Pregunta as Pregunta_teoria
 def grupos_home(request):
     grupos = Grupo.objects.all().order_by("numero")
     years = list(sorted(set([grupo.año for grupo in grupos])))
-    current_year = years[-1]
+    if years:
+        current_year = years[-1]
+    else:
+        current_year = None
     current_grupos = [grupo for grupo in grupos if grupo.año == current_year]
 
     return render(request, 'grupos/grupos_home.html', {'grupos': current_grupos,
@@ -160,6 +163,7 @@ def dashboard_grupo(request, grupo_pk):
                                                           })
 
 
+# TODO: remove nonsense view
 def autoevaluacion(request):
     return redirect('home')
 
@@ -284,7 +288,6 @@ def ver_autoevaluacion(request, autoevaluacion_pk):
             linea_resumen.append((promedio, comparacion))
 
         linea_resumen.append(round(sum(celda[0] for celda in linea_resumen[1:])/len(linea_resumen[1:]), 2))
-        print(linea_resumen)
         tabla_resumen.append(linea_resumen)
 
 
