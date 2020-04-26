@@ -27,7 +27,8 @@ def switch_pregunta(request, pk_1, pk_2):
 
     switch_order(pregunta1, pregunta2)
 
-    return redirect('ver_unidad', pregunta1.unidad_id)
+    redirect_url = reverse('ver_unidad', args=[pregunta1.unidad_id]) + "#preguntas"
+    return redirect(redirect_url)
 
 
 
