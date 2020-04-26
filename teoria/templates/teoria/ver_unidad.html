@@ -96,11 +96,21 @@
           <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
           {% if preguntas %}
             <ol>
-              {% for preg in preguntas %}
+              {% for preg, prev_id, next_id in preguntas %}
                 <li>
                   <p class="in-line-p">
                     {% if staff %}
                       <a href="{% url 'del_recurso' 'p' preg.id %}"><span> [quitar] </span></a>
+                      {% if prev_id %}
+                        <a href=" {% url 'switch_pregunta' preg.id prev_id %}">
+                          <span class="glyphicon glyphicon-arrow-up" ></span>
+                        </a>
+                      {% endif %}
+                      {% if next_id %}
+                        <a href=" {% url 'switch_pregunta' preg.id next_id %}">
+                          <span class="glyphicon glyphicon-arrow-down" ></span>
+                        </a>
+                      {% endif %}
                     {% endif %}
                     <p class="in-line-p"> {{ preg.pregunta }}</p>
                     <span class="in-line-p"> Sugerido por:

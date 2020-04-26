@@ -2,6 +2,39 @@ class OrderError(Exception):
     pass
 
 
+def get_previous_and_next_ids(queryset):
+    """Get previous and next ids for each element of a queryset.
+
+    Given a queryset, return a list of tuples where the first element is an element
+    from queryset, the second one is the id of the previous element and the third one is
+    the id of the next element.
+
+    For example:
+    get_previous_and_next_ids(queryset(Elem 1, Elem 2, Elem3))
+    >> [(Elem1, None, 2), (Elem2, 1, 3), (Elem3, 2, None)]
+    """
+    all_elements = list(queryset)
+    first = 0
+    last = len(queryset) -1
+
+    elements_with_previous_and_next = []
+
+    for i, element in enumerate(all_elements):
+        if i == first:
+            previous = None
+        else:
+            previous = all_elements[i-1].pk
+
+        if i == last:
+            next_element = None
+        else:
+            next_element = all_elements[i+1].pk
+
+        elements_with_previous_and_next.append((element, previous, next_element))
+
+    return elements_with_previous_and_next
+
+
 
 def switch_order(element_1, element_2):
     """Switch 'orden' value between two elements if they are adjacent.

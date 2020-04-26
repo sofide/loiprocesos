@@ -11,7 +11,7 @@ from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
 
 from base.models import Text
 from base.forms import EditTextForm
-from utils.order_logic import switch_order
+from utils.order_logic import switch_order, get_previous_and_next_ids
 
 
 def teoria_home(request):
@@ -44,6 +44,9 @@ def ver_unidad(request, unidad_pk):
     preguntas_extra = Pregunta.objects.filter(
         unidad=unidad, vigente=False
     ).select_related( 'grupo_autor')
+
+    # agrega información de pregunta anterior y siguiente
+    preguntas = get_previous_and_next_ids(preguntas)
 
     # material de estudio vigente y no vigente
     material_de_la_unidad = Material.objects.filter(unidad=unidad).select_related('grupo_autor')
