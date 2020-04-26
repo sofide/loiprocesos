@@ -2,6 +2,7 @@ class OrderError(Exception):
     pass
 
 
+
 def switch_order(element_1, element_2):
     """Switch 'orden' value between two elements if they are adjacent.
 
@@ -10,12 +11,12 @@ def switch_order(element_1, element_2):
     """
     model_class, unidad = get_class_and_unit(element_1, element_2)
 
-    if abs(element_1.orden - element_2.orden):
+    if not are_adjacents(element_1, element_2):
         update_order(model_class, unidad)
         element_1 = model_class.objects.get(pk=element_1.pk)
         element_2 = model_class.objects.get(pk=element_2.pk)
 
-        if abs(element_1.orden - element_2.orden):
+        if not are_adjacents(element_1, element_2):
             msg = "Cannot switch order of {} and {} because they are not adjacent"
             raise OrderError(msg.format(element_1, element_2))
 
@@ -27,6 +28,14 @@ def switch_order(element_1, element_2):
 
     element_1.save()
     element_2.save()
+
+
+def are_adjacents(element_1, element_2):
+    """Check if two elements are adjacents.
+
+    Return True if the elements are next to each other
+    """
+    return abs(element_1.orden - element_2.orden) == 1
 
 
 def get_class_and_unit(element_1, element_2):
@@ -50,6 +59,6 @@ def update_order(model, unidad):
     elements_to_order = model.objects.filter(unidad=unidad)
 
     for order, element in enumerate(elements_to_order):
-        print("about to update {} from order {} to order {}".format(element, element.orden, order))
-        element.orden = order
-        element.save()
+        if element.orden != order:
+            element.orden = order
+            element.save()
