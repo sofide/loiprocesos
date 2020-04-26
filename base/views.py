@@ -77,21 +77,23 @@ def home_tres(request):
 
         return clase, tiempos, preguntas
 
+    context = {'unidades': Unidad.objects.all()}
+
     # Datos de la última clase
     clase, tiempos, preguntas = clase_data()
-    # Datos de la anteúltima clase
-    clase_ant, tiempos_ant, preguntas_ant = clase_data(clase.pk)
+    if clase:
+        context.update(dict(clase=clase, tiempos=tiempos, preguntas=preguntas))
+        # Datos de la anteúltima clase
+        clase_ant, tiempos_ant, preguntas_ant = clase_data(clase.pk)
+        if clase_ant:
+            context.update(dict(
+                clase_ant=clase_ant,
+                tiempos_ant=tiempos_ant,
+                preguntas_ant=preguntas_ant
+            ))
 
-    unidades = Unidad.objects.all()
 
-    return render(request, 'base/home_tres.html', {'clase': clase,
-                                                   'tiempos': tiempos,
-                                                   'preguntas': preguntas,
-                                                   'clase_ant': clase_ant,
-                                                   'tiempos_ant': tiempos_ant,
-                                                   'preguntas_ant': preguntas_ant,
-                                                   'unidades': unidades,
-                                                  })
+    return render(request, 'base/home_tres.html', context)
 
 
 def pruebas(request):
