@@ -11,6 +11,7 @@ from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
 
 from base.models import Text
 from base.forms import EditTextForm
+from utils.order_logic import switch_order
 
 
 def teoria_home(request):
@@ -20,6 +21,15 @@ def teoria_home(request):
     return render(request, 'teoria/teoria_home.html', {'unidades': unidades,
                                                        'texts': texts,
                                                       })
+def switch_pregunta(request, pk_1, pk_2):
+    pregunta1 = get_object_or_404(Pregunta, pk=pk_1)
+    pregunta2 = get_object_or_404(Pregunta, pk=pk_2)
+
+    switch_order(pregunta1, pregunta2)
+
+    return redirect('ver_unidad', pregunta1.unidad_id)
+
+
 
 
 def ver_unidad(request, unidad_pk):
@@ -30,9 +40,10 @@ def ver_unidad(request, unidad_pk):
     texts = Text.objects.filter(reference = "teoria")
 
     # preguntas vigentes y no vigentes
-    preguntas_de_la_unidad = Pregunta.objects.filter(unidad=unidad).select_related('grupo_autor')
-    preguntas = [p for p in preguntas_de_la_unidad if p.vigente]
-    preguntas_extra = [p for p in preguntas_de_la_unidad if not p.vigente]
+    preguntas = Pregunta.objects.filter(unidad=unidad, vigente=True).select_related('grupo_autor')
+    preguntas_extra = Pregunta.objects.filter(
+        unidad=unidad, vigente=False
+    ).select_related( 'grupo_autor')
 
     # material de estudio vigente y no vigente
     material_de_la_unidad = Material.objects.filter(unidad=unidad).select_related('grupo_autor')
