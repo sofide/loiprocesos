@@ -35,7 +35,6 @@ def get_previous_and_next_ids(queryset):
     return elements_with_previous_and_next
 
 
-
 def switch_order(element_1, element_2):
     """Switch 'orden' value between two elements if they are adjacent.
 
