@@ -22,8 +22,10 @@ class Pregunta(models.Model):
     usuario = models.ForeignKey('auth.User', default=None, null=True,
                                 blank=True, )
     grupo_autor = models.ForeignKey(Grupo, blank=True, null=True, related_name='preguntas_teoria')
+    orden = models.IntegerField()
+
     class Meta:
-        ordering = ['autor', 'pregunta']
+        ordering = ['-vigente', 'orden', 'autor', 'pregunta']
         index_together = ['autor', 'pregunta']
     def __str__(self):
         return "{} - {}".format(self.pregunta, self.autor)
@@ -39,8 +41,10 @@ class Material(models.Model):
     usuario = models.ForeignKey('auth.User', default=None, null=True,
                                 blank=True,)
     grupo_autor = models.ForeignKey(Grupo, blank=True, null=True, related_name='material_teoria')
+    orden = models.IntegerField()
+
     class Meta:
-        ordering = ['autor', 'nombre']
+        ordering = ['-vigente', 'orden', 'autor', 'nombre']
         index_together = ['autor', 'nombre']
     def __str__(self):
         return "{} - {}".format(self.nombre, self.autor)

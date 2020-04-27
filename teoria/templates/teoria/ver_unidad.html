@@ -23,7 +23,59 @@
       </div>
     </div>
 
-    <div class="container section">
+    <div class="container section padding-title", id="preguntas">
+      <div class="row">
+        <a class="btn-soft inline-title" href="{% url 'add_recurso' 'p' %}">
+          {% if staff %}
+            Agregar
+          {% else %}
+            Sugerir
+          {% endif %}
+        </a>
+        <div class="inline-title">
+          <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
+          {% if preguntas %}
+            <ol>
+              {% for preg, prev_id, next_id in preguntas %}
+                <li>
+                  <p class="in-line-p">
+                    {% if staff %}
+                      <a href="{% url 'del_recurso' 'p' preg.id %}"><span> [quitar] </span></a>
+                      {% if prev_id %}
+                        <a href=" {% url 'switch_pregunta' preg.id prev_id %}">
+                          <span class="glyphicon glyphicon-arrow-up" ></span>
+                        </a>
+                      {% endif %}
+                      {% if next_id %}
+                        <a href=" {% url 'switch_pregunta' preg.id next_id %}">
+                          <span class="glyphicon glyphicon-arrow-down" ></span>
+                        </a>
+                      {% endif %}
+                    {% endif %}
+                    <p class="in-line-p"> {{ preg.pregunta }}</p>
+                    <span class="in-line-p"> Sugerido por:
+                      {% if preg.grupo_autor %}
+                      <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
+                        {{ preg.grupo_autor }}
+                      </a>
+                      {% else %}
+                        {{ preg.autor }}
+                      {% endif %}
+                    </span>
+                  </p>
+                </li>
+              {% endfor %}
+            </ol>
+          {% else %}
+            <p>Todavía no hay preguntas cargadas para esta unidad</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="container section padding-title", id="videos">
       <div class="row">
         <a class="btn-soft inline-title" href="{% url 'add_recurso' 'm' %}">
           {% if staff %}
@@ -83,45 +135,6 @@
       </div>
     </div>
 
-    <div class="container section">
-      <div class="row">
-        <a class="btn-soft inline-title" href="{% url 'add_recurso' 'p' %}">
-          {% if staff %}
-            Agregar
-          {% else %}
-            Sugerir
-          {% endif %}
-        </a>
-        <div class="inline-title">
-          <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
-          {% if preguntas %}
-            <ol>
-              {% for preg in preguntas %}
-                <li>
-                  <p class="in-line-p">
-                    {% if staff %}
-                      <a href="{% url 'del_recurso' 'p' preg.id %}"><span> [quitar] </span></a>
-                    {% endif %}
-                    <p class="in-line-p"> {{ preg.pregunta }}</p>
-                    <span class="in-line-p"> Sugerido por:
-                      {% if preg.grupo_autor %}
-                      <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
-                        {{ preg.grupo_autor }}
-                      </a>
-                      {% else %}
-                        {{ preg.autor }}
-                      {% endif %}
-                    </span>
-                  </p>
-                </li>
-              {% endfor %}
-            </ol>
-          {% else %}
-            <p>Todavía no hay preguntas cargadas para esta unidad</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="container section">

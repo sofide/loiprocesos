@@ -141,6 +141,9 @@ span {
   color:white;
 }
 
+.padding-title {
+  padding-top: 60px;
+}
 .inline-title {
   display: inline-block;
 }
