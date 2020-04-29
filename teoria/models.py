@@ -22,7 +22,7 @@ class Pregunta(models.Model):
     usuario = models.ForeignKey('auth.User', default=None, null=True,
                                 blank=True, )
     grupo_autor = models.ForeignKey(Grupo, blank=True, null=True, related_name='preguntas_teoria')
-    orden = models.IntegerField()
+    orden = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-vigente', 'orden', 'autor', 'pregunta']
@@ -41,7 +41,7 @@ class Material(models.Model):
     usuario = models.ForeignKey('auth.User', default=None, null=True,
                                 blank=True,)
     grupo_autor = models.ForeignKey(Grupo, blank=True, null=True, related_name='material_teoria')
-    orden = models.IntegerField()
+    orden = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-vigente', 'orden', 'autor', 'nombre']
