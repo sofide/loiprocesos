@@ -117,7 +117,7 @@ def edit_ud(request, ud_pk=None):
                                                    }, )
 
 
-def add_recurso(request, recurso):
+def add_recurso(request, recurso, ud_pk=None):
     if recurso == "m":
         form_class = MaterialForm
         is_material = True
@@ -155,7 +155,13 @@ def add_recurso(request, recurso):
                 form = form_class(initial={'autor':str(grupo), 'unidad': ud})
 
     else:
-        form = form_class(initial={'autor':str(grupo), })
+        initial_form = {'autor': str(grupo)}
+
+        if ud_pk:
+            unidad = get_object_or_404(Unidad, pk=ud_pk)
+            initial_form['unidad'] = unidad.pk
+
+        form = form_class(initial=initial_form)
 
     return render(request, 'teoria/add_recurso.html', {'material_form': form,
                                                         'is_material': is_material,
