@@ -7,7 +7,9 @@ from django.http import HttpResponseRedirect
 from django.db.models import Sum
 
 from teoria.models import Unidad, Pregunta, Material, Voto
-from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
+from teoria.forms import (
+    EditUdForm, MaterialForm, PreguntaTeoriaForm, MaterialEditForm, PreguntaTeoriaEditForm
+)
 
 from base.models import Text
 from base.forms import EditTextForm
@@ -166,6 +168,39 @@ def add_recurso(request, recurso, ud_pk=None):
     return render(request, 'teoria/add_recurso.html', {'material_form': form,
                                                         'is_material': is_material,
                                                         })
+
+
+@staff_member_required
+def edit_recurso(request, recurso, pk):
+    if recurso == "m":
+        is_material = True
+        recurso_model = Material
+        recurso_form = MaterialEditForm
+    else:
+        is_material = False
+        recurso_model = Pregunta
+        recurso_form = PreguntaTeoriaEditForm
+
+    recurso = get_object_or_404(recurso_model, pk=pk)
+
+    if request.method == "POST":
+        form = recurso_form(request.POST, instance=recurso)
+        if form.is_valid():
+            new_text = form.save(commit=False)
+            new_text.reference = "teoria"
+            new_text.edited = timezone.now()
+            new_text.save()
+
+            ud = recurso.unidad_id
+            return redirect('teoria.views.ver_unidad', ud)
+    else:
+        form = recurso_form(instance=recurso)
+
+    context = {
+        'material_form': form,
+        'is_material': is_material,
+    }
+    return render(request, 'teoria/add_recurso.html', context)
 
 
 @staff_member_required
