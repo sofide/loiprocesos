@@ -199,6 +199,7 @@ def edit_recurso(request, recurso, pk):
     context = {
         'material_form': form,
         'is_material': is_material,
+        'edit_resource': True,
     }
     return render(request, 'teoria/add_recurso.html', context)
 
