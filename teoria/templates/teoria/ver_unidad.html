@@ -25,7 +25,7 @@
 
     <div class="container section padding-title", id="preguntas">
       <div class="row">
-        <a class="btn-soft inline-title" href="{% url 'add_recurso' 'p' %}">
+        <a class="btn-soft inline-title" href="{% url 'add_recurso_in_ud' 'p' unidad.pk %}">
           {% if staff %}
             Agregar
           {% else %}
@@ -77,7 +77,7 @@
 
     <div class="container section padding-title", id="videos">
       <div class="row">
-        <a class="btn-soft inline-title" href="{% url 'add_recurso' 'm' %}">
+        <a class="btn-soft inline-title" href="{% url 'add_recurso_in_ud' 'm' unidad.pk %}">
           {% if staff %}
             Agregar
           {% else %}
