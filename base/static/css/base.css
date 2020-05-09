@@ -256,7 +256,7 @@ p.home {
   width: 100%;
 }
 
-.extended-input #id_titulo, #id_nombre, #id_link, #id_autor {
+.extended-input #id_titulo, #id_nombre, #id_link, #id_autor, #id_pregunta {
   width: 100%;
 }
 
