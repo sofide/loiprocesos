@@ -32,16 +32,26 @@
         <div id="tab-preguntas" class="tab" data-tab-group="recursos-teoria">
             <div class="row">
                 <div class="col-12">
-                    <a class="btn-soft inline-title" href="{% url 'add_recurso_in_ud' 'p' unidad.pk %}">
-                        {% if staff %}
-                            Agregar
-                        {% else %}
-                            Sugerir
-                        {% endif %}
-                    </a>
-
                     <div class="inline-title">
-                        <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
+                        <a class="btn-soft" href="{% url 'add_recurso_in_ud' 'p' unidad.pk %}">
+                            {% if staff %}
+                                Agregar nuevas preguntas
+                            {% else %}
+                                Sugerir nuevas preguntas
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="inline-title">
+                        <h4>Preguntas para facilitar la comprensión de la unidad:</h4>
+                        <p>
+                            A continuación se listan las preguntas más representativas de esta unidad.
+                            Si estás en condiciones de contestar correctamente todas, significa que alcanzaste
+                            los conocimientos básicos necesarios que esta unidad propone.
+                        </p>
                     </div>
                 </div>
             </div>
