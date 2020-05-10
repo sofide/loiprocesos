@@ -404,6 +404,22 @@ a.menu-button:hover {
   background-color: #2980B9;
 }
 
+
+/* Tab links */
+.tab-link {
+  color: #2980B9;
+}
+
+.tab-link.inactive {
+  color: #96c7e8;
+}
+
+.tab-link:hover {
+  color: #404040;
+  text-decoration: none;
+}
+
+
 /*! REEMPLAZADO POR SIMPLE-SIDEBAR
 .lateral{
 margin: 0;

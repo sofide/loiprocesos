@@ -2,203 +2,213 @@
 {% load admin_urls %}
 
 {% block content %}
-  <div class="col-sm-12">
     <div class="container section">
-      <div class="row">
-        <div class="col-sm-8">
-          <h1>{{ unidad }}</h1>
+        <div class="row">
+            <div class="col-12">
+                <h1>{{ unidad }}</h1>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="container section">
-      <div class="row">
-        <div class="col-sm-12">
-          {% if texts %}
-            {% for text in texts %}
-              {{text | safe}}
-            {% endfor %}
-          {% endif %}
-        </div>
-      </div>
-    </div>
+        {% if texts %}
+            <div class="row">
+                <div class="col-12">
+                  {% for text in texts %}
+                    {{text | safe}}
+                  {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <h2>
+            <span id="tab-link-preguntas" class="tab-link"
+                  data-tab-id="tab-preguntas" data-tab-group="recursos-teoria">
+                Preguntas
+            </span> |
+            <span id="tab-link-material" class="tab-link"
+                  data-tab-id="tab-material" data-tab-group="recursos-teoria">
+                Videos y material
+            </span>
+        </h2>
 
-    <div class="container section padding-title", id="preguntas">
-      <div class="row">
-        <a class="btn-soft inline-title" href="{% url 'add_recurso_in_ud' 'p' unidad.pk %}">
-          {% if staff %}
-            Agregar
-          {% else %}
-            Sugerir
-          {% endif %}
-        </a>
-        <div class="inline-title">
-          <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
-          {% if preguntas %}
-            <ol>
-              {% for preg, prev_id, next_id in preguntas %}
-                <li>
-                  <p class="in-line-p">
-                    {% if staff %}
-                      <a href="{% url 'del_recurso' 'p' preg.id %}"><span> [quitar] </span></a>
-                      {% if prev_id %}
-                        <a href=" {% url 'switch_pregunta' preg.id prev_id %}">
-                          <span class="glyphicon glyphicon-arrow-up" ></span>
-                        </a>
-                      {% endif %}
-                      {% if next_id %}
-                        <a href=" {% url 'switch_pregunta' preg.id next_id %}">
-                          <span class="glyphicon glyphicon-arrow-down" ></span>
-                        </a>
-                      {% endif %}
-                    {% endif %}
-                    <p class="in-line-p"> {{ preg.pregunta }}</p>
-                    <span class="in-line-p"> Sugerido por:
-                      {% if preg.grupo_autor %}
-                      <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
-                        {{ preg.grupo_autor }}
-                      </a>
-                      {% else %}
-                        {{ preg.autor }}
-                      {% endif %}
-                    </span>
-                  </p>
-                </li>
-              {% endfor %}
-            </ol>
-          {% else %}
-            <p>Todavía no hay preguntas cargadas para esta unidad</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="container section padding-title", id="videos">
-      <div class="row">
-        <a class="btn-soft inline-title" href="{% url 'add_recurso_in_ud' 'm' unidad.pk %}">
-          {% if staff %}
-            Agregar
-          {% else %}
-            Sugerir
-          {% endif %}
-        </a>
-        <div class="inline-title">
-          <h3>Videos de la unidad:</h3>
-          {% if material %}
-            <ol class="list-group">
-              {% for mat, votos, votado in material %}
-                <li class="big list-group-item">
-                  <span class="badge">Votos: {{ votos }}</span>
-                  {% if user.is_authenticated %}
-                    <span class="badge votaste">
-                      {% if votado %}
-                        {% if votado > 0 %}
-                          Votaste <span class="glyphicon glyphicon-ok positivo" ></span>
+        <div id="tab-preguntas" class="tab" data-tab-group="recursos-teoria">
+            <div class="row">
+                <div class="col-12">
+                    <a class="btn-soft inline-title" href="{% url 'add_recurso_in_ud' 'p' unidad.pk %}">
+                        {% if staff %}
+                            Agregar
                         {% else %}
-                          Votaste <span class="glyphicon glyphicon-remove negativo" ></span>
+                            Sugerir
                         {% endif %}
-                      {% else %}
-                        Votá:
-                        <a href=" {% url 'voto_recurso' '+' 'm' mat.id %}">
-                          <span class="glyphicon glyphicon-ok positivo" ></span>
-                        </a>
-                        <a href=" {% url 'voto_recurso' '-' 'm' mat.id %}">
-                          <span class="glyphicon glyphicon-remove negativo" ></span>
-                        </a>
-                      {% endif %}
-                    </span>
-                  {% endif %}
-                  <p class="in-line-p">
+                    </a>
+
+                    <div class="inline-title">
+                        <h3>Preguntas para facilitar la comprensión de la unidad:</h3>
+                    </div>
+                </div>
+            </div>
+            {% if preguntas %}
+                <ol>
+                {% for preg, prev_id, next_id in preguntas %}
+                    <div class="row">
+                        <li>
+                            {% if staff %}
+                                <a href="{% url 'del_recurso' 'p' preg.id %}"><span> [quitar] </span></a>
+                                {% if prev_id %}
+                                    <a class="btn btn-outline-primary" href=" {% url 'switch_pregunta' preg.id prev_id %}">
+                                        <span class="glyphicon glyphicon-arrow-up" ></span>
+                                    </a>
+                                {% endif %}
+                                {% if next_id %}
+                                    <a href=" {% url 'switch_pregunta' preg.id next_id %}">
+                                        <span class="glyphicon glyphicon-arrow-down" ></span>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                            <p class="in-line-p"> {{ preg.pregunta }}</p>
+                            <span class="in-line-p span-style"> Sugerido por:
+                                {% if preg.grupo_autor %}
+                                    <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
+                                        {{ preg.grupo_autor }}
+                                    </a>
+                                {% else %}
+                                    {{ preg.autor }}
+                                {% endif %}
+                            </span>
+                        </li>
+                    </div>
+                {% endfor %}
+                </ol>
+            {% else %}
+                <p>Todavía no hay preguntas cargadas para esta unidad</p>
+            {% endif %}
+        </div>
+
+
+        <div id="tab-material" class="tab" data-tab-group="recursos-teoria">
+            <div class="row">
+                <a class="btn-soft inline-title" href="{% url 'add_recurso_in_ud' 'm' unidad.pk %}">
                     {% if staff %}
-                      <a href="{% url 'del_recurso' 'm' mat.id %}" class="in-line-p"><span class="in-line-p">[quitar] </span></a>
+                        Agregar
+                    {% else %}
+                        Sugerir
                     {% endif %}
-                    <a href="{{ mat.link }}" target="_blank" class="dark-link in-line-p"> {{ mat.nombre }} </a>
-                    <span class="in-line-p"> Sugerido por:
-                      {% if mat.grupo_autor %}
-                      <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
-                        {{ mat.grupo_autor}}
-                      </a>
-                      {% else %}
-                        {{ mat.autor }}
-                      {% endif %}
-                    </span>
-                  </p>
-                </li>
-              {% endfor %}
-            </ol>
-          {% else %}
-            <p>Todavía no hay mateial de estudio cargdo para esta unidad</p>
-          {% endif %}
+                </a>
+                <div class="inline-title">
+                    <h3>Videos de la unidad:</h3>
+                    {% if material %}
+                        <ol class="list-group">
+                        {% for mat, votos, votado in material %}
+                            <li class="big list-group-item">
+                                <span class="badge">Votos: {{ votos }}</span>
+                                {% if user.is_authenticated %}
+                                    <span class="badge votaste">
+                                        {% if votado %}
+                                            {% if votado > 0 %}
+                                                Votaste <span class="glyphicon glyphicon-ok positivo" ></span>
+                                            {% else %}
+                                                Votaste <span class="glyphicon glyphicon-remove negativo" ></span>
+                                            {% endif %}
+                                        {% else %}
+                                            Votá:
+                                            <a href=" {% url 'voto_recurso' '+' 'm' mat.id %}">
+                                                <span class="glyphicon glyphicon-ok positivo" ></span>
+                                            </a>
+                                            <a href=" {% url 'voto_recurso' '-' 'm' mat.id %}">
+                                                <span class="glyphicon glyphicon-remove negativo" ></span>
+                                            </a>
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                                <p class="in-line-p">
+                                    {% if staff %}
+                                        <a href="{% url 'del_recurso' 'm' mat.id %}" class="in-line-p"><span class="in-line-p">[quitar] </span></a>
+                                    {% endif %}
+                                    <a href="{{ mat.link }}" target="_blank" class="dark-link in-line-p"> {{ mat.nombre }} </a>
+                                    <span class="in-line-p span-style"> Sugerido por:
+                                        {% if mat.grupo_autor %}
+                                            <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
+                                                {{ mat.grupo_autor}}
+                                            </a>
+                                        {% else %}
+                                            {{ mat.autor }}
+                                        {% endif %}
+                                    </span>
+                                </p>
+                            </li>
+                        {% endfor %}
+                        </ol>
+                    {% else %}
+                        <p>Todavía no hay mateial de estudio cargdo para esta unidad</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="col-sm-12">
+            <div class="row">
+                <h2> Otros recursos sugeridos: </h2>
+                <div class="col-sm-6">
+                    <h3>Videos</h3>
+                    {% if material_extra %}
+                        <ol>
+                            {% for mat in material_extra %}
+                                <li>
+                                    <p>
+                                        {% if request.user.is_staff %}
+                                            <a href="{% url 'admin:teoria_material_change' mat.pk %}" target="_blank">[x]</a>
+                                        {% endif %}
+                                        <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
+                                        <span class="in-line-p span-style"> Sugerido por:
+                                            {% if mat.grupo_autor %}
+                                                <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
+                                                    {{ mat.grupo_autor}}
+                                                </a>
+                                            {% else %}
+                                                {{ mat.autor }}
+                                            {% endif %}
+                                        </span>
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% else %}
+                        <p>Toavía no hay preguntas sugeridas para esta unidad</p>
+                    {% endif %}
+                </div>
+                <div class="col-sm-6">
+                    <h3>Preguntas</h3>
+                    {% if preguntas_extra %}
+                        <ol>
+                            {% for preg in preguntas_extra %}
+                                <li>
+                                    <p>
+                                        {% if request.user.is_staff %}
+                                            <a class="in-line-preg" href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
+                                        {% endif %}
+                                        {{ preg.pregunta }}
+                                        <span class="in-line-p span-style"> Sugerido por:
+                                            {% if preg.grupo_autor %}
+                                                <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
+                                                    {{ preg.grupo_autor}}
+                                                </a>
+                                            {% else %}
+                                                {{ preg.autor }}
+                                            {% endif %}
+                                        </span>
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% else %}
+                        <p>Todavía no hay preguntas sugeridas para esta unidad</p>
+                    {% endif %}
+                  </div>
+            </div>
+        </div>
     </div>
 
-  </div>
-
-  <div class="container section">
-    <div class="col-sm-12">
-      <div class="row">
-        <h2> Otros recursos sugeridos: </h2>
-        <div class="col-sm-6">
-          <h3>Videos</h3>
-          {% if material_extra %}
-            <ol>
-            {% for mat in material_extra %}
-                <li>
-                  <p>
-                    {% if request.user.is_staff %}
-                      <a href="{% url 'admin:teoria_material_change' mat.pk %}" target="_blank">[x]</a>
-                    {% endif %}
-                    <a href="{{ mat.link }}" target="_blank" class="dark-link"> {{ mat.nombre }} </a>
-                    <span class="in-line-p"> Sugerido por:
-                      {% if mat.grupo_autor %}
-                      <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
-                        {{ mat.grupo_autor}}
-                      </a>
-                      {% else %}
-                        {{ mat.autor }}
-                      {% endif %}
-                    </span>
-                  </p>
-                </li>
-            {% endfor %}
-            </ol>
-          {% else %}
-            <p>Toavía no hay preguntas sugeridas para esta unidad</p>
-          {% endif %}
-        </div>
-        <div class="col-sm-6">
-          <h3>Preguntas</h3>
-          {% if preguntas_extra %}
-            <ol>
-            {% for preg in preguntas_extra %}
-            <li>
-              <p>
-                {% if request.user.is_staff %}
-                  <a class="in-line-preg" href="{% url 'admin:teoria_pregunta_change' preg.pk %}" target="_blank">[x]</a>
-                {% endif %}
-                {{ preg.pregunta }}
-                <span class="in-line-p"> Sugerido por:
-                  {% if preg.grupo_autor %}
-                  <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
-                    {{ preg.grupo_autor}}
-                  </a>
-                  {% else %}
-                    {{ preg.autor }}
-                  {% endif %}
-                </span>
-              </p>
-            </li>
-            {% endfor %}
-            </ol>
-          {% else %}
-            <p>Toavía no hay preguntas sugeridas para esta unidad</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
-
+    <script>
+      $(function() {
+          $('#tab-link-preguntas').click();
+      });
+    </script>
 {% endblock %}
