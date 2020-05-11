@@ -419,6 +419,10 @@ a.menu-button:hover {
   text-decoration: none;
 }
 
+.mt {
+  margin-top: 20px
+}
+
 
 /*! REEMPLAZADO POR SIMPLE-SIDEBAR
 .lateral{

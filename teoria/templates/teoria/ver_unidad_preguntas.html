@@ -1,0 +1,33 @@
+<ol class="list-group">
+    {% for preg, prev_id, next_id in preguntas %}
+        <li class="list-group-item">
+            {% if staff %}
+                <span class="badge votaste">
+                    <a class="btn" href="{% url 'edit_recurso' 'p' preg.id %}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    {% if prev_id %}
+                        <a class="btn" href=" {% url 'switch_pregunta' preg.id prev_id %}">
+                            <span class="glyphicon glyphicon-arrow-up" ></span>
+                        </a>
+                    {% endif %}
+                    {% if next_id %}
+                        <a class="btn" href=" {% url 'switch_pregunta' preg.id next_id %}">
+                            <span class="glyphicon glyphicon-arrow-down" ></span>
+                        </a>
+                    {% endif %}
+                </span>
+            {% endif %}
+            <p class="in-line-p"> {{ preg.pregunta }}</p>
+            <p class="span-style"> Sugerido por:
+                {% if preg.grupo_autor %}
+                    <a href="{% url 'ver_grupo' preg.grupo_autor_id %}">
+                        {{ preg.grupo_autor }}
+                    </a>
+                {% else %}
+                    {{ preg.autor }}
+                {% endif %}
+            </p>
+        </li>
+    {% endfor %}
+</ol>

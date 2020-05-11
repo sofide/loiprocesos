@@ -50,6 +50,7 @@ def ver_unidad(request, unidad_pk):
 
     # agrega información de pregunta anterior y siguiente
     preguntas = get_previous_and_next_ids(preguntas)
+    preguntas_extra = get_previous_and_next_ids(preguntas_extra)
 
     # material de estudio vigente y no vigente
     material_de_la_unidad = Material.objects.filter(unidad=unidad).select_related('grupo_autor')
@@ -80,6 +81,8 @@ def ver_unidad(request, unidad_pk):
     # agrupa informacion del material, conteo de votos y voto del grupo o usuario autenticado
     material = [(m, conteo_votos.get(m.pk, 0), votos_sesion.get(m.pk, 0))
                 for m in material]
+    # agrega votos dummy a extra_material para mantener la misma estructura que material.
+    material_extra = [(m, 0, 0) for m in material_extra]
 
     if request.user.groups.filter(name="staff procesos").exists():
         staff = True
