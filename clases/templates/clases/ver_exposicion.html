@@ -136,9 +136,9 @@
       <li>
         {{ preg.preguntador }} realizó {{ preg.cantidad }} pregunta/s
         {% if preg.primero %}
-          <span>primero!</span>
+          <span class="span-style">primero!</span>
         {% elif preg.ultimo %}
-          <span>ultimo!</span>
+          <span class="span-style">último!</span>
         {% endif %}
       </li>
       {% endfor %}
@@ -172,7 +172,7 @@
             <li>
               {{ pregunta }}
               {% if pregunta.mejor %}
-                <span>Seleccionada como Mejor</span>
+                <span class="span-style">Seleccionada como Mejor</span>
               {% endif %}
             </li>
           {% endfor %}

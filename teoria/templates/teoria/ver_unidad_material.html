@@ -1,0 +1,45 @@
+<ol class="list-group">
+    {% for mat, votos, votado in material %}
+        <li class="big list-group-item">
+            {% if staff %}
+                <span class="badge votaste">
+                    <a class="btn" href="{% url 'edit_recurso' 'm' mat.id %}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </span>
+            {% endif %}
+            {% if include_votos %}
+                <span class="badge">Votos: {{ votos }}</span>
+                {% if user.is_authenticated %}
+                    <span class="badge votaste">
+                        {% if votado %}
+                            {% if votado > 0 %}
+                                Votaste <span class="glyphicon glyphicon-ok positivo" ></span>
+                            {% else %}
+                                Votaste <span class="glyphicon glyphicon-remove negativo" ></span>
+                            {% endif %}
+                        {% else %}
+                            Votá:
+                            <a href=" {% url 'voto_recurso' '+' 'm' mat.id %}">
+                                <span class="glyphicon glyphicon-ok positivo" ></span>
+                            </a>
+                            <a href=" {% url 'voto_recurso' '-' 'm' mat.id %}">
+                                <span class="glyphicon glyphicon-remove negativo" ></span>
+                            </a>
+                        {% endif %}
+                    </span>
+                {% endif %}
+            {% endif %}
+            <a href="{{ mat.link }}" target="_blank" class="dark-link in-line-p"> {{ mat.nombre }} </a>
+            <p class="span-style"> Sugerido por:
+                {% if mat.grupo_autor %}
+                    <a href="{% url 'ver_grupo' mat.grupo_autor_id %}">
+                        {{ mat.grupo_autor}}
+                    </a>
+                {% else %}
+                    {{ mat.autor }}
+                {% endif %}
+            </p>
+        </li>
+    {% endfor %}
+</ol>

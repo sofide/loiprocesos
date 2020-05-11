@@ -20,7 +20,20 @@ class MaterialForm(forms.ModelForm):
         model = Material
         fields = ('unidad', 'nombre', 'link', 'autor')
 
+
 class PreguntaTeoriaForm(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = ('unidad', 'pregunta', 'autor')
+
+
+class MaterialEditForm(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = ('unidad', 'nombre', 'link', 'autor', 'vigente')
+
+
+class PreguntaTeoriaEditForm(forms.ModelForm):
+    class Meta:
+        model = Pregunta
+        fields = ('unidad', 'pregunta', 'autor', 'vigente')

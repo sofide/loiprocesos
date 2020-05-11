@@ -3,7 +3,11 @@
 {% block content %}
 <div class="col-sm-12">
   <div class="container section">
-    {% if is_material %}
+    {% if edit_resource and is_material %}
+      <h2>Editar material</h2>
+    {% elif edit_resource %}
+      <h2>Editar pregunta</h2>
+    {% elif is_material %}
       <h2>Agregar material para mejorar el aprendizaje de una unidad</h2>
     {% else %}
       <h2>Agregar pregunta para mejorar la comprensión de una unidad</h2>
@@ -13,8 +17,10 @@
   <div class="container section">
     <form method="POST" class="extended-input">{% csrf_token %}
       {{ material_form.as_p }}
-      <input type="submit" name="save" class="btn-dark" value="Cargar"></input>
-      <input type="submit" name="add" class="btn-dark" value="Cargar y agregar nuevo"></input>
+      <input type="submit" name="save" class="btn-dark" value="Guardar"></input>
+      {% if not edit_resource %}
+        <input type="submit" name="add" class="btn-dark" value="Guardar y agregar nuevo"></input>
+      {% endif %}
 
     </form>
   </div>

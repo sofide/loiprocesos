@@ -42,7 +42,7 @@ a:hover {
   display: inline-block;
 }
 
-span {
+.span-style {
   font-style: italic;
   font-family: monospace;
   color: #2980B9;
@@ -256,7 +256,7 @@ p.home {
   width: 100%;
 }
 
-.extended-input #id_titulo, #id_nombre, #id_link, #id_autor {
+.extended-input #id_titulo, #id_nombre, #id_link, #id_autor, #id_pregunta {
   width: 100%;
 }
 
@@ -403,6 +403,26 @@ a.menu-button:hover {
 .sidebar-nav li a:hover {
   background-color: #2980B9;
 }
+
+
+/* Tab links */
+.tab-link {
+  color: #2980B9;
+}
+
+.tab-link.inactive {
+  color: #96c7e8;
+}
+
+.tab-link:hover {
+  color: #404040;
+  text-decoration: none;
+}
+
+.mt {
+  margin-top: 20px
+}
+
 
 /*! REEMPLAZADO POR SIMPLE-SIDEBAR
 .lateral{

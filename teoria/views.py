@@ -7,7 +7,9 @@ from django.http import HttpResponseRedirect
 from django.db.models import Sum
 
 from teoria.models import Unidad, Pregunta, Material, Voto
-from teoria.forms import EditUdForm, MaterialForm, PreguntaTeoriaForm
+from teoria.forms import (
+    EditUdForm, MaterialForm, PreguntaTeoriaForm, MaterialEditForm, PreguntaTeoriaEditForm
+)
 
 from base.models import Text
 from base.forms import EditTextForm
@@ -48,6 +50,7 @@ def ver_unidad(request, unidad_pk):
 
     # agrega información de pregunta anterior y siguiente
     preguntas = get_previous_and_next_ids(preguntas)
+    preguntas_extra = get_previous_and_next_ids(preguntas_extra)
 
     # material de estudio vigente y no vigente
     material_de_la_unidad = Material.objects.filter(unidad=unidad).select_related('grupo_autor')
@@ -78,6 +81,8 @@ def ver_unidad(request, unidad_pk):
     # agrupa informacion del material, conteo de votos y voto del grupo o usuario autenticado
     material = [(m, conteo_votos.get(m.pk, 0), votos_sesion.get(m.pk, 0))
                 for m in material]
+    # agrega votos dummy a extra_material para mantener la misma estructura que material.
+    material_extra = [(m, 0, 0) for m in material_extra]
 
     if request.user.groups.filter(name="staff procesos").exists():
         staff = True
@@ -117,7 +122,7 @@ def edit_ud(request, ud_pk=None):
                                                    }, )
 
 
-def add_recurso(request, recurso):
+def add_recurso(request, recurso, ud_pk=None):
     if recurso == "m":
         form_class = MaterialForm
         is_material = True
@@ -155,11 +160,51 @@ def add_recurso(request, recurso):
                 form = form_class(initial={'autor':str(grupo), 'unidad': ud})
 
     else:
-        form = form_class(initial={'autor':str(grupo), })
+        initial_form = {'autor': str(grupo)}
+
+        if ud_pk:
+            unidad = get_object_or_404(Unidad, pk=ud_pk)
+            initial_form['unidad'] = unidad.pk
+
+        form = form_class(initial=initial_form)
 
     return render(request, 'teoria/add_recurso.html', {'material_form': form,
                                                         'is_material': is_material,
                                                         })
+
+
+@staff_member_required
+def edit_recurso(request, recurso, pk):
+    if recurso == "m":
+        is_material = True
+        recurso_model = Material
+        recurso_form = MaterialEditForm
+    else:
+        is_material = False
+        recurso_model = Pregunta
+        recurso_form = PreguntaTeoriaEditForm
+
+    recurso = get_object_or_404(recurso_model, pk=pk)
+
+    if request.method == "POST":
+        form = recurso_form(request.POST, instance=recurso)
+        if form.is_valid():
+            new_text = form.save(commit=False)
+            new_text.reference = "teoria"
+            new_text.edited = timezone.now()
+            new_text.save()
+
+            ud = recurso.unidad_id
+            return redirect('teoria.views.ver_unidad', ud)
+    else:
+        form = recurso_form(instance=recurso)
+
+    context = {
+        'material_form': form,
+        'is_material': is_material,
+        'edit_resource': True,
+    }
+    return render(request, 'teoria/add_recurso.html', context)
 
 
 @staff_member_required
