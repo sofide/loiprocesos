@@ -6,60 +6,40 @@
         <div class="row">
             <div class="col-12">
                 <!--title-->
-                  <h1>Exposición: {{ exposicion }}</h1>
+                    <a href="{% url 'ver_grupo' exposicion.grupo.id %}">
+                        <h1>Grupo {{ exposicion.grupo.numero }}: {{ exposicion.grupo.producto }}</h1>
+                    </a>
+                    {% if exposicion.virtual %}
+                        <h3>Exposición virtual</h3>
+                    {% else %}
+                        <a href="{% url 'ver_clase' exposicion.clase.id %}">
+                          <h3>Exposición del {{exposicion.clase}}</h3>
+                        </a>
+                    {% endif %}
                 <!--/title-->
             </div>
         </div>
 
         <!--description-->
-        <div class="row">
+        <div class="row mt">
             <div class="col-12">
                 {% if exposicion.description %}
                       {{ exposicion.description | safe }}
                 {% endif %}
                 <div class="panel panel-default">
-                  <div class="panel-body">
-                    {{ exposicion.tp.descripcion | safe }}
-                  </div>
+                    <div class="panel-heading">
+                        <a href="{% url 'ver_tp' exposicion.tp.id %}">
+                          <h4>{{ exposicion.tp }}</h4>
+                        </a>
+                </div>
+                    <div class="panel-body">
+                        {{ exposicion.tp.descripcion | safe }}
+                    </div>
                 </div>
             </div>
         </div>
         <!--/description-->
 
-        <!--buttons-->
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <a href="{% url 'ver_grupo' exposicion.grupo.id %}">
-                    <div class="relleno">
-                        Ver G{{exposicion.grupo.numero}} - {{exposicion.grupo.producto}}
-                    </div>
-                </a>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <a href="{% url 'ver_tp' exposicion.tp.id %}">
-                    <div class="relleno">
-                        Ver {{exposicion.tp}}
-                    </div>
-                </a>
-            </div>
-            {% if not exposicion.virtual %}
-                <div class="col-xs-12 col-sm-6">
-                    <a href="{% url 'ver_clase' exposicion.clase.id %}">
-                        <div class="relleno">
-                            Exposiciones del {{exposicion.clase}}
-                        </div>
-                    </a>
-                </div>
-            {% endif %}
-            <div class="col-xs-12 col-sm-6">
-                <a href="{% url 'preguntas' exposicion.id %}">
-                    <div class="relleno">
-                        Cargar preguntas
-                    </div>
-                </a>
-            </div>
-        </div>
-        <!--/buttons-->
 
         <!--video-->
         {% if exposicion.virtual %}
@@ -155,22 +135,39 @@
         <!--/cantidad de preguntas-->
 
         <!--preguntas por grupos-->
-        {% if preguntas_agrupadas %}
-            <h2> Preguntas: </h2>
-            {% for grupo, preguntas in preguntas_agrupadas %}
-                <h4>{{grupo}}</h4>
-                <ul>
-                    {% for pregunta in preguntas %}
-                        <li>
-                            {{ pregunta }}
-                            {% if pregunta.mejor %}
-                                <span class="span-style">Seleccionada como Mejor</span>
-                            {% endif %}
-                        </li>
+        <div class="row">
+            <div class="col">
+                <h2> Preguntas: </h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col">
+                <a href="{% url 'preguntas' exposicion.id %}" class="btn btn-blue " role="button">
+                    Cargar preguntas
+                </a>
+            </div>
+        </div>
+        <div class="row mt">
+            <div class="col">
+                {% if preguntas_agrupadas %}
+                    {% for grupo, preguntas in preguntas_agrupadas %}
+                        <h4>{{grupo}}</h4>
+                        <ul>
+                            {% for pregunta in preguntas %}
+                                <li>
+                                    {{ pregunta }}
+                                    {% if pregunta.mejor %}
+                                        <span class="span-style">Seleccionada como Mejor</span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
                     {% endfor %}
-                </ul>
-            {% endfor %}
-        {% endif %}
+                {% else %}
+                    <p> Todavía no se han cargado preguntas para esta exposición </p>
+                {% endif %}
+            </div>
+        </div>
         <!--/preguntas por grupos-->
 
     </div>
