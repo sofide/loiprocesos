@@ -10,15 +10,15 @@
   <!--/title-->
 
   <!--descripcion-->
-  <div class="container section">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6">
-        {% if exposicion.description %}
-          {{ exposicion.description | safe }}
-        {% endif %} 
-      </div>
+  {% if exposicion.description %}
+    <div class="container section">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                {{ exposicion.description | safe }}
+            </div>
+        </div>
     </div>
-  </div>
+  {% endif %} 
   <!--/descripcion-->
 
   <!--buttons-->
