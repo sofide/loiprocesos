@@ -122,7 +122,8 @@ def edit_ud(request, ud_pk=None):
                                                    }, )
 
 
-def add_recurso(request, recurso, ud_pk=None):
+def add_recurso(request, recurso, ud_pk):
+    unidad = get_object_or_404(Unidad, pk=ud_pk)
     if recurso == "m":
         form_class = MaterialForm
         is_material = True
@@ -131,12 +132,14 @@ def add_recurso(request, recurso, ud_pk=None):
         is_material = False
 
     if request.user.is_authenticated() and request.user.grupos.all().exists():
-        grupo = request.user.grupos.first()
+        grupo_autor = request.user.grupos.first()
+        autor = str(grupo_autor)
     else:
-        grupo = " "
+        grupo_autor = None
+        autor = " "
 
     if request.method == "POST":
-        form = form_class(request.POST, initial={'autor':str(grupo), })
+        form = form_class(request.POST, initial={'autor': autor})
         if form.is_valid():
 
             if request.user.is_authenticated():
@@ -147,6 +150,8 @@ def add_recurso(request, recurso, ud_pk=None):
             recurso = form.save(commit=False)
             recurso.fecha = timezone.now()
             recurso.usuario = user
+            recurso.unidad = unidad
+            recurso.grupo_autor = grupo_autor
 
             if request.user.groups.filter(name="staff procesos").exists():
                 recurso.vigente = True
@@ -157,20 +162,24 @@ def add_recurso(request, recurso, ud_pk=None):
             if "save" in request.POST:
                 return redirect('teoria.views.ver_unidad', ud)
             if "add" in request.POST:
-                form = form_class(initial={'autor':str(grupo), 'unidad': ud})
+                form = form_class(initial={'autor': recurso.autor})
 
     else:
-        initial_form = {'autor': str(grupo)}
-
-        if ud_pk:
-            unidad = get_object_or_404(Unidad, pk=ud_pk)
-            initial_form['unidad'] = unidad.pk
+        initial_form = {'autor': autor}
 
         form = form_class(initial=initial_form)
 
-    return render(request, 'teoria/add_recurso.html', {'material_form': form,
-                                                        'is_material': is_material,
-                                                        })
+    if grupo_autor:
+        form.fields.pop("autor")
+
+    context_data = {
+        'material_form': form,
+        'is_material': is_material,
+        'unidad': unidad,
+        'grupo_autor': grupo_autor,
+    }
+
+    return render(request, 'teoria/add_recurso.html', context_data)
 
 
 @staff_member_required
@@ -200,6 +209,8 @@ def edit_recurso(request, recurso, pk):
         form = recurso_form(instance=recurso)
 
     context = {
+        'unidad': recurso.unidad,
+        'grupo_autor': recurso.grupo_autor,
         'material_form': form,
         'is_material': is_material,
         'edit_resource': True,

@@ -3,20 +3,26 @@
 {% block content %}
 <div class="col-sm-12">
   <div class="container section">
+    <h1>Unidad {{ unidad.numero }}: {{ unidad.titulo }}</h1>
     {% if edit_resource and is_material %}
       <h2>Editar material</h2>
     {% elif edit_resource %}
       <h2>Editar pregunta</h2>
     {% elif is_material %}
-      <h2>Agregar material para mejorar el aprendizaje de una unidad</h2>
+      <h2>Agregar material para mejorar el aprendizaje de esta unidad</h2>
     {% else %}
-      <h2>Agregar pregunta para mejorar la comprensión de una unidad</h2>
+      <h2>Agregar pregunta para mejorar la comprensión de esta unidad</h2>
     {% endif %}
   </div>
 
   <div class="container section">
     <form method="POST" class="extended-input">{% csrf_token %}
       {{ material_form.as_p }}
+      {% if grupo_autor %}
+          <p> Sugerencia realizada por <span class="span-style">{{ grupo_autor }}</span></p>
+      {% else %}
+          <p> No hay ningún grupo asociado a esta sugerencia. </p>
+      {% endif %}
       <input type="submit" name="save" class="btn-dark" value="Guardar"></input>
       {% if not edit_resource %}
         <input type="submit" name="add" class="btn-dark" value="Guardar y agregar nuevo"></input>
