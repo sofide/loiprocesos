@@ -51,7 +51,7 @@ class Exposicion(models.Model):
         else:
             clase = str(self.clase)
 
-        return 'G{} - TP {} - {}'.format(self.grupo.numero, self.tp, clase)
+        return 'G{} - {} - {}'.format(self.grupo.numero, self.tp, clase)
 
     def short_string(self):
         if self.virtual:

@@ -2,194 +2,181 @@
 
 
 {% block content %}
-<div class="col-sm-12">
-  <!--title-->
-  <div class="container section">
-    <h1>Exposición: {{ exposicion }}</h1>
-  </div>
-  <!--/title-->
-
-  <!--descripcion-->
-  <div class="container section">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6">
-        {% if exposicion.description %}
-          {{ exposicion.description | safe }}
-        {% endif %} 
-      </div>
-    </div>
-  </div>
-  <!--/descripcion-->
-
-  <!--buttons-->
-  <div class="container section">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6">
-        <a href="{% url 'ver_grupo' exposicion.grupo.id %}">
-          <div class="relleno">
-            Ver G{{exposicion.grupo.numero}} - {{exposicion.grupo.producto}}
-          </div>
-        </a>
-      </div>
-      <div class="col-xs-12 col-sm-6">
-        <a href="{% url 'ver_tp' exposicion.tp.id %}">
-          <div class="relleno">
-            Ver {{exposicion.tp}}
-          </div>
-        </a>
-      </div>
-      {% if not exposicion.virtual %}
-        <div class="col-xs-12 col-sm-6">
-        <a href="{% url 'ver_clase' exposicion.clase.id %}">
-            <div class="relleno">
-            Exposiciones del {{exposicion.clase}}
-            </div>
-        </a>
-        </div>
-      {% endif %}
-      <div class="col-xs-12 col-sm-6">
-        <a href="{% url 'preguntas' exposicion.id %}">
-          <div class="relleno">
-            Cargar preguntas
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <!--/buttons-->
-
-  <!--video-->
-  {% if exposicion.virtual %}
     <div class="container section">
-      <div class="row center-content">
-        <div class="col-sm-12">
-          <iframe  width="420" height="315"
-           src="https://www.youtube.com/embed/{{video_id}}">
-          </iframe> 
-          <p> Exposición subida el {{exposicion.start_expo}}</p>
+        <div class="row">
+            <div class="col-12">
+                <!--title-->
+                    <a href="{% url 'ver_grupo' exposicion.grupo.id %}">
+                        <h1>Grupo {{ exposicion.grupo.numero }}: {{ exposicion.grupo.producto }}</h1>
+                    </a>
+                    {% if exposicion.virtual %}
+                        <h3>Exposición virtual</h3>
+                    {% else %}
+                        <a href="{% url 'ver_clase' exposicion.clase.id %}">
+                          <h3>Exposición del {{exposicion.clase}}</h3>
+                        </a>
+                    {% endif %}
+                <!--/title-->
+            </div>
         </div>
-      </div>
+
+        <!--description-->
+        <div class="row mt">
+            <div class="col-12">
+                {% if exposicion.description %}
+                      {{ exposicion.description | safe }}
+                {% endif %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="{% url 'ver_tp' exposicion.tp.id %}">
+                          <h4>{{ exposicion.tp }}</h4>
+                        </a>
+                </div>
+                    <div class="panel-body">
+                        {{ exposicion.tp.descripcion | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/description-->
+
+
+        <!--video-->
+        {% if exposicion.virtual %}
+            <div class="row center-content">
+                <div class="col-sm-12">
+                    <iframe  width="420" height="315"
+                        src="https://www.youtube.com/embed/{{video_id}}">
+                    </iframe>
+                    <p> Exposición subida el {{exposicion.start_expo}}</p>
+                </div>
+            </div>
+        {% else %}
+        <!--tiempos-->
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                {% if exposicion.start_expo %}
+                    <p>Comienzo de la exposición: {{ exposicion.start_expo }}</p>
+                {% elif perms.clases %}
+                    <form method="POST" class="post-form">{% csrf_token %}
+                        {{ st_expo_form.as_p }}
+                        <input type="submit" name="st_ex" class="save btn btn-default" value="Cargar!"></input>
+                    </form>
+                {% endif %}
+
+                {% if exposicion.start_ques %}
+                    <p>Comienzo de las preguntas: {{ exposicion.start_ques }}</p>
+                {% elif perms.clases %}
+                    <form method="POST" class="post-form">{% csrf_token %}
+                        {{ st_ques_form.as_p }}
+                        <input type="submit" name="st_qu" class="save btn btn-default" value="Cargar!"></input>
+                    </form>
+                {% endif %}
+
+                {% if exposicion.finish_expo %}
+                    <p>Fin de la exposición: {{ exposicion.finish_expo }}</p>
+                {% elif perms.clases %}
+                    <form method="POST" class="post-form">{% csrf_token %}
+                        {{ fi_expo_form.as_p }}
+                        <input type="submit" name="fi_ex" class="save btn btn-default" value="Cargar!"></input>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        <!--/tiempos-->
+
+        <!--gráficos-->
+        <div class="row">
+            <div class="col-sm-6">
+                {% if tiempos_graph %}
+                    {{tiempos_graph.0|safe}}
+                    {{tiempos_graph.1|safe}}
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                {% if preguntas_graph %}
+                    {{preguntas_graph.0|safe}}
+                    {{preguntas_graph.1|safe}}
+                {% endif %}
+            </div>
+        </div>
+        <!--/graficos-->
+
+        <!--cantidad de preguntas-->
+        {% if not exposicion.virtual %}
+            <h2>Preguntas realizadas en esta exposicion: </h2>
+            {% if q_preguntas %}
+                <ul>
+                  {% for preg in q_preguntas %}
+                      <li>
+                          {{ preg.preguntador }} realizó {{ preg.cantidad }} pregunta/s
+                          {% if preg.primero %}
+                              <span class="span-style">primero!</span>
+                          {% elif preg.ultimo %}
+                              <span class="span-style">último!</span>
+                          {% endif %}
+                      </li>
+                  {% endfor %}
+                </ul>
+            {% else %}
+                <p>Todavía no se registraron las cantidades de preguntas por grupos hechas en clases</p>
+            {% endif %}
+
+            {% if perms.clases %}
+                <h2> Agregar preguntas por grupo a esta clase: </h2>
+
+                <form method="POST" class="post-form">{% csrf_token %}
+                    {{ cont_preg_form.as_p }}
+                    <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
+                </form>
+            {% endif %}
+        {% endif %}
+        <!--/cantidad de preguntas-->
+
+        <!--preguntas por grupos-->
+        <div class="row">
+            <div class="col">
+                <h2> Preguntas: </h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col">
+                <a href="{% url 'preguntas' exposicion.id %}" class="btn btn-blue " role="button">
+                    Cargar preguntas
+                </a>
+            </div>
+        </div>
+        <div class="row mt">
+            <div class="col">
+                {% if preguntas_agrupadas %}
+                    {% for grupo, preguntas in preguntas_agrupadas %}
+                        <h4>{{grupo}}</h4>
+                        <ul>
+                            {% for pregunta in preguntas %}
+                                <li>
+                                    {{ pregunta }}
+                                    {% if pregunta.mejor %}
+                                        <span class="span-style">Seleccionada como Mejor</span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                {% else %}
+                    <p> Todavía no se han cargado preguntas para esta exposición </p>
+                {% endif %}
+            </div>
+        </div>
+        <!--/preguntas por grupos-->
+
     </div>
-  {% else %}
-  <!--tiempos-->
-  <div class="container section">
-    <div class="panel panel-primary">
-      <div class="panel-body">
-        {% if exposicion.start_expo %}
-          <p>Comienzo de la exposición: {{ exposicion.start_expo }}</p>
-        {% elif perms.clases %}
-          <form method="POST" class="post-form">{% csrf_token %}
-            {{ st_expo_form.as_p }}
-            <input type="submit" name="st_ex" class="save btn btn-default" value="Cargar!"></input>
-          </form>
-        {% endif %}
 
-        {% if exposicion.start_ques %}
-          <p>Comienzo de las preguntas: {{ exposicion.start_ques }}</p>
-        {% elif perms.clases %}
-          <form method="POST" class="post-form">{% csrf_token %}
-            {{ st_ques_form.as_p }}
-            <input type="submit" name="st_qu" class="save btn btn-default" value="Cargar!"></input>
-          </form>
-        {% endif %}
-
-        {% if exposicion.finish_expo %}
-          <p>Fin de la exposición: {{ exposicion.finish_expo }}</p>
-        {% elif perms.clases %}
-          <form method="POST" class="post-form">{% csrf_token %}
-            {{ fi_expo_form.as_p }}
-            <input type="submit" name="fi_ex" class="save btn btn-default" value="Cargar!"></input>
-          </form>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
-  <!--/tiempos-->
-
-  <!--gráficos-->
-  <div class="container section">
-    <div class="row">
-      <div class="col-sm-6">
-        {% if tiempos_graph %}
-          {{tiempos_graph.0|safe}}
-          {{tiempos_graph.1|safe}}
-        {% endif %}
-      </div>
-      <div class="col-sm-6">
-        {% if preguntas_graph %}
-          {{preguntas_graph.0|safe}}
-          {{preguntas_graph.1|safe}}
-        {% endif %}
-      </div>
-    </div>
-  </div>
-  <!--/graficos-->
-
-  <!--cantidad de preguntas-->
-  {% if not exposicion.virtual %}
-  <div class="container section">
-    <h2>Preguntas realizadas en esta exposicion: </h2>
-    <ul>
-    {% if q_preguntas %}
-      {% for preg in q_preguntas %}
-      <li>
-        {{ preg.preguntador }} realizó {{ preg.cantidad }} pregunta/s
-        {% if preg.primero %}
-          <span class="span-style">primero!</span>
-        {% elif preg.ultimo %}
-          <span class="span-style">último!</span>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-     <p>Todavía no se registraron las cantidades de preguntas por grupos hechas en clases</p>
-    {% endif %}
-  </div>
-
-  <div class="container section">
-    {% if perms.clases %}
-      <h2> Agregar preguntas por grupo a esta clase: </h2>
-
-      <form method="POST" class="post-form">{% csrf_token %}
-        {{ cont_preg_form.as_p }}
-        <input type="submit" name="pregunta" class="save btn btn-default" value="Cargar!"></input>
-      </form>
-    {% endif %}
-  </div>
-  {% endif %}
-  <!--/cantidad de preguntas-->
-
-  <!--preguntas por grupos-->
-  <div class="container section">
-    {% if preguntas_agrupadas %}
-      <h2> Preguntas: </h2>
-      {% for grupo, preguntas in preguntas_agrupadas %}
-        <h4>{{grupo}}</h4>
-        <ul>
-          {% for pregunta in preguntas %}
-            <li>
-              {{ pregunta }}
-              {% if pregunta.mejor %}
-                <span class="span-style">Seleccionada como Mejor</span>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <!--/preguntas por grupos-->
-
-
-  <script type="text/javascript">
-      $(function () {
-          $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({
-              format: 'DD/MM/YYYY HH:mm:ss'
-          });
-      });
-  </script>
-
-</div>
+    <script type="text/javascript">
+        $(function () {
+            $('#id_start_expo, #id_start_ques, #id_finish_expo').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+        });
+    </script>
 {% endblock %}
