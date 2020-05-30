@@ -1,4 +1,11 @@
 {% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block extra_head %}
+  <!-- Utility to enable search in a dropdown -->
+  <link type="text/css" rel="stylesheet" href="{% static 'vendor/select2/select2-4.1.0-beta.1.min.css' %}"/>
+  <script src="{% static 'vendor/select2/select2-4.1.0-beta.1.min.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 <div class="col-sm-12">
@@ -186,4 +193,14 @@
 
 
 
+{% endblock %}
+
+{% block extra_js %}
+  {% if pertenencia_form %}
+    <script>
+      $(document).ready(function() {
+        $('#id_usuario').select2();
+      });
+    </script>
+  {% endif %}
 {% endblock %}
