@@ -42,8 +42,8 @@ PUBLIC_ACCESS_VIEW = [
     # defined in teoria.urls
     ('teoria_home', []),
     ('ver_unidad', [('unidad_pk', factories.UnidadFactory)]),
-    ('add_recurso', [('recurso', 'm')]), # add new material
-    ('add_recurso', [('recurso', 'p')]), # add new question
+    ('add_recurso_in_ud', [('recurso', 'm'), ('ud_pk', factories.UnidadFactory)]), # add new material
+    ('add_recurso_in_ud', [('recurso', 'p'), ('ud_pk', factories.UnidadFactory)]), # add new question
 ]
 
 
